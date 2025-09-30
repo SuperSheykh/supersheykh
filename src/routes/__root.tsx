@@ -8,9 +8,11 @@ import { trpc } from "../utils/trpc";
 import { useState } from "react";
 import { httpBatchLink } from "@trpc/client";
 
-import Header from "../components/Header";
+import Header from "@/components/header";
 
-import appCss from "../styles.css?url";
+import appCss from "@/styles/app.css?url";
+import ThemeProvider from "@/components/providers/theme-provider";
+import MenuDrawerProvider from "@/components/providers/menu-drawer-provider";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -45,7 +47,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           url: "/api/trpc",
         }),
       ],
-    })
+    }),
   );
 
   return (
@@ -53,12 +55,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="bg-background text-foreground font-fira">
         <trpc.Provider client={trpcClient} queryClient={queryClient}>
           <QueryClientProvider client={queryClient}>
             <I18nextProvider i18n={i18n}>
-              <Header />
-              {children}
+              <MenuDrawerProvider />
+              <ThemeProvider>
+                <Header />
+                {children}
+              </ThemeProvider>
             </I18nextProvider>
           </QueryClientProvider>
         </trpc.Provider>
