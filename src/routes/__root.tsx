@@ -1,6 +1,6 @@
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import { TanstackDevtools } from "@tanstack/react-devtools";
+// import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+// import { TanstackDevtools } from "@tanstack/react-devtools";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../i18n";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -67,17 +67,17 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             </I18nextProvider>
           </QueryClientProvider>
         </trpc.Provider>
-        <TanstackDevtools
-          config={{
-            position: "bottom-left",
-          }}
-          plugins={[
-            {
-              name: "Tanstack Router",
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
+        {/* <TanstackDevtools */}
+        {/*   config={{ */}
+        {/*     position: "bottom-left", */}
+        {/*   }} */}
+        {/*   plugins={[ */}
+        {/*     { */}
+        {/*       name: "Tanstack Router", */}
+        {/*       render: <TanStackRouterDevtoolsPanel />, */}
+        {/*     }, */}
+        {/*   ]} */}
+        {/* /> */}
         <Scripts />
       </body>
     </html>
