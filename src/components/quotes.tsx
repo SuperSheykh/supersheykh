@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import Gutter from "./gutter";
 import { QuoteIcon } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
+import { useTrans } from "@/hooks/use-trans";
 
 import { QUOTES } from "@/lib/constants";
 
@@ -26,6 +27,7 @@ const Quotes = () => {
 export default Quotes;
 
 const QuoteElement = (quote: (typeof QUOTES)[number]) => {
+  const t = useTrans();
   return (
     <div className="relative max-w-4xl mx-auto">
       <blockquote className="border border-border p-8 text-center relative">
@@ -37,7 +39,7 @@ const QuoteElement = (quote: (typeof QUOTES)[number]) => {
         >
           <QuoteIcon />
         </div>
-        <p className="text-2xl md:text-3xl">{quote.quote}</p>
+        <p className="text-2xl md:text-3xl">{t(quote.quote, quote.quote_fr)}</p>
       </blockquote>
       <figcaption className="absolute -bottom-5 right-8 bg-card px-4 py-2 border border-border">
         <p className="text-lg whitespace-nowrap">{quote.author}</p>
@@ -45,4 +47,3 @@ const QuoteElement = (quote: (typeof QUOTES)[number]) => {
     </div>
   );
 };
-

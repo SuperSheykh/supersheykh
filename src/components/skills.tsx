@@ -11,16 +11,15 @@ const SKILLS_DATA = {
 
 const Skills = () => {
   return (
-    <section className="py-16">
+    <section>
       <Gutter className="space-y-10">
         <SectionTitle title="Skills" title_fr="Compétences" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {Object.entries(SKILLS_DATA).map(([category, skills]) => (
-            <div
-              key={category}
-              className="border border-border p-4 rounded-lg"
-            >
-              <h3 className="text-xl font-bold mb-4">{category}</h3>
+            <div key={category} className="border border-border p-4">
+              <h3 className="text-xl font-bold mb-4 border-b border-border">
+                {category}
+              </h3>
               <ul className="flex flex-wrap gap-2">
                 {skills.map((skill) => (
                   <li

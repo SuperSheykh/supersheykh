@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import Gutter from "./gutter";
 import { Button } from "./ui/button";
+
 import {
   Carousel,
   CarouselApi,
@@ -10,6 +11,7 @@ import {
 import { HERO_ITEMS } from "@/lib/constants";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { useTrans } from "@/hooks/use-trans";
 
 type HeroItemProps = (typeof HERO_ITEMS)[number];
 
@@ -61,21 +63,24 @@ const hero = () => {
 export default hero;
 
 const HeroItem = (item: HeroItemProps) => {
+  const t = useTrans();
   return (
     <div className="md:flex ">
       <div className="text-xl md:text-2xl text-center md:w-1/2 md:self-center md:text-start flex flex-col gap-4 lg:gap-6 items-center md:items-start">
-        <p>{item?.greeting}</p>
+        <p>{t(item?.greeting, item?.greeting_fr)}</p>
         <p className="text-4xl md:text-5xl lg:text-7xl font-bold text-primary capitalize">
-          {item.title}
+          {t(item.title, item.title_fr)}
         </p>
-        <p>{item.description}</p>
+        <p>{t(item.description, item.description_fr)}</p>
         <Button
           size="lg"
           className="capitalize rounded-none self-center md:text-xl py-6 md:self-start md:mt-8"
           variant="outline"
           asChild
         >
-          <Link to={item.buttonLink}>{item.buttonText}</Link>
+          <Link to={item.buttonLink}>
+            {t(item.buttonText, item.buttonText_fr)}
+          </Link>
         </Button>
       </div>
       <div className="md:w-1/2">
@@ -84,12 +89,12 @@ const HeroItem = (item: HeroItemProps) => {
           <div className="border-2 rounded-none flex gap-4 items-center p-2 px-4 md:p-4">
             <div className="w-4 aspect-square bg-primary" />
             <div>
-              <p className="font-light">{item.subText}</p>
+              <p className="font-light">{t(item.subText, item.subText_fr)}</p>
               <Link
                 to={item.subLink}
                 className="cursor-pointer hover:underline hover:text-primary font-bold transition ease-in-out"
               >
-                {item.subLinkText}
+                {t(item.subLinkText, item.subLinkText_fr)}
               </Link>
             </div>
           </div>

@@ -9,6 +9,7 @@ import ThemeSwitcher from "./theme-switcher";
 import { MenuIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useMenuDrawer } from "@/hooks/use-menu-drawer";
+import { useTrans } from "@/hooks/use-trans";
 
 export default function Header() {
   return (
@@ -40,13 +41,14 @@ export default function Header() {
 const NavItem = ({
   to,
   title,
-  // title_fr,
+  title_fr,
 }: {
   to: string;
   title: string;
   title_fr?: string;
 }) => {
   const isActive = useLocation().pathname === to;
+  const t = useTrans();
   return (
     <Button
       variant="ghost"
@@ -62,7 +64,7 @@ const NavItem = ({
         >
           #
         </span>
-        {title}
+        {t(title, title_fr)}
       </Link>
     </Button>
   );

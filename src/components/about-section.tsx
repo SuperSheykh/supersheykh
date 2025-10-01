@@ -3,7 +3,7 @@ import SectionTitle from "./section-title";
 
 const AboutSection = () => {
   return (
-    <section className="py-16">
+    <section>
       <Gutter>
         <SectionTitle title="About Me" title_fr="A propos de moi" />
         <div className="space-y-4 text-lg">
@@ -15,9 +15,9 @@ const AboutSection = () => {
             code.
           </p>
           <p>
-            I specialize in React, Node.js, and the entire TypeScript
-            ecosystem. I'm also proficient in database management with
-            PostgreSQL and have experience deploying scalable applications.
+            I specialize in React, Node.js, and the entire TypeScript ecosystem.
+            I'm also proficient in database management with PostgreSQL and have
+            experience deploying scalable applications.
           </p>
           <p>
             When I'm not coding, you can find me exploring the latest tech
@@ -31,3 +31,4 @@ const AboutSection = () => {
 };
 
 export default AboutSection;
+
