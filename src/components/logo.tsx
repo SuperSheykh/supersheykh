@@ -1,9 +1,11 @@
 import { Link } from "@tanstack/react-router";
+import { ClassNameValue } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
-const Logo = () => {
+const Logo = ({ className }: { className?: ClassNameValue }) => {
   return (
-    <Link to="/" className="text-xl md:text-2xl font-bold">
-      SUPERSHEYKH
+    <Link to="/" className={cn("text-xl md:text-2xl font-bold", className)}>
+      @SuperSheykh
     </Link>
   );
 };

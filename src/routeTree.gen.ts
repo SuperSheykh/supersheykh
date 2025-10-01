@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SocialsRouteImport } from './routes/socials'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
@@ -24,6 +25,11 @@ const SocialsRoute = SocialsRouteImport.update({
 const PortfolioRoute = PortfolioRouteImport.update({
   id: '/portfolio',
   path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/portfolio': typeof PortfolioRoute
   '/socials': typeof SocialsRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/portfolio': typeof PortfolioRoute
   '/socials': typeof SocialsRoute
 }
@@ -69,20 +77,36 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/portfolio': typeof PortfolioRoute
   '/socials': typeof SocialsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/blog' | '/contact' | '/portfolio' | '/socials'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/blog'
+    | '/contact'
+    | '/dashboard'
+    | '/portfolio'
+    | '/socials'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/blog' | '/contact' | '/portfolio' | '/socials'
+  to:
+    | '/'
+    | '/about'
+    | '/blog'
+    | '/contact'
+    | '/dashboard'
+    | '/portfolio'
+    | '/socials'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/blog'
     | '/contact'
+    | '/dashboard'
     | '/portfolio'
     | '/socials'
   fileRoutesById: FileRoutesById
@@ -92,6 +116,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BlogRoute: typeof BlogRoute
   ContactRoute: typeof ContactRoute
+  DashboardRoute: typeof DashboardRoute
   PortfolioRoute: typeof PortfolioRoute
   SocialsRoute: typeof SocialsRoute
 }
@@ -110,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/portfolio'
       fullPath: '/portfolio'
       preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -148,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   BlogRoute: BlogRoute,
   ContactRoute: ContactRoute,
+  DashboardRoute: DashboardRoute,
   PortfolioRoute: PortfolioRoute,
   SocialsRoute: SocialsRoute,
 }

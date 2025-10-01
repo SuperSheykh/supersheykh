@@ -12,7 +12,7 @@ import { useMenuDrawer } from "@/hooks/use-menu-drawer";
 
 export default function Header() {
   return (
-    <header className="py-4 border-b-0 shadow-xs">
+    <header className="sticky top-0 z-50 w-full bg-background py-4 border-b-0 shadow-xs">
       <Gutter>
         <nav className="flex justify-between items-center">
           <Logo />

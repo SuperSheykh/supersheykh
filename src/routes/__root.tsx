@@ -13,6 +13,7 @@ import Header from "@/components/header";
 import appCss from "@/styles/app.css?url";
 import ThemeProvider from "@/components/providers/theme-provider";
 import MenuDrawerProvider from "@/components/providers/menu-drawer-provider";
+import Footer from "@/components/footer";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -63,6 +64,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               <ThemeProvider>
                 <Header />
                 {children}
+                <Footer />
               </ThemeProvider>
             </I18nextProvider>
           </QueryClientProvider>

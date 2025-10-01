@@ -6,5 +6,19 @@
   "main": "@tanstack/react-start/server-entry",
   "vars": {
     "MY_VAR": "Hello from Cloudflare"
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "supersheykh_db",
+      "database_id": "ad7a302c-f4ae-4797-86a3-ab30e12c13bd",
+      "migrations_dir":"/drizzle/migrations"
+    }
+  ], 
+  "r2_buckets": [
+    {
+      "binding": "BK",
+      "bucket_name": "supersheykh-bucket",
+    }
+  ]
 }
