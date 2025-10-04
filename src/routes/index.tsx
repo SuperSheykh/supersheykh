@@ -5,7 +5,9 @@ import Projects from "@/components/projects";
 import Skills from "@/components/skills";
 import AboutMe from "@/components/about-section";
 import Contact from "@/components/contact-section";
+import { testing } from "@/actions/test";
 export const Route = createFileRoute("/")({
+  loader: async () => testing(),
   component: App,
 });
 

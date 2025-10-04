@@ -12,7 +12,8 @@
       "binding": "DB",
       "database_name": "supersheykh_db",
       "database_id": "ad7a302c-f4ae-4797-86a3-ab30e12c13bd",
-      "migrations_dir":"/drizzle/migrations"
+      "preview_database_id": "ad7a302c-f4ae-4797-86a3-ab30e12c13bd",
+      "migrations_dir":"./drizzle/"
     }
   ], 
   "r2_buckets": [

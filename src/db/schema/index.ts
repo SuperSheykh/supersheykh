@@ -6,5 +6,8 @@ export {
   skill_category_relations,
 } from "./skills";
 export { socials } from "./socials";
-export { blogs } from "./blogs";
-export { images } from "./images";
+export { blogs, blog_relations } from "./blogs";
+export { images, image_relations } from "./images";
+export { quotes } from "./quotes";
+export { billboards, billboard_relations } from "./billboards";
+export * from "./auth-schema";
