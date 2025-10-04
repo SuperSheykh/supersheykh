@@ -5,7 +5,6 @@ import Projects from "@/components/projects";
 import Skills from "@/components/skills";
 import AboutMe from "@/components/about-section";
 import Contact from "@/components/contact-section";
-
 export const Route = createFileRoute("/")({
   component: App,
 });

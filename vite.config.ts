@@ -7,14 +7,17 @@ import { cloudflare } from "@cloudflare/vite-plugin";
 
 const config = defineConfig({
   plugins: [
+    tanstackStart(),
+    viteReact(),
     // this is the plugin that enables path aliases
     viteTsConfigPaths({
       projects: ["./tsconfig.json"],
     }),
     tailwindcss(),
-    cloudflare({ viteEnvironment: { name: "ssr" } }),
-    tanstackStart(),
-    viteReact(),
+    cloudflare({
+      viteEnvironment: { name: "ssr" },
+      configPath: "./wrangler.json",
+    }),
   ],
 });
 

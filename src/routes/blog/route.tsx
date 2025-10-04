@@ -54,7 +54,9 @@ function RouteComponent() {
                   <h2 className="text-xl font-bold mb-2">{post.title}</h2>
                   <p className="text-muted-foreground mb-4">{post.excerpt}</p>
                   <Button asChild variant="outline">
-                    <Link to={`/blog/${post.slug}`}>Read More</Link>
+                    <Link to="/blog/$slug" params={{ slug: post.slug }}>
+                      Read More
+                    </Link>
                   </Button>
                 </div>
               </div>

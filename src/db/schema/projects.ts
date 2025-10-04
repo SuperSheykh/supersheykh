@@ -1,5 +1,7 @@
 import { sqliteTable, text, index } from "drizzle-orm/sqlite-core";
 import { v4 as uuidv4 } from "uuid";
+import { images } from "./images";
+import { relations } from "drizzle-orm";
 
 export const projects = sqliteTable(
   "projects",
@@ -10,9 +12,13 @@ export const projects = sqliteTable(
     description: text("description").notNull(),
     description_fr: text("description_fr").notNull(),
     slug: text("slug").notNull().unique(),
-    cover: text("cover").notNull(),
-    created_at: text("created_at").notNull(),
-    updated_at: text("updated_at").notNull(),
+    cover: text("cover")
+      .notNull()
+      .references(() => images.id),
+    live: text("live").notNull(),
+    github: text("github"),
+    created_at: text("created_at").$defaultFn(() => new Date().toISOString()),
+    updated_at: text("updated_at").$defaultFn(() => new Date().toISOString()),
   },
   (table) => ({
     titleIdx: index("title_idx").on(table.title),
@@ -20,3 +26,10 @@ export const projects = sqliteTable(
     slugIdx: index("slug_idx").on(table.slug),
   }),
 );
+
+export const project_relations = relations(projects, ({ one }) => ({
+  cover: one(images, {
+    fields: [projects.cover],
+    references: [images.id],
+  }),
+}));

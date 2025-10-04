@@ -1,12 +1,12 @@
+import { useState } from "react";
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
-// import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-// import { TanstackDevtools } from "@tanstack/react-devtools";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../i18n";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { trpc } from "../utils/trpc";
-import { useState } from "react";
-import { httpBatchLink } from "@trpc/client";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { createTRPCClient, httpBatchLink } from "@trpc/client";
+import { AppRouter } from "@worker/trpc/router";
+import { TRPCProvider } from "@/lib/utils/trpc";
+import { getQueryClient } from "@/lib/utils";
 
 import Header from "@/components/header";
 
@@ -39,36 +39,35 @@ export const Route = createRootRoute({
   shellComponent: RootDocument,
 });
 
-function RootDocument({ children }: { children: React.ReactNode }) {
-  const [queryClient] = useState(() => new QueryClient());
+export function RootDocument({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient();
   const [trpcClient] = useState(() =>
-    trpc.createClient({
+    createTRPCClient<AppRouter>({
       links: [
         httpBatchLink({
-          url: "/api/trpc",
+          url: "/trpc",
         }),
       ],
     }),
   );
-
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body className="bg-background text-foreground font-fira">
-        <trpc.Provider client={trpcClient} queryClient={queryClient}>
+        <I18nextProvider i18n={i18n}>
           <QueryClientProvider client={queryClient}>
-            <I18nextProvider i18n={i18n}>
+            <TRPCProvider queryClient={queryClient} trpcClient={trpcClient}>
               <MenuDrawerProvider />
               <ThemeProvider>
                 <Header />
                 {children}
                 <Footer />
               </ThemeProvider>
-            </I18nextProvider>
+            </TRPCProvider>
           </QueryClientProvider>
-        </trpc.Provider>
+        </I18nextProvider>
         {/* <TanstackDevtools */}
         {/*   config={{ */}
         {/*     position: "bottom-left", */}

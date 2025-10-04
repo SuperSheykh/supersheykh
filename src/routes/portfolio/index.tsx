@@ -1,11 +1,11 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute, Outlet } from "@tanstack/react-router";
 import Gutter from "@/components/gutter";
 import SectionTitle from "@/components/section-title";
 import ProjectCard from "@/components/project-card";
 
 const PROJECTS = [
   {
-    id: 1,
+    id: "043b5b40-c0ce-47cc-880e-f3b58209e47e",
     title: "Project 1",
     title_fr: "Projet 1",
     description: "Description 1",
@@ -14,7 +14,7 @@ const PROJECTS = [
     imageAlt: "Sekou SIDIBE",
   },
   {
-    id: 2,
+    id: "043b5b40-c0ce-47cc-880e-f3b58209e47f",
     title: "Project 2",
     title_fr: "Projet 2",
     description: "Description 2",
@@ -23,7 +23,7 @@ const PROJECTS = [
     imageAlt: "Sekou SIDIBE",
   },
   {
-    id: 3,
+    id: "043b5b40-c0ce-47cc-880e-f3b58209e480",
     title: "Project 3",
     title_fr: "Projet 3",
     description: "Description 3",
@@ -32,7 +32,7 @@ const PROJECTS = [
     imageAlt: "Sekou SIDIBE",
   },
   {
-    id: 4,
+    id: "043b5b40-c0ce-47cc-880e-f3b58209e481",
     title: "Project 4",
     title_fr: "Projet 4",
     description: "Description 4",
@@ -41,7 +41,7 @@ const PROJECTS = [
     imageAlt: "Sekou SIDIBE",
   },
   {
-    id: 5,
+    id: "043b5b40-c0ce-47cc-880e-f3b58209e482",
     title: "Project 5",
     title_fr: "Projet 5",
     description: "Description 5",
@@ -51,7 +51,7 @@ const PROJECTS = [
   },
 ];
 
-export const Route = createFileRoute("/portfolio")({
+export const Route = createFileRoute("/portfolio/")({
   component: RouteComponent,
 });
 
@@ -68,7 +68,11 @@ function RouteComponent() {
           <SectionTitle title="My Work" title_fr="Mes projets" />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {PROJECTS.map((project) => (
-              <Link to={`/portfolio/${project.id}`} key={project.id}>
+              <Link
+                to={`/portfolio/$projectId`}
+                params={{ projectId: project.id }}
+                key={project.id}
+              >
                 <ProjectCard {...project} />
               </Link>
             ))}
