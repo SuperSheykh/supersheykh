@@ -16,7 +16,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full bg-background py-4 border-b-0 shadow-xs">
       <Gutter>
         <nav className="flex justify-between items-center">
-          <Logo />
+          <Logo className="text-base" />
           <div className="w-auto flex gap-x-2 justify-end">
             {PAGES.map((page) => (
               <NavItem

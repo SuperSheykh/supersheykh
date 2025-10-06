@@ -18,6 +18,8 @@ import { Route as PortfolioIndexRouteImport } from './routes/portfolio/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as PortfolioProjectIdIndexRouteImport } from './routes/portfolio/$projectId/index'
+import { Route as DashboardProjectsIndexRouteImport } from './routes/dashboard/projects/index'
+import { Route as DashboardProjectsProjectIdIndexRouteImport } from './routes/dashboard/projects/$projectId/index'
 
 const SocialsRoute = SocialsRouteImport.update({
   id: '/socials',
@@ -64,6 +66,17 @@ const PortfolioProjectIdIndexRoute = PortfolioProjectIdIndexRouteImport.update({
   path: '/portfolio/$projectId/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardProjectsIndexRoute = DashboardProjectsIndexRouteImport.update({
+  id: '/dashboard/projects/',
+  path: '/dashboard/projects/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardProjectsProjectIdIndexRoute =
+  DashboardProjectsProjectIdIndexRouteImport.update({
+    id: '/dashboard/projects/$projectId/',
+    path: '/dashboard/projects/$projectId/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -74,7 +87,9 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard': typeof DashboardIndexRoute
   '/portfolio': typeof PortfolioIndexRoute
+  '/dashboard/projects': typeof DashboardProjectsIndexRoute
   '/portfolio/$projectId': typeof PortfolioProjectIdIndexRoute
+  '/dashboard/projects/$projectId': typeof DashboardProjectsProjectIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -85,7 +100,9 @@ export interface FileRoutesByTo {
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard': typeof DashboardIndexRoute
   '/portfolio': typeof PortfolioIndexRoute
+  '/dashboard/projects': typeof DashboardProjectsIndexRoute
   '/portfolio/$projectId': typeof PortfolioProjectIdIndexRoute
+  '/dashboard/projects/$projectId': typeof DashboardProjectsProjectIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -97,7 +114,9 @@ export interface FileRoutesById {
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/portfolio/': typeof PortfolioIndexRoute
+  '/dashboard/projects/': typeof DashboardProjectsIndexRoute
   '/portfolio/$projectId/': typeof PortfolioProjectIdIndexRoute
+  '/dashboard/projects/$projectId/': typeof DashboardProjectsProjectIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -110,7 +129,9 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/dashboard'
     | '/portfolio'
+    | '/dashboard/projects'
     | '/portfolio/$projectId'
+    | '/dashboard/projects/$projectId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -121,7 +142,9 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/dashboard'
     | '/portfolio'
+    | '/dashboard/projects'
     | '/portfolio/$projectId'
+    | '/dashboard/projects/$projectId'
   id:
     | '__root__'
     | '/'
@@ -132,7 +155,9 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/dashboard/'
     | '/portfolio/'
+    | '/dashboard/projects/'
     | '/portfolio/$projectId/'
+    | '/dashboard/projects/$projectId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -143,7 +168,9 @@ export interface RootRouteChildren {
   SocialsRoute: typeof SocialsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   PortfolioIndexRoute: typeof PortfolioIndexRoute
+  DashboardProjectsIndexRoute: typeof DashboardProjectsIndexRoute
   PortfolioProjectIdIndexRoute: typeof PortfolioProjectIdIndexRoute
+  DashboardProjectsProjectIdIndexRoute: typeof DashboardProjectsProjectIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -211,6 +238,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortfolioProjectIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/projects/': {
+      id: '/dashboard/projects/'
+      path: '/dashboard/projects'
+      fullPath: '/dashboard/projects'
+      preLoaderRoute: typeof DashboardProjectsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/projects/$projectId/': {
+      id: '/dashboard/projects/$projectId/'
+      path: '/dashboard/projects/$projectId'
+      fullPath: '/dashboard/projects/$projectId'
+      preLoaderRoute: typeof DashboardProjectsProjectIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -234,7 +275,9 @@ const rootRouteChildren: RootRouteChildren = {
   SocialsRoute: SocialsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   PortfolioIndexRoute: PortfolioIndexRoute,
+  DashboardProjectsIndexRoute: DashboardProjectsIndexRoute,
   PortfolioProjectIdIndexRoute: PortfolioProjectIdIndexRoute,
+  DashboardProjectsProjectIdIndexRoute: DashboardProjectsProjectIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

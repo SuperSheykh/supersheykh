@@ -1,7 +1,8 @@
-import { publicProcedure, router } from "./trpc";
+import { createTRPCRouter as router } from "./trpc";
+import * as projects from "./routes/projects";
 
 export const appRouter = router({
-  test: publicProcedure.query(async () => "hello"),
+  projects,
 });
 
 export type AppRouter = typeof appRouter;
