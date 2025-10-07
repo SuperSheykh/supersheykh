@@ -24,7 +24,7 @@ const QUICK_LINKS: { name: string; url: string; icon: LucideIcon }[] = [
 
 const Footer = () => {
   return (
-    <div className="mt-12 bg-card text-card-foreground border-t-1 border-border ">
+    <div className="mt-auto bg-card text-card-foreground border-t-1 border-border ">
       <Gutter className="pt-8">
         <div className="flex flex-col md:flex-row">
           <div className="flex flex-col items-center md:items-start gap-2 md:w-1/2">

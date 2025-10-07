@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { v4 as uuidv4 } from "uuid";
+import { createInsertSchema } from "drizzle-zod";
 
 export const skills = sqliteTable("skills", {
   id: text("id").primaryKey().$defaultFn(uuidv4),
@@ -28,3 +29,6 @@ export const skill_category_relations = relations(
     skills: many(skills),
   }),
 );
+
+export const skillSchema = createInsertSchema(skills);
+export type SkillInsert = typeof skills.$inferInsert;

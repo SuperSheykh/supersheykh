@@ -4,6 +4,9 @@ import PageTitle from "@/components/page-title";
 
 export const Route = createFileRoute("/contact")({
   component: RouteComponent,
+  handle: {
+    crumb: () => "Contact",
+  },
 });
 
 function RouteComponent() {

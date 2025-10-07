@@ -35,4 +35,6 @@ export const project_relations = relations(projects, ({ one }) => ({
   }),
 }));
 
+export type Project = typeof projects.$inferSelect;
+export type ProjectInsert = typeof projects.$inferInsert;
 export const projectSchema = createInsertSchema(projects);

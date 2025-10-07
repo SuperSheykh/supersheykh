@@ -1,5 +1,13 @@
-export { getProject as get } from "./get";
-export { getAllProjects as getAll } from "./get-all";
-export { getLive } from "./get-live";
-export { upsertProject as upsert } from "./upsert";
-export { deleteProject as remove } from "./remove";
+import { getProject as get } from "./get";
+import { getAllProjects as getAll } from "./get-all";
+import { getLive } from "./get-live";
+import { upsertProject as upsert } from "./upsert";
+import { deleteProject as remove } from "./remove";
+
+export const projectsRouter = {
+  get,
+  getAll,
+  getLive,
+  upsert,
+  remove,
+};

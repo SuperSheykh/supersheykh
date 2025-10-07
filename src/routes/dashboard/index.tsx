@@ -22,31 +22,37 @@ const DASHBOARD_SECTIONS = [
     title: "Projects",
     path: "/dashboard/projects",
     description: "All of projects built or in progress",
+    newPath: "/dashboard/projects/new",
   },
   {
     title: "Billboards",
     path: "/dashboard/billboards",
     description: "website hero billboards",
+    newPath: "/dashboard/billboards/new",
   },
   {
     title: "Blogs",
     path: "/dashboard/blogs",
     description: "Articles I've written or chosen to publish.",
+    newPath: "/dashboard/blogs/new",
   },
   {
     title: "Skills & Experience",
     path: "/dashboard/skills",
     description: "My skills and working tools",
+    newPath: "/dashboard/skills/new",
   },
   {
     title: "Quotes",
     path: "/dashboard/quotes",
     description: "Quotes that inspire me in day to day life",
+    newPath: "/dashboard/quotes/new",
   },
   {
     title: "Socials",
     path: "/dashboard/socials",
     description: "Where people can find me on the web",
+    newPath: "/dashboard/socials/new",
   },
 ];
 
@@ -83,6 +89,7 @@ function RouteComponent() {
               <Button
                 variant="outline"
                 className="hover:text-primary w-full aspect-auto cursor-pointer md:w-auto"
+                onClick={() => router.navigate({ to: section.newPath })}
               >
                 <span className="flex gap-x-2">
                   <Plus />

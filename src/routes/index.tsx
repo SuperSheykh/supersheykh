@@ -1,25 +1,23 @@
-import { createFileRoute } from "@tanstack/react-router";
 import Hero from "@/components/hero";
-import Quotes from "@/components/quotes";
 import Projects from "@/components/projects";
+import Quotes from "@/components/quotes";
 import Skills from "@/components/skills";
-import AboutMe from "@/components/about-section";
-import Contact from "@/components/contact-section";
-import { testing } from "@/actions/test";
+import { createFileRoute } from "@tanstack/react-router";
+
 export const Route = createFileRoute("/")({
-  loader: async () => testing(),
-  component: App,
+  component: RouteComponent,
+  handle: {
+    crumb: () => "Home",
+  },
 });
 
-function App() {
+function RouteComponent() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-24">
       <Hero />
-      <Quotes />
       <Projects />
       <Skills />
-      <AboutMe />
-      <Contact />
+      <Quotes />
     </div>
   );
 }

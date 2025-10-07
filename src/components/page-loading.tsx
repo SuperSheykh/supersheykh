@@ -1,11 +1,14 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import Gutter from "@/components/gutter";
 
 const PageLoading = () => {
   return (
-    <div className="flex flex-col items-center justify-center">
-      <Skeleton className="h-24 w-full" />
-      <Skeleton className="h-6 w-full" />
-    </div>
+    <Gutter className="flex flex-col gap-y-6 py-8 ">
+      <Skeleton className="h-10 w-1/2" />
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+    </Gutter>
   );
 };
 

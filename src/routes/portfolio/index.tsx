@@ -53,6 +53,9 @@ const PROJECTS = [
 
 export const Route = createFileRoute("/portfolio/")({
   component: RouteComponent,
+  handle: {
+    crumb: () => "Portfolio",
+  },
 });
 
 import PageTitle from "@/components/page-title";

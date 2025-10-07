@@ -2,6 +2,7 @@ import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { v4 as uuidv4 } from "uuid";
 import { images } from "./images";
 import { relations } from "drizzle-orm";
+import { createInsertSchema } from "drizzle-zod";
 
 export const billboards = sqliteTable("billboards", {
   id: text("id").primaryKey().$defaultFn(uuidv4),
@@ -31,3 +32,6 @@ export const billboard_relations = relations(billboards, ({ one }) => ({
     references: [images.id],
   }),
 }));
+
+export const billboardSchema = createInsertSchema(billboards);
+export type BillboardInsert = typeof billboards.$inferInsert;

@@ -4,19 +4,36 @@ import { useTRPC } from "@/lib/utils/trpc";
 
 import PageLoading from "@/components/page-loading";
 import ProjectForm from "./-form";
+import PageTitle from "@/components/page-title";
+import Gutter from "@/components/gutter";
 
 export const Route = createFileRoute("/dashboard/projects/$projectId/")({
   component: RouteComponent,
+  handle: {
+    crumb: (params: { projectId: string }) =>
+      params.projectId === "new" ? "New Project" : `Edit Project`,
+  },
 });
 
 function RouteComponent() {
   const { projectId } = useParams({ from: "/dashboard/projects/$projectId/" });
   const trpc = useTRPC();
+  const isNew = projectId === "new";
   const { data, isLoading } = useQuery(
-    trpc.projects.get.queryOptions(projectId),
+    trpc.projects.get.queryOptions(projectId, {
+      enabled: !isNew,
+    }),
   );
 
-  if (isLoading) return <PageLoading />;
+  if (isLoading && !isNew) return <PageLoading />;
 
-  return <ProjectForm project={data ?? null} />;
+  return (
+    <Gutter className="space-y-8">
+      <PageTitle
+        title={data ? "Edit" : "Create"}
+        description={data ? "Edit the project" : "Create a new project"}
+      />
+      <ProjectForm project={data ?? null} />
+    </Gutter>
+  );
 }
