@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { skillSchema, SkillInsert } from "@/db/schema/skills";
-import { trpc } from "@/lib/utils/trpc";
+import { trpc } from "@/router";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "@tanstack/react-router";
 import {
@@ -34,19 +34,10 @@ const SkillForm = ({
 
   // const { data: categories } = trpc.skillCategories.getAll.useQuery();
 
-  const utils = trpc.useUtils();
+  // const utils = trpc.useUtils();
   const navigate = useNavigate();
-  const upsertSkill = trpc.skills.upsert.useMutation({
-    onSuccess: () => {
-      utils.skills.getAll.invalidate();
-      utils.skills.get.invalidate();
-      navigate({ to: "/dashboard/skills" });
-    },
-  });
 
-  const onSubmit: SubmitHandler<SkillInsert> = (data) => {
-    upsertSkill.mutate(data);
-  };
+  const onSubmit: SubmitHandler<SkillInsert> = (data) => {};
 
   return (
     <Form {...form}>
@@ -108,8 +99,8 @@ const SkillForm = ({
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={upsertSkill.isPending}>
-          {upsertSkill.isPending ? "Saving..." : "Save"}
+        <Button type="submit" disabled={false}>
+          Save
         </Button>
       </form>
     </Form>

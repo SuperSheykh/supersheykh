@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { quoteSchema, QuoteInsert } from "@/db/schema/quotes";
-import { trpc } from "@/lib/utils/trpc";
+import { trpc } from "@/router";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "@tanstack/react-router";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -26,19 +26,9 @@ const QuoteForm = ({
     defaultValues: quote ?? {},
   });
 
-  const utils = trpc.useUtils();
   const navigate = useNavigate();
-  const upsertQuote = trpc.quotes.upsert.useMutation({
-    onSuccess: () => {
-      utils.quotes.getAll.invalidate();
-      utils.quotes.get.invalidate();
-      navigate({ to: "/dashboard/quotes" });
-    },
-  });
 
-  const onSubmit: SubmitHandler<QuoteInsert> = (data) => {
-    upsertQuote.mutate(data);
-  };
+  const onSubmit: SubmitHandler<QuoteInsert> = (data) => {};
 
   return (
     <Form {...form}>
@@ -64,19 +54,19 @@ const QuoteForm = ({
               <FormControl>
                 <Checkbox
                   checked={field.value === "1"}
-                  onCheckedChange={(checked) => field.onChange(checked ? "1" : "0")}
+                  onCheckedChange={(checked) =>
+                    field.onChange(checked ? "1" : "0")
+                  }
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <FormLabel>
-                  Live
-                </FormLabel>
+                <FormLabel>Live</FormLabel>
               </div>
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={upsertQuote.isPending}>
-          {upsertQuote.isPending ? "Saving..." : "Save"}
+        <Button type="submit" disabled={false}>
+          Save
         </Button>
       </form>
     </Form>

@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 const Logo = ({ className }: { className?: ClassNameValue }) => {
   return (
-    <Link to="/" className={cn("text-xl md:text-2xl font-bold", className)}>
+    <Link to="/" className={cn("text-xl font-bold", className)}>
       @SuperSheykh
     </Link>
   );

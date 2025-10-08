@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { socialSchema, SocialInsert } from "@/db/schema/socials";
-import { trpc } from "@/lib/utils/trpc";
+import { trpc } from "@/router";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "@tanstack/react-router";
 
@@ -25,19 +25,9 @@ const SocialForm = ({
     defaultValues: social ?? {},
   });
 
-  const utils = trpc.useUtils();
   const navigate = useNavigate();
-  const upsertSocial = trpc.socials.upsert.useMutation({
-    onSuccess: () => {
-      utils.socials.getAll.invalidate();
-      utils.socials.get.invalidate();
-      navigate({ to: "/dashboard/socials" });
-    },
-  });
 
-  const onSubmit: SubmitHandler<SocialInsert> = (data) => {
-    upsertSocial.mutate(data);
-  };
+  const onSubmit: SubmitHandler<SocialInsert> = (data) => {};
 
   return (
     <Form {...form}>
@@ -68,8 +58,8 @@ const SocialForm = ({
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={upsertSocial.isPending}>
-          {upsertSocial.isPending ? "Saving..." : "Save"}
+        <Button type="submit" disabled={false}>
+          save
         </Button>
       </form>
     </Form>

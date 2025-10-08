@@ -1,4 +1,9 @@
-import { Link, useLocation } from "@tanstack/react-router";
+import {
+  Link,
+  useLocation,
+  useMatch,
+  useMatchRoute,
+} from "@tanstack/react-router";
 import Gutter from "./gutter";
 import { Button } from "./ui/button";
 import Logo from "./logo";
@@ -47,7 +52,8 @@ const NavItem = ({
   title: string;
   title_fr?: string;
 }) => {
-  const isActive = useLocation().pathname === to;
+  const matchRoute = useMatchRoute();
+  const isActive = !!matchRoute({ to, fuzzy: true });
   const t = useTrans();
   return (
     <Button

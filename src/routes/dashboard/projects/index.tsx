@@ -8,7 +8,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import Gutter from "@/components/gutter";
 import { DataTable } from "@/components/ui/data-table";
-import { trpc } from "@/lib/utils/trpc";
+import { trpc } from "@/router";
 
 import { columns } from "./-columns";
 
@@ -18,7 +18,9 @@ export const Route = createFileRoute("/dashboard/projects/")({
 
 function RouteComponent() {
   const navigate = useNavigate();
-  // const { data } = trpc.projects.getAll.useQuery();
+  const {} = useRouteContext({ from: "/" });
+  const { data } = useQuery(trpc.projects.getAll.queryOptions());
+  console.log("data:", data);
 
   return (
     <Gutter>

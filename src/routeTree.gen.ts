@@ -130,9 +130,9 @@ const DashboardBillboardsBillboardIdRoute =
   } as any)
 const DashboardSocialsSocialIdIndexRoute =
   DashboardSocialsSocialIdIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => DashboardSocialsSocialIdRoute,
+    id: '/dashboard/socials/$socialId/',
+    path: '/dashboard/socials/$socialId/',
+    getParentRoute: () => rootRouteImport,
   } as any)
 const DashboardProjectsProjectIdIndexRoute =
   DashboardProjectsProjectIdIndexRouteImport.update({
@@ -162,7 +162,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/socials': typeof DashboardSocialsIndexRoute
   '/portfolio/$projectId': typeof PortfolioProjectIdIndexRoute
   '/dashboard/projects/$projectId': typeof DashboardProjectsProjectIdIndexRoute
-  '/dashboard/socials/$socialId/': typeof DashboardSocialsSocialIdIndexRoute
+  '/dashboard/socials/$socialId': typeof DashboardSocialsSocialIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -234,7 +234,7 @@ export interface FileRouteTypes {
     | '/dashboard/socials'
     | '/portfolio/$projectId'
     | '/dashboard/projects/$projectId'
-    | '/dashboard/socials/$socialId/'
+    | '/dashboard/socials/$socialId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -303,6 +303,7 @@ export interface RootRouteChildren {
   DashboardSocialsIndexRoute: typeof DashboardSocialsIndexRoute
   PortfolioProjectIdIndexRoute: typeof PortfolioProjectIdIndexRoute
   DashboardProjectsProjectIdIndexRoute: typeof DashboardProjectsProjectIdIndexRoute
+  DashboardSocialsSocialIdIndexRoute: typeof DashboardSocialsSocialIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -442,10 +443,10 @@ declare module '@tanstack/react-router' {
     }
     '/dashboard/socials/$socialId/': {
       id: '/dashboard/socials/$socialId/'
-      path: '/'
-      fullPath: '/dashboard/socials/$socialId/'
+      path: '/dashboard/socials/$socialId'
+      fullPath: '/dashboard/socials/$socialId'
       preLoaderRoute: typeof DashboardSocialsSocialIdIndexRouteImport
-      parentRoute: typeof DashboardSocialsSocialIdRoute
+      parentRoute: typeof rootRouteImport
     }
     '/dashboard/projects/$projectId/': {
       id: '/dashboard/projects/$projectId/'
@@ -489,6 +490,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardSocialsIndexRoute: DashboardSocialsIndexRoute,
   PortfolioProjectIdIndexRoute: PortfolioProjectIdIndexRoute,
   DashboardProjectsProjectIdIndexRoute: DashboardProjectsProjectIdIndexRoute,
+  DashboardSocialsSocialIdIndexRoute: DashboardSocialsSocialIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
