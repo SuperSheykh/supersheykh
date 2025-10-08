@@ -11,7 +11,7 @@ export const Route = createFileRoute("/dashboard/blogs/")({
 });
 
 function RouteComponent() {
-  const { data, isLoading } = trpc.blogs.getAll.useQuery();
+  // const { data, isLoading } = trpc.blogs.getAll.useQuery();
   const navigate = useNavigate();
 
   // if (isLoading) return <PageLoading />;
@@ -21,7 +21,7 @@ function RouteComponent() {
       <PageTitle title="Blogs" description="All the blogs I've written." />
       <DataTable
         columns={columns}
-        data={data ?? []}
+        data={[]}
         onAdd={() =>
           navigate({
             to: "/dashboard/blogs/$blogId",
@@ -32,3 +32,4 @@ function RouteComponent() {
     </Gutter>
   );
 }
+

@@ -13,19 +13,20 @@ export const Route = createFileRoute("/dashboard/quotes/$quoteId")({
 function RouteComponent() {
   const { quoteId } = useParams({ from: "/dashboard/quotes/$quoteId" });
   const isNew = quoteId === "new";
-  const { data, isLoading } = trpc.quotes.get.useQuery(quoteId, {
-    enabled: !isNew,
-  });
+  // const { data, isLoading } = trpc.quotes.get.useQuery(quoteId, {
+  //   enabled: !isNew,
+  // });
 
-  if (isLoading && !isNew) return <PageLoading />;
+  // if (isLoading && !isNew) return <PageLoading />;
 
   return (
     <Gutter className="space-y-8">
       <PageTitle
-        title={data ? "Edit" : "Create"}
-        description={data ? "Edit the quote" : "Create a new quote"}
+        title={false ? "Edit" : "Create"}
+        description={false ? "Edit the quote" : "Create a new quote"}
       />
-      <QuoteForm quote={data ?? null} />
+      <QuoteForm quote={null} />
     </Gutter>
   );
 }
+

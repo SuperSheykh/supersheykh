@@ -15,7 +15,7 @@ const LocalSwitcher = () => {
       variant={"ghost"}
       size="icon"
       onClick={toggleLanguage}
-      className="transition duration-200 ease-in-out"
+      className="cursor-pointer transition duration-200 ease-in-out"
     >
       {language === "en" ? "EN" : "FR"}
     </Button>
@@ -23,3 +23,4 @@ const LocalSwitcher = () => {
 };
 
 export default LocalSwitcher;
+

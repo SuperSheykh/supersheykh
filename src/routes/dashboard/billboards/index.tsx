@@ -5,13 +5,16 @@ import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./-columns";
 import { trpc } from "@/lib/utils/trpc";
 import PageLoading from "@/components/page-loading";
+import { useState } from "react";
 
 export const Route = createFileRoute("/dashboard/billboards/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { data, isLoading } = trpc.billboards.getAll.useQuery();
+  // const { data, isLoading } = trpc.billboards.getAll.useQuery();
+  const [data] = useState([]);
+  const [isLoading] = useState(false);
   const navigate = useNavigate();
 
   if (isLoading) return <PageLoading />;
@@ -35,3 +38,4 @@ function RouteComponent() {
     </Gutter>
   );
 }
+

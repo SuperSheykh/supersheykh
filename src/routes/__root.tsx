@@ -9,6 +9,7 @@ import appCss from "@/styles/app.css?url";
 import ThemeProvider from "@/components/providers/theme-provider";
 import MenuDrawerProvider from "@/components/providers/menu-drawer-provider";
 import Footer from "@/components/footer";
+import BreadcrumbComponent from "@/components/breadcrumb";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -60,7 +61,10 @@ export function RootDocument({ children }: { children: React.ReactNode }) {
           <ThemeProvider>
             <div className="flex flex-col min-h-screen gap-y-12">
               <Header />
-              <div className="h-full">{children}</div>
+              <div className="h-full">
+                <BreadcrumbComponent />
+                {children}
+              </div>
               <Footer />
             </div>
             <Toaster />

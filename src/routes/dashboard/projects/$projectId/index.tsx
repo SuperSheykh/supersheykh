@@ -13,20 +13,19 @@ export const Route = createFileRoute("/dashboard/projects/$projectId/")({
 function RouteComponent() {
   const { projectId } = useParams({ from: "/dashboard/projects/$projectId/" });
   const isNew = projectId === "new";
-  const { data, isLoading } = trpc.projects.get.useQuery(projectId, {
-    enabled: !isNew,
-  });
+  // const { data, isLoading } = trpc.projects.get.useQuery(projectId, {
+  //   enabled: !isNew,
+  // });
 
-  if (isLoading && !isNew) return <PageLoading />;
+  // if (isLoading && !isNew) return <PageLoading />;
 
   return (
     <Gutter className="space-y-8">
       <PageTitle
-        title={data ? "Edit" : "Create"}
-        description={data ? "Edit the project" : "Create a new project"}
+        title={false ? "Edit" : "Create"}
+        description={false ? "Edit the project" : "Create a new project"}
       />
-      <ProjectForm project={data ?? null} />
+      <ProjectForm project={null} />
     </Gutter>
   );
 }
-

@@ -13,19 +13,20 @@ export const Route = createFileRoute("/dashboard/skills/$skillId")({
 function RouteComponent() {
   const { skillId } = useParams({ from: "/dashboard/skills/$skillId" });
   const isNew = skillId === "new";
-  const { data, isLoading } = trpc.skills.get.useQuery(skillId, {
-    enabled: !isNew,
-  });
+  // const { data, isLoading } = trpc.skills.get.useQuery(skillId, {
+  //   enabled: !isNew,
+  // });
 
-  if (isLoading && !isNew) return <PageLoading />;
+  // if (isLoading && !isNew) return <PageLoading />;
 
   return (
     <Gutter className="space-y-8">
       <PageTitle
-        title={data ? "Edit" : "Create"}
-        description={data ? "Edit the skill" : "Create a new skill"}
+        title={false ? "Edit" : "Create"}
+        description={false ? "Edit the skill" : "Create a new skill"}
       />
-      <SkillForm skill={data ?? null} />
+      <SkillForm skill={null} />
     </Gutter>
   );
 }
+

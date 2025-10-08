@@ -11,17 +11,17 @@ export const Route = createFileRoute("/dashboard/skills/")({
 });
 
 function RouteComponent() {
-  const { data, isLoading } = trpc.skills.getAll.useQuery();
+  // const { data, isLoading } = trpc.skills.getAll.useQuery();
   const navigate = useNavigate();
 
-  if (isLoading) return <PageLoading />;
+  // if (isLoading) return <PageLoading />;
 
   return (
     <Gutter>
       <PageTitle title="Skills" description="All the skills I have." />
       <DataTable
         columns={columns}
-        data={data ?? []}
+        data={[]}
         onAdd={() =>
           navigate({
             to: "/dashboard/skills/$skillId",
@@ -32,3 +32,4 @@ function RouteComponent() {
     </Gutter>
   );
 }
+

@@ -11,17 +11,17 @@ export const Route = createFileRoute("/dashboard/socials/")({
 });
 
 function RouteComponent() {
-  const { data, isLoading } = trpc.socials.getAll.useQuery();
+  // const { data, isLoading } = trpc.socials.getAll.useQuery();
   const navigate = useNavigate();
 
-  if (isLoading) return <PageLoading />;
+  // if (isLoading) return <PageLoading />;
 
   return (
     <Gutter>
       <PageTitle title="Socials" description="All the socials I am on." />
       <DataTable
         columns={columns}
-        data={data ?? []}
+        data={[]}
         onAdd={() =>
           navigate({
             to: "/dashboard/socials/$socialId",
@@ -32,3 +32,4 @@ function RouteComponent() {
     </Gutter>
   );
 }
+

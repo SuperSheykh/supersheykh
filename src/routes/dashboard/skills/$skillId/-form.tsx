@@ -32,7 +32,7 @@ const SkillForm = ({
     defaultValues: skill ?? {},
   });
 
-  const { data: categories } = trpc.skillCategories.getAll.useQuery();
+  // const { data: categories } = trpc.skillCategories.getAll.useQuery();
 
   const utils = trpc.useUtils();
   const navigate = useNavigate();
@@ -71,7 +71,11 @@ const SkillForm = ({
             <FormItem>
               <FormLabel>Name (FR)</FormLabel>
               <FormControl>
-                <Input placeholder="Nom de la compétence" {...field} value={field.value ?? ''} />
+                <Input
+                  placeholder="Nom de la compétence"
+                  {...field}
+                  value={field.value ?? ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -83,18 +87,21 @@ const SkillForm = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Category</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value ?? undefined}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value ?? undefined}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {categories?.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
-                      {category.name}
-                    </SelectItem>
-                  ))}
+                  {/* {categories?.map((category) => ( */}
+                  {/*   <SelectItem key={category.id} value={category.id}> */}
+                  {/*     {category.name} */}
+                  {/*   </SelectItem> */}
+                  {/* ))} */}
                 </SelectContent>
               </Select>
               <FormMessage />

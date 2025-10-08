@@ -11,10 +11,16 @@ const ThemeSwitcher = () => {
   };
 
   return (
-    <Button size="icon" variant={"ghost"} onClick={toggleTheme}>
+    <Button
+      size="icon"
+      variant={"ghost"}
+      onClick={toggleTheme}
+      className="cursor-pointer"
+    >
       {theme === "dark" ? <Sun /> : <Moon />}
     </Button>
   );
 };
 
 export default ThemeSwitcher;
+

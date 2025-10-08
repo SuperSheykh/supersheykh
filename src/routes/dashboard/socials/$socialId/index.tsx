@@ -8,28 +8,24 @@ import Gutter from "@/components/gutter";
 
 export const Route = createFileRoute("/dashboard/socials/$socialId/")({
   component: RouteComponent,
-  handle: {
-    crumb: (params: { socialId: string }) =>
-      params.socialId === "new" ? "New Social" : `Edit Social`,
-  },
 });
 
 function RouteComponent() {
-  const { socialId } = useParams({ from: "/dashboard/socials/$socialId" });
+  const { socialId } = useParams({ from: "/dashboard/socials/$socialId/" });
   const isNew = socialId === "new";
-  const { data, isLoading } = trpc.socials.get.useQuery(socialId, {
-    enabled: !isNew,
-  });
+  // const { data, isLoading } = trpc.socials.get.useQuery(socialId, {
+  //   enabled: !isNew,
+  // });
 
-  if (isLoading && !isNew) return <PageLoading />;
+  // if (isLoading && !isNew) return <PageLoading />;
 
   return (
     <Gutter className="space-y-8">
       <PageTitle
-        title={data ? "Edit" : "Create"}
-        description={data ? "Edit the social" : "Create a new social"}
+        title={false ? "Edit" : "Create"}
+        description={false ? "Edit the social" : "Create a new social"}
       />
-      <SocialForm social={data ?? null} />
+      <SocialForm social={null} />
     </Gutter>
   );
 }

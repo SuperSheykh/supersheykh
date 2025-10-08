@@ -2,7 +2,6 @@ import { createFileRoute, useParams } from "@tanstack/react-router";
 import { trpc } from "@/lib/utils/trpc";
 
 import PageLoading from "@/components/page-loading";
-import BillboardForm from "./$billboardId/-form";
 import PageTitle from "@/components/page-title";
 import Gutter from "@/components/gutter";
 
@@ -15,19 +14,20 @@ function RouteComponent() {
     from: "/dashboard/billboards/$billboardId",
   });
   const isNew = billboardId === "new";
-  const { data, isLoading } = trpc.billboards.get.useQuery(billboardId, {
-    enabled: !isNew,
-  });
+  // const { data, isLoading } = trpc.billboards.get.useQuery(billboardId, {
+  //   enabled: !isNew,
+  // });
 
-  if (isLoading && !isNew) return <PageLoading />;
+  if (false && !isNew) return <PageLoading />;
 
   return (
     <Gutter className="space-y-8">
       <PageTitle
-        title={data ? "Edit" : "Create"}
-        description={data ? "Edit the billboard" : "Create a new billboard"}
+        title={false ? "Edit" : "Create"}
+        description={false ? "Edit the billboard" : "Create a new billboard"}
       />
-      <BillboardForm billboard={data ?? null} />
+      <div>Form</div>
     </Gutter>
   );
 }
+
