@@ -6,7 +6,7 @@ import SocialForm from "./-form";
 import PageTitle from "@/components/page-title";
 import Gutter from "@/components/gutter";
 
-export const Route = createFileRoute("/dashboard/socials/$socialId")({
+export const Route = createFileRoute("/dashboard/socials/$socialId/")({
   component: RouteComponent,
   handle: {
     crumb: (params: { socialId: string }) =>

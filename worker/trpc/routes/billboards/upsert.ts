@@ -1,7 +1,7 @@
 import { publicProcedure } from "@worker/trpc/trpc";
 import { billboards } from "@/db/schema";
 import { billboardSchema } from "@/db/schema/billboards";
-import { db } from "@/db";
+import db from "@/db";
 
 export const upsertBillboard = publicProcedure
   .input(billboardSchema)

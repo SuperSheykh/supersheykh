@@ -1,5 +1,5 @@
 import { publicProcedure } from "@worker/trpc/trpc";
-import { db } from "@/db";
+import db from "@/db";
 import { z } from "zod";
 import { eq } from "drizzle-orm";
 import { billboards } from "@/db/schema";
