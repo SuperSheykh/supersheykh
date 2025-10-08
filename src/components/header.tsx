@@ -15,7 +15,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bg-background border-b-0 shadow-xs">
       <Gutter>
-        <nav className="flex justify-between items-center">
+        <nav className="py-2 flex justify-between items-center">
           <Logo className="text-base" />
           <div className="w-auto flex gap-x-2 justify-end">
             {PAGES.map((page) => (

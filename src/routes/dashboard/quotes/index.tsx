@@ -4,16 +4,14 @@ import Gutter from "@/components/gutter";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./-columns";
 import PageLoading from "@/components/page-loading";
-import { useTRPC } from "@/lib/utils/trpc";
-import { useQuery } from "@tanstack/react-query";
+import { trpc } from "@/lib/utils/trpc";
 
 export const Route = createFileRoute("/dashboard/quotes/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const trpc = useTRPC();
-  const { data, isLoading } = useQuery(trpc.quotes.getAll.queryOptions());
+  const { data, isLoading } = trpc.quotes.getAll.useQuery();
   const navigate = useNavigate();
 
   if (isLoading) return <PageLoading />;

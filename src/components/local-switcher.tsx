@@ -1,22 +1,23 @@
 import { useTranslation } from "react-i18next";
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
+
 const LocalSwitcher = () => {
   const {
     i18n: { language, changeLanguage },
   } = useTranslation();
 
-  const toogleLanguage = () => {
+  const toggleLanguage = () => {
     changeLanguage(language === "en" ? "fr" : "en");
   };
 
   return (
-    <Button variant={"ghost"} size="icon" asChild>
-      <p
-        onClick={toogleLanguage}
-        className="transition duration-200 ease-in-out"
-      >
-        {language === "en" ? "EN" : "FR"}
-      </p>
+    <Button
+      variant={"ghost"}
+      size="icon"
+      onClick={toggleLanguage}
+      className="transition duration-200 ease-in-out"
+    >
+      {language === "en" ? "EN" : "FR"}
     </Button>
   );
 };

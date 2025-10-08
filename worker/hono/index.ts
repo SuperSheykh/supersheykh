@@ -14,7 +14,7 @@ app.use("/api/auth/*", async (c) => {
 });
 
 // Setup tRPC server
-app.use("/trpc/*", async (c, next) => {
+app.use("/trpc*", async (c, next) => {
   const server = trpcServer({
     router: appRouter,
     createContext: () => createContext(c.env),

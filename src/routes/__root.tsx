@@ -1,12 +1,6 @@
-import { useState } from "react";
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../i18n";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { createTRPCClient, httpBatchLink } from "@trpc/client";
-import { AppRouter } from "@worker/trpc/router";
-import { TRPCProvider } from "@/lib/utils/trpc";
-import { getQueryClient } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 
 import Header from "@/components/header";
@@ -15,16 +9,6 @@ import appCss from "@/styles/app.css?url";
 import ThemeProvider from "@/components/providers/theme-provider";
 import MenuDrawerProvider from "@/components/providers/menu-drawer-provider";
 import Footer from "@/components/footer";
-
-// Create these instances once at the module level
-const queryClient = getQueryClient();
-const trpcClient = createTRPCClient<AppRouter>({
-  links: [
-    httpBatchLink({
-      url: "/trpc",
-    }),
-  ],
-});
 
 export const Route = createRootRoute({
   head: () => ({
@@ -51,26 +35,36 @@ export const Route = createRootRoute({
 });
 
 export function RootDocument({ children }: { children: React.ReactNode }) {
+  const themeScript = `
+    (function() {
+      document.documentElement.classList.remove('light', 'dark');
+      const theme = localStorage.getItem('supersheykh-ui-theme') || 'system';
+      if (theme === 'system') {
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.classList.add(systemTheme);
+      } else {
+        document.documentElement.classList.add(theme);
+      }
+    })();
+  `;
+
   return (
     <html lang="en">
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="bg-background text-foreground font-fira">
         <I18nextProvider i18n={i18n}>
-          <QueryClientProvider client={queryClient}>
-            <TRPCProvider queryClient={queryClient} trpcClient={trpcClient}>
-              <MenuDrawerProvider />
-              <ThemeProvider>
-                <div className="flex flex-col min-h-screen gap-y-12">
-                  <Header />
-                  <div className="h-full">{children}</div>
-                  <Footer />
-                </div>
-                <Toaster />
-              </ThemeProvider>
-            </TRPCProvider>
-          </QueryClientProvider>
+          <MenuDrawerProvider />
+          <ThemeProvider>
+            <div className="flex flex-col min-h-screen gap-y-12">
+              <Header />
+              <div className="h-full">{children}</div>
+              <Footer />
+            </div>
+            <Toaster />
+          </ThemeProvider>
         </I18nextProvider>
         {/* <TanstackDevtools */}
         {/*   config={{ */}

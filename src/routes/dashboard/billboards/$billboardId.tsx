@@ -1,7 +1,5 @@
 import { createFileRoute, useParams } from "@tanstack/react-router";
-import { useTRPC } from "@/lib/utils/trpc";
-
-import { useQuery } from "@tanstack/react-query";
+import { trpc } from "@/lib/utils/trpc";
 
 import PageLoading from "@/components/page-loading";
 import BillboardForm from "./$billboardId/-form";
@@ -17,12 +15,9 @@ function RouteComponent() {
     from: "/dashboard/billboards/$billboardId",
   });
   const isNew = billboardId === "new";
-  const trpc = useTRPC();
-  const { data, isLoading } = useQuery(
-    trpc.billboards.get.queryOptions(billboardId, {
-      enabled: !isNew,
-    }),
-  );
+  const { data, isLoading } = trpc.billboards.get.useQuery(billboardId, {
+    enabled: !isNew,
+  });
 
   if (isLoading && !isNew) return <PageLoading />;
 

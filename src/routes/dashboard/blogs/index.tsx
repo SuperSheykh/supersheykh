@@ -4,16 +4,14 @@ import Gutter from "@/components/gutter";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./-columns";
 import PageLoading from "@/components/page-loading";
-import { useTRPC } from "@/lib/utils/trpc";
-import { useQuery } from "@tanstack/react-query";
+import { trpc } from "@/lib/utils/trpc";
 
 export const Route = createFileRoute("/dashboard/blogs/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const trpc = useTRPC();
-  const { data, isLoading } = useQuery(trpc.blogs.getAll.queryOptions());
+  const { data, isLoading } = trpc.blogs.getAll.useQuery();
   const navigate = useNavigate();
 
   // if (isLoading) return <PageLoading />;
