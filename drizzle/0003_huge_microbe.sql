@@ -1,0 +1,1 @@
+ALTER TABLE `projects` ADD `completion` real DEFAULT 0 NOT NULL;

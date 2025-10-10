@@ -3,18 +3,16 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import Gutter from "@/components/gutter";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./-columns";
-import { trpc } from "@/lib/utils/trpc";
+import { trpc } from "@/router";
 import PageLoading from "@/components/page-loading";
-import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/dashboard/billboards/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  // const { data, isLoading } = trpc.billboards.getAll.useQuery();
-  const [data] = useState([]);
-  const [isLoading] = useState(false);
+  const { data, isLoading } = useQuery(trpc.billboards.getAll.queryOptions());
   const navigate = useNavigate();
 
   if (isLoading) return <PageLoading />;

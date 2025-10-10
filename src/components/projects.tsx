@@ -2,6 +2,9 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import Gutter from "./gutter";
 import ProjectCard from "./project-card";
 import SectionTitle from "./section-title";
+import { useServerFn } from "@tanstack/react-start";
+import { getAllProjects } from "@/actions";
+import { useQuery } from "@tanstack/react-query";
 const PROJECTS = [
   {
     id: 1,
@@ -51,6 +54,14 @@ const PROJECTS = [
 ];
 
 const Projects = () => {
+  const getProjects = useServerFn(getAllProjects);
+  const { data } = useQuery({
+    queryKey: ["few", "projects"],
+    queryFn: getProjects,
+  });
+
+  console.log("data", data);
+
   return (
     <Gutter className="space-y-12">
       <SectionTitle

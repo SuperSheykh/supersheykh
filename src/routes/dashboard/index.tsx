@@ -82,7 +82,7 @@ function RouteComponent() {
                 className="w-full aspect-auto cursor-pointer md:w-auto"
               >
                 <span className="flex gap-x-2">
-                  <ListChecks />
+                  <ListChecks className="mr-2" />
                   View
                 </span>
               </Button>
@@ -92,7 +92,7 @@ function RouteComponent() {
                 onClick={() => router.navigate({ to: section.newPath })}
               >
                 <span className="flex gap-x-2">
-                  <Plus />
+                  <Plus className="mr-2" />
                   Add
                 </span>
               </Button>

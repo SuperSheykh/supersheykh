@@ -1,17 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import type { AppRouter } from "@worker/trpc/router";
 import { Delete, Edit } from "lucide-react";
+import type { TrpcRouterOutputs } from "@/types";
 
-type Project = {
-  id: number;
-  name: string;
-  description: string;
-  completion: number;
-  url: string;
-};
-
-export const columns: ColumnDef<Project>[] = [
+export const columns: ColumnDef<
+  TrpcRouterOutputs["projects"]["getAll"][number]
+>[] = [
   {
     accessorKey: "name",
     header: "Name",

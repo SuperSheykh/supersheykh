@@ -35,3 +35,4 @@ export const billboard_relations = relations(billboards, ({ one }) => ({
 
 export const billboardSchema = createInsertSchema(billboards);
 export type BillboardInsert = typeof billboards.$inferInsert;
+export type Billboard = typeof billboards.$inferSelect;

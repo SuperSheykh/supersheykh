@@ -12,10 +12,11 @@ import { HERO_ITEMS } from "@/lib/constants";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useTrans } from "@/hooks/use-trans";
+import { Billboard } from "@/db/schema/billboards";
 
 type HeroItemProps = (typeof HERO_ITEMS)[number];
 
-const hero = () => {
+const hero = ({ billboards }: { billboards: Billboard[] }) => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
 

@@ -1,4 +1,4 @@
-import { sqliteTable, text, index } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, index, real } from "drizzle-orm/sqlite-core";
 import { v4 as uuidv4 } from "uuid";
 import { images } from "./images";
 import { relations } from "drizzle-orm";
@@ -16,7 +16,8 @@ export const projects = sqliteTable(
     cover: text("cover")
       .notNull()
       .references(() => images.id),
-    live: text("live").notNull(),
+    live: text("live").default("1"),
+    completion: real("completion").notNull(),
     github: text("github"),
     created_at: text("created_at").$defaultFn(() => new Date().toISOString()),
     updated_at: text("updated_at").$defaultFn(() => new Date().toISOString()),

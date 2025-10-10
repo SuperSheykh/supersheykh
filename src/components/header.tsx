@@ -1,9 +1,4 @@
-import {
-  Link,
-  useLocation,
-  useMatch,
-  useMatchRoute,
-} from "@tanstack/react-router";
+import { Link, useMatchRoute } from "@tanstack/react-router";
 import Gutter from "./gutter";
 import { Button } from "./ui/button";
 import Logo from "./logo";

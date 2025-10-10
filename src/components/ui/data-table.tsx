@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/table";
 import { Plus } from "lucide-react";
 import { Button } from "./button";
+import { Input } from "./input";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -37,7 +38,11 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      <div className="flex items-center justify-end mb-2">
+      <div className="flex items-center gap-x-2 justify-between mb-2">
+        <Input
+          className="w-full md:w-auto md:min-w-1/2"
+          placeholder="Search..."
+        />
         {onAdd && (
           <Button
             variant="outline"
@@ -45,13 +50,13 @@ export function DataTable<TData, TValue>({
             onClick={onAdd}
           >
             <span className="flex gap-x-2">
-              <Plus />
+              <Plus className="mr-2" />
               Add
             </span>
           </Button>
         )}
       </div>
-      <div className="overflow-hidden rounded-md border">
+      <div className="overflow-hidden rounded-none border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

@@ -19,7 +19,8 @@
   "r2_buckets": [
     {
       "binding": "BK",
-      "bucket_name": "supersheykh-bucket"
+      "bucket_name": "supersheykh-bucket",
+      "remote": true
     }
   ]
 }

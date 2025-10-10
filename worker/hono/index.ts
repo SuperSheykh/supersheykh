@@ -14,13 +14,13 @@ app.use("/api/auth/*", async (c) => {
 });
 
 // Setup tRPC server
-app.use("/trpc*", async (c, next) => {
-  const server = trpcServer({
+app.use(
+  "/trpc/*",
+  trpcServer({
     router: appRouter,
-    createContext: () => createContext(c.env),
-  });
-  return server(c, next);
-});
+    createContext: (_, c) => createContext(c.env),
+  }),
+);
 
 // Let tanstack handle all other requests
 app.all("*", (c) => {

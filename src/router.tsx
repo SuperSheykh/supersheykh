@@ -1,19 +1,32 @@
 import { createRouter } from "@tanstack/react-router";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createTRPCClient, httpBatchLink } from "@trpc/client";
-import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
+import { createTRPCClient, httpBatchLink } from "@trpc/client";
+import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import { AppRouter } from "@worker/trpc/router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-// Module-level singletons
-export const queryClient = new QueryClient();
+// ✅ Create the shared QueryClient here
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60_000,
+    },
+  },
+});
+
+// ✅ Create a single tRPC client bound to that QueryClient
+const trpcClient = createTRPCClient<AppRouter>({
+  links: [
+    httpBatchLink({
+      url: "/trpc", // relative for Cloudflare routing
+    }),
+  ],
+});
 
 export const trpc = createTRPCOptionsProxy<AppRouter>({
-  client: createTRPCClient({
-    links: [httpBatchLink({ url: "/trpc" })],
-  }),
+  client: trpcClient,
   queryClient,
 });
 
@@ -27,7 +40,7 @@ export const getRouter = () => {
       trpc,
       queryClient,
     },
-    Wrap: function WrapComponent({ children }: { children: React.ReactNode }) {
+    Wrap: ({ children }) => {
       return (
         <QueryClientProvider client={queryClient}>
           {children}

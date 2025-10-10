@@ -39,16 +39,16 @@ const breadcrumb = () => {
 
             return (
               <React.Fragment key={index}>
-                <BreadcrumbItem key={index} className="capitalize">
+                <BreadcrumbItem className="capitalize">
                   <BreadcrumbLink href={`/${routePath}`}>
                     {route}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
-                <BreadcrumbSeparator key={index} />
+                <BreadcrumbSeparator />
                 {isFirst && routes.length > 3 && (
                   <>
-                    <BreadcrumbEllipsis key={index} />
-                    <BreadcrumbSeparator key={index} />
+                    <BreadcrumbEllipsis />
+                    <BreadcrumbSeparator />
                   </>
                 )}
               </React.Fragment>
