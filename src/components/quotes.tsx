@@ -3,29 +3,18 @@ import Gutter from "./gutter";
 import { QuoteIcon } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import { useTrans } from "@/hooks/use-trans";
-import { trpc } from "@/lib/utils/trpc";
+import { trpc } from "@/router";
 import { Skeleton } from "./ui/skeleton";
 
+import { QUOTES } from "@/lib/constants";
+
 const Quotes = () => {
-  const { data: quotes, isLoading } = trpc.quotes.getLive.useQuery();
-
-  if (isLoading)
-    return (
-      <Gutter>
-        <div className="py-4">
-          <QuoteElementSkeleton />
-        </div>
-      </Gutter>
-    );
-
-  if (!quotes || quotes.length === 0) return null;
-
   return (
     <div>
       <Gutter>
         <Carousel>
           <CarouselContent className="py-4">
-            {quotes.map((quote) => (
+            {QUOTES.map((quote) => (
               <CarouselItem key={quote.id} className="py-4">
                 <QuoteElement {...quote} />
               </CarouselItem>
@@ -40,7 +29,7 @@ const Quotes = () => {
 export default Quotes;
 
 const QuoteElement = (quote: {
-  id: string;
+  id: number;
   quote: string;
   quote_fr: string | null;
   author: string;
@@ -52,12 +41,12 @@ const QuoteElement = (quote: {
         <div
           className={cn(
             "p-2 bg-background flex justify-center items-center text-foreground",
-            "absolute -top-px left-4 text-6xl font-serif transform -translate-y-1/2"
+            "absolute -top-px left-4 text-6xl font-serif transform -translate-y-1/2",
           )}
         >
           <QuoteIcon />
         </div>
-        <p className="text-2xl md:text-3xl">{t(quote.quote, quote.quote_fr)}</p>
+        <p className="text-2xl md:text-3xl">{t(quote.quote, quote.quote)}</p>
       </blockquote>
       <figcaption className="absolute -bottom-5 right-8 bg-card px-4 py-2 border border-border">
         <p className="text-lg whitespace-nowrap">{quote.author}</p>
@@ -73,7 +62,7 @@ const QuoteElementSkeleton = () => {
         <div
           className={cn(
             "p-2 bg-background flex justify-center items-center text-foreground",
-            "absolute -top-px left-4 text-6xl font-serif transform -translate-y-1/2"
+            "absolute -top-px left-4 text-6xl font-serif transform -translate-y-1/2",
           )}
         >
           <QuoteIcon />

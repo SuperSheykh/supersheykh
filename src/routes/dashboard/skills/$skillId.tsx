@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { trpc } from "@/lib/utils/trpc";
+import { trpc } from "@/router";
 import { skillSchema } from "@/db/schema/skills";
 
 import PageLoading from "@/components/page-loading";

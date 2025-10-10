@@ -4,7 +4,7 @@ import Gutter from "@/components/gutter";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./-columns";
 import PageLoading from "@/components/page-loading";
-import { trpc } from "@/lib/utils/trpc";
+import { trpc } from "@/router";
 
 export const Route = createFileRoute("/dashboard/blogs/")({
   component: RouteComponent,

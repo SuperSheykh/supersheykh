@@ -3,7 +3,7 @@ import {
   useNavigate,
   useParams,
 } from "@tanstack/react-router";
-import { trpc } from "@/lib/utils/trpc";
+import { trpc } from "@/router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

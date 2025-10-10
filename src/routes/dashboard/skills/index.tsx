@@ -3,8 +3,6 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import Gutter from "@/components/gutter";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./-columns";
-import { trpc } from "@/lib/utils/trpc";
-import PageLoading from "@/components/page-loading";
 
 export const Route = createFileRoute("/dashboard/skills/")({
   component: RouteComponent,

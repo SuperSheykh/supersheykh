@@ -1,13 +1,9 @@
 import PageTitle from "@/components/page-title";
-import {
-  createFileRoute,
-  useNavigate,
-  useRouteContext,
-} from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import Gutter from "@/components/gutter";
 import { DataTable } from "@/components/ui/data-table";
-import { trpc } from "@/lib/utils/trpc";
+import { trpc } from "@/router";
 
 import { columns } from "./-columns";
 import PageLoading from "@/components/page-loading";
@@ -18,7 +14,6 @@ export const Route = createFileRoute("/dashboard/projects/")({
 
 function RouteComponent() {
   const navigate = useNavigate();
-  const {} = useRouteContext({ from: "/" });
   const { data, isLoading } = useQuery(trpc.projects.getAll.queryOptions());
 
   if (isLoading) return <PageLoading />;

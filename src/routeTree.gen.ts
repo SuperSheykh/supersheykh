@@ -24,7 +24,7 @@ import { Route as DashboardQuotesIndexRouteImport } from './routes/dashboard/quo
 import { Route as DashboardProjectsIndexRouteImport } from './routes/dashboard/projects/index'
 import { Route as DashboardBlogsIndexRouteImport } from './routes/dashboard/blogs/index'
 import { Route as DashboardBillboardsIndexRouteImport } from './routes/dashboard/billboards/index'
-import { Route as DashboardSocialsSocialIdRouteImport } from './routes/dashboard/socials/socialId'
+import { Route as DashboardSocialsSocialIdRouteImport } from './routes/dashboard/socials/$socialId'
 import { Route as DashboardSkillsSkillIdRouteImport } from './routes/dashboard/skills/$skillId'
 import { Route as DashboardQuotesQuoteIdRouteImport } from './routes/dashboard/quotes/$quoteId'
 import { Route as DashboardProjectsProjectIdRouteImport } from './routes/dashboard/projects/$projectId'
@@ -109,8 +109,8 @@ const DashboardBillboardsIndexRoute =
   } as any)
 const DashboardSocialsSocialIdRoute =
   DashboardSocialsSocialIdRouteImport.update({
-    id: '/dashboard/socials/socialId',
-    path: '/dashboard/socials/socialId',
+    id: '/dashboard/socials/$socialId',
+    path: '/dashboard/socials/$socialId',
     getParentRoute: () => rootRouteImport,
   } as any)
 const DashboardSkillsSkillIdRoute = DashboardSkillsSkillIdRouteImport.update({
@@ -155,7 +155,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/projects/$projectId': typeof DashboardProjectsProjectIdRoute
   '/dashboard/quotes/$quoteId': typeof DashboardQuotesQuoteIdRoute
   '/dashboard/skills/$skillId': typeof DashboardSkillsSkillIdRoute
-  '/dashboard/socials/socialId': typeof DashboardSocialsSocialIdRoute
+  '/dashboard/socials/$socialId': typeof DashboardSocialsSocialIdRoute
   '/dashboard/billboards': typeof DashboardBillboardsIndexRoute
   '/dashboard/blogs': typeof DashboardBlogsIndexRoute
   '/dashboard/projects': typeof DashboardProjectsIndexRoute
@@ -178,7 +178,7 @@ export interface FileRoutesByTo {
   '/dashboard/projects/$projectId': typeof DashboardProjectsProjectIdRoute
   '/dashboard/quotes/$quoteId': typeof DashboardQuotesQuoteIdRoute
   '/dashboard/skills/$skillId': typeof DashboardSkillsSkillIdRoute
-  '/dashboard/socials/socialId': typeof DashboardSocialsSocialIdRoute
+  '/dashboard/socials/$socialId': typeof DashboardSocialsSocialIdRoute
   '/dashboard/billboards': typeof DashboardBillboardsIndexRoute
   '/dashboard/blogs': typeof DashboardBlogsIndexRoute
   '/dashboard/projects': typeof DashboardProjectsIndexRoute
@@ -202,7 +202,7 @@ export interface FileRoutesById {
   '/dashboard/projects/$projectId': typeof DashboardProjectsProjectIdRoute
   '/dashboard/quotes/$quoteId': typeof DashboardQuotesQuoteIdRoute
   '/dashboard/skills/$skillId': typeof DashboardSkillsSkillIdRoute
-  '/dashboard/socials/socialId': typeof DashboardSocialsSocialIdRoute
+  '/dashboard/socials/$socialId': typeof DashboardSocialsSocialIdRoute
   '/dashboard/billboards/': typeof DashboardBillboardsIndexRoute
   '/dashboard/blogs/': typeof DashboardBlogsIndexRoute
   '/dashboard/projects/': typeof DashboardProjectsIndexRoute
@@ -227,7 +227,7 @@ export interface FileRouteTypes {
     | '/dashboard/projects/$projectId'
     | '/dashboard/quotes/$quoteId'
     | '/dashboard/skills/$skillId'
-    | '/dashboard/socials/socialId'
+    | '/dashboard/socials/$socialId'
     | '/dashboard/billboards'
     | '/dashboard/blogs'
     | '/dashboard/projects'
@@ -250,7 +250,7 @@ export interface FileRouteTypes {
     | '/dashboard/projects/$projectId'
     | '/dashboard/quotes/$quoteId'
     | '/dashboard/skills/$skillId'
-    | '/dashboard/socials/socialId'
+    | '/dashboard/socials/$socialId'
     | '/dashboard/billboards'
     | '/dashboard/blogs'
     | '/dashboard/projects'
@@ -273,7 +273,7 @@ export interface FileRouteTypes {
     | '/dashboard/projects/$projectId'
     | '/dashboard/quotes/$quoteId'
     | '/dashboard/skills/$skillId'
-    | '/dashboard/socials/socialId'
+    | '/dashboard/socials/$socialId'
     | '/dashboard/billboards/'
     | '/dashboard/blogs/'
     | '/dashboard/projects/'
@@ -413,10 +413,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardBillboardsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard/socials/socialId': {
-      id: '/dashboard/socials/socialId'
-      path: '/dashboard/socials/socialId'
-      fullPath: '/dashboard/socials/socialId'
+    '/dashboard/socials/$socialId': {
+      id: '/dashboard/socials/$socialId'
+      path: '/dashboard/socials/$socialId'
+      fullPath: '/dashboard/socials/$socialId'
       preLoaderRoute: typeof DashboardSocialsSocialIdRouteImport
       parentRoute: typeof rootRouteImport
     }

@@ -1,13 +1,7 @@
-import {
-  HeadContent,
-  Scripts,
-  createRootRoute,
-  useRouteContext,
-} from "@tanstack/react-router";
+import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../i18n";
 import { Toaster } from "@/components/ui/sonner";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Header from "@/components/header";
 
@@ -17,8 +11,6 @@ import MenuDrawerProvider from "@/components/providers/menu-drawer-provider";
 import Footer from "@/components/footer";
 import BreadcrumbComponent from "@/components/breadcrumb";
 import { themeScript } from "@/lib/utils/themeScript";
-
-import { trpc } from "@/router";
 
 export const Route = createRootRoute({
   head: () => ({
