@@ -1,16 +1,13 @@
 import {
   createFileRoute,
+  useLoaderData,
   useNavigate,
   useParams,
 } from "@tanstack/react-router";
-import { trpc } from "@/router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { billboardSchema } from "@/db/schema/billboards";
-
-import PageLoading from "@/components/page-loading";
 import PageTitle from "@/components/page-title";
 import Gutter from "@/components/gutter";
 import {
@@ -24,65 +21,41 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { FormButtons } from "@/components/form-buttons";
-import { useEffect, useState } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { toast } from "sonner";
+import { getBillboard, upsertBillboard } from "actions/billboards";
+import PageLoading from "@/components/page-loading";
+import { billboardSchema } from "@/db/schema/billboards";
+import ImageUploader from "@/components/image-uploader";
 
 export const Route = createFileRoute("/dashboard/billboards/$billboardId")({
+  loader: ({ params: { billboardId } }) =>
+    getBillboard({ data: { id: billboardId } }),
+  shouldReload: false,
+  staleTime: Infinity,
   component: RouteComponent,
+  pendingComponent: PageLoading,
 });
 
-const formSchema = billboardSchema.pick({
-  greeting: true,
-  greeting_fr: true,
-  title: true,
-  title_fr: true,
-  description: true,
-  description_fr: true,
-  buttonText: true,
-  buttonText_fr: true,
-  buttonLink: true,
-  imageUrl: true,
-  imageAlt: true,
-  subText: true,
-  subText_fr: true,
-  subLink: true,
-  subLinkText: true,
-  subLinkText_fr: true,
-});
-
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof billboardSchema>;
 
 function RouteComponent() {
-  const { billboardId } = useParams({
-    from: "/dashboard/billboards/$billboardId",
-  });
-  const isNew = billboardId === "new";
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
-  const { data, isLoading } = useQuery(
-    trpc.billboards.get.queryOptions(billboardId, {
-      enabled: !isNew,
-    }),
-  );
-
-  const { mutateAsync } = useMutation(trpc.billboards.upsert.mutationOptions());
+  const data =
+    useLoaderData({ from: "/dashboard/billboards/$billboardId" }) ?? {};
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {},
+    resolver: zodResolver(billboardSchema),
+    defaultValues: data,
   });
 
-  useEffect(() => {
-    if (data) {
-      form.reset(data);
-    }
-  }, [data, form]);
+  const imageUrl = form.watch("imageUrl");
+  console.log("imageUrl:", imageUrl);
 
   const onSubmit = (values: FormValues) => {
     setLoading(true);
-    toast.promise(mutateAsync(values), {
+    toast.promise(upsertBillboard({ data: values }), {
       loading: "Submitting...",
       success: () => {
         navigate({ to: ".." });
@@ -92,8 +65,6 @@ function RouteComponent() {
       finally: () => setLoading(false),
     });
   };
-
-  if (isLoading && !isNew) return <PageLoading />;
 
   return (
     <Gutter className="space-y-8">
@@ -242,22 +213,6 @@ function RouteComponent() {
             />
             <FormField
               control={form.control}
-              name="imageUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Image URL</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Image URL" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This should be an ID from the images table.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="imageAlt"
               render={({ field }) => (
                 <FormItem>
@@ -354,6 +309,22 @@ function RouteComponent() {
                       value={field.value ?? ""}
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="imageUrl"
+              render={({ field }) => (
+                <FormItem className="col-span-full">
+                  <FormLabel>Image URL</FormLabel>
+                  <FormControl>
+                    <ImageUploader onUpload={field.onChange} />
+                  </FormControl>
+                  <FormDescription>
+                    Better choose a square image with a transparent background.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

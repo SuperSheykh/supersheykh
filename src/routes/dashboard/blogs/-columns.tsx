@@ -1,8 +1,10 @@
-import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { TrpcRouterOutputs } from "@/types";
-import { ArrowUpDown, Delete, Edit } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { ArrowUpDown } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
+import TableMoreBtn from "@/components/table-more-btn";
+import { delBlog } from "actions/blogs";
+import { Button } from "@/components/ui/button";
 
 type Blog = TrpcRouterOutputs["blogs"]["getAll"][number];
 
@@ -35,22 +37,25 @@ export const columns: ColumnDef<Blog>[] = [
     header: "",
     cell: ({ row }) => (
       <div className="flex gap-x-2 items-center justify-start flex-wrap">
-        <Link
-          to={"/dashboard/blogs/$blogId"}
-          params={{ blogId: row.original.id }}
-        >
-          <Button variant="outline" size="icon" className="hover:text-primary">
-            <Edit />
-          </Button>
-        </Link>
-        <Button
-          variant="outline"
-          size="icon"
-          className="hover:text-destructive"
-        >
-          <Delete />
-        </Button>
+        <MoreButtons id={row.original.id} />
       </div>
     ),
   },
 ];
+
+const MoreButtons = ({ id }: { id: string }) => {
+  const navigate = useNavigate();
+
+  return (
+    <TableMoreBtn
+      name="blog"
+      onDelete={() => delBlog({ data: { id } })}
+      onEdit={() =>
+        navigate({
+          to: "/dashboard/blogs/$blogId",
+          params: { blogId: id },
+        })
+      }
+    />
+  );
+};

@@ -1,4 +1,6 @@
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../i18n";
 import { Toaster } from "@/components/ui/sonner";
@@ -11,6 +13,7 @@ import MenuDrawerProvider from "@/components/providers/menu-drawer-provider";
 import Footer from "@/components/footer";
 import BreadcrumbComponent from "@/components/breadcrumb";
 import { themeScript } from "@/lib/utils/themeScript";
+import { QueryProvider } from "@/components/providers/query-provider";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -44,31 +47,28 @@ export function RootDocument({ children }: { children: React.ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="bg-background text-foreground font-fira">
-        <I18nextProvider i18n={i18n}>
-          <ThemeProvider>
-            <MenuDrawerProvider />
-            <div className="flex flex-col min-h-screen gap-y-12">
-              <Header />
-              <div className="h-full">
-                <BreadcrumbComponent />
-                {children}
+        <QueryProvider>
+          <I18nextProvider i18n={i18n}>
+            <ThemeProvider>
+              <MenuDrawerProvider />
+              <div className="flex flex-col min-h-screen gap-y-12">
+                <Header />
+                <div className="h-full">
+                  <BreadcrumbComponent />
+                  {children}
+                </div>
+                <Footer />
               </div>
-              <Footer />
-            </div>
-            <Toaster />
-          </ThemeProvider>
-          {/* <TanstackDevtools */}
-          {/*   config={{ */}
-          {/*     position: "bottom-left", */}
-          {/*   }} */}
-          {/*   plugins={[ */}
-          {/*     { */}
-          {/*       name: "Tanstack Router", */}
-          {/*       render: <TanStackRouterDevtoolsPanel />, */}
-          {/*     }, */}
-          {/*   ]} */}
-          {/* /> */}
-        </I18nextProvider>
+              <Toaster />
+            </ThemeProvider>
+            {/* <TanStackDevtools */}
+            {/*   config={{ */}
+            {/*     position: "bottom-left", */}
+            {/*   }} */}
+            {/*   plugins={[]} */}
+            {/* /> */}
+          </I18nextProvider>
+        </QueryProvider>
         <Scripts />
       </body>
     </html>

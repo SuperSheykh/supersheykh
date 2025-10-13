@@ -1,12 +1,14 @@
-import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import {
+  createFileRoute,
+  useLoaderData,
+  useNavigate,
+  useParams,
+} from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { trpc } from "@/router";
 import { skillSchema } from "@/db/schema/skills";
 
 import PageLoading from "@/components/page-loading";
@@ -29,9 +31,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { FormButtons } from "@/components/form-buttons";
+import { getSkill, upsertSkill } from "actions/skills";
+import { getAllSkillCategories } from "actions/skill-categories";
+import { useState } from "react";
 
 export const Route = createFileRoute("/dashboard/skills/$skillId")({
+  loader: async ({ params: { skillId } }) => {
+    const [data, categories] = await Promise.all([
+      skillId === "new" ? undefined : getSkill({ data: { id: skillId } }),
+      getAllSkillCategories(),
+    ]);
+    return { data, categories };
+  },
+  shouldReload: false,
+  staleTime: Infinity,
   component: RouteComponent,
+  pendingComponent: PageLoading,
 });
 
 const formSchema = skillSchema.pick({
@@ -46,42 +61,28 @@ function RouteComponent() {
   const { skillId } = useParams({ from: "/dashboard/skills/$skillId" });
   const isNew = skillId === "new";
   const navigate = useNavigate();
-
-  const { data, isLoading } = useQuery(
-    trpc.skills.get.queryOptions(skillId, { enabled: !isNew })
-  );
-
-  const { data: categories, isLoading: isLoadingCategories } = useQuery(
-    trpc.skillCategories.getAll.queryOptions()
-  );
-
-  const { mutateAsync, isPending } = useMutation(
-    trpc.skills.upsert.mutationOptions()
-  );
+  const { data, categories } = useLoaderData({
+    from: "/dashboard/skills/$skillId",
+  });
+  const [isPending, setIsPending] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: data ?? {},
   });
 
-  useEffect(() => {
-    if (data) {
-      form.reset(data);
-    }
-  }, [data, form]);
-
   const onSubmit = (values: FormValues) => {
-    toast.promise(mutateAsync({ ...values, id: isNew ? undefined : skillId }), {
+    setIsPending(true);
+    toast.promise(upsertSkill({ data: { ...values, id: isNew ? undefined : skillId } }), {
       loading: "Submitting...",
       success: () => {
         navigate({ to: "/dashboard/skills" });
         return "Skill updated!";
       },
       error: "Something went wrong!",
+      finally: () => setIsPending(false),
     });
   };
-
-  if ((isLoading && !isNew) || isLoadingCategories) return <PageLoading />;
 
   return (
     <Gutter className="space-y-8">

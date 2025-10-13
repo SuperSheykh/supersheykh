@@ -1,22 +1,30 @@
 import PageTitle from "@/components/page-title";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  useLoaderData,
+  useNavigate,
+} from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import Gutter from "@/components/gutter";
 import { DataTable } from "@/components/ui/data-table";
-import { trpc } from "@/router";
 
 import { columns } from "./-columns";
 import PageLoading from "@/components/page-loading";
+import { useTRPC } from "@/lib/trpc";
+
+import { getAllProjects } from "actions/projects/get-all";
 
 export const Route = createFileRoute("/dashboard/projects/")({
+  loader: () => getAllProjects(),
+  staleTime: Infinity,
+  shouldReload: false,
   component: RouteComponent,
+  pendingComponent: PageLoading,
 });
 
 function RouteComponent() {
   const navigate = useNavigate();
-  const { data, isLoading } = useQuery(trpc.projects.getAll.queryOptions());
-
-  if (isLoading) return <PageLoading />;
+  const data = useLoaderData({ from: "/dashboard/projects/" }) ?? [];
 
   return (
     <Gutter>
@@ -26,7 +34,7 @@ function RouteComponent() {
       />
       <DataTable
         columns={columns}
-        data={data ?? []}
+        data={data}
         onAdd={() =>
           navigate({
             to: "/dashboard/projects/$projectId",

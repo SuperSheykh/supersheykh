@@ -1,13 +1,13 @@
 import {
   createFileRoute,
+  useLoaderData,
   useNavigate,
   useParams,
 } from "@tanstack/react-router";
-import { trpc } from "@/router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useEffect } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 import { blogSchema } from "@/db/schema/blogs";
@@ -27,10 +27,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FormButtons } from "@/components/form-buttons";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { getBlog, upsertBlog } from "actions/blogs";
 
 export const Route = createFileRoute("/dashboard/blogs/$blogId")({
+  loader: ({ params: { blogId } }) => {
+    if (blogId === "new") return;
+    return getBlog({ data: { id: blogId } });
+  },
+  shouldReload: false,
+  staleTime: Infinity,
   component: RouteComponent,
+  pendingComponent: PageLoading,
 });
 
 const formSchema = blogSchema.pick({
@@ -45,45 +52,29 @@ const formSchema = blogSchema.pick({
 type FormValues = z.infer<typeof formSchema>;
 
 function RouteComponent() {
-  const { blogId } = useParams({
-    from: "/dashboard/blogs/$blogId",
-  });
+  const { blogId } = useParams({ from: "/dashboard/blogs/$blogId" });
   const isNew = blogId === "new";
   const navigate = useNavigate();
-
-  const { data, isLoading } = useQuery(
-    trpc.blogs.get.queryOptions(blogId, {
-      enabled: !isNew,
-    }),
-  );
-
-  const { mutateAsync, isPending } = useMutation(
-    trpc.blogs.upsert.mutationOptions(),
-  );
+  const data = useLoaderData({ from: "/dashboard/blogs/$blogId" });
+  const [isPending, setIsPending] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {},
+    defaultValues: data ?? {},
   });
 
-  useEffect(() => {
-    if (data) {
-      form.reset(data);
-    }
-  }, [data, form]);
-
   const onSubmit = (values: FormValues) => {
-    toast.promise(mutateAsync({ ...values, id: isNew ? undefined : blogId }), {
+    setIsPending(true);
+    toast.promise(upsertBlog({ data: { ...values, id: isNew ? undefined : blogId } }), {
       loading: "Submitting...",
       success: () => {
         navigate({ to: "/dashboard/blogs" });
         return "Blog post updated!";
       },
       error: "Something went wrong!",
+      finally: () => setIsPending(false),
     });
   };
-
-  if (isLoading && !isNew) return <PageLoading />;
 
   return (
     <Gutter className="space-y-8">

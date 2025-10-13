@@ -3,37 +3,44 @@ import Gutter from "./gutter";
 import { QuoteIcon } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import { useTrans } from "@/hooks/use-trans";
-import { trpc } from "@/router";
 import { Skeleton } from "./ui/skeleton";
 
-import { QUOTES } from "@/lib/constants";
+import type { Quote } from "@/db/schema/quotes";
+import { useTRPC } from "@/lib/trpc";
+import { useQuery } from "@tanstack/react-query";
+import SectionTitle from "./section-title";
 
 const Quotes = () => {
-  return (
-    <div>
-      <Gutter>
-        <Carousel>
-          <CarouselContent className="py-4">
-            {QUOTES.map((quote) => (
-              <CarouselItem key={quote.id} className="py-4">
-                <QuoteElement {...quote} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </Gutter>
-    </div>
-  );
+  const trpc = useTRPC();
+  const { data, isLoading } = useQuery(trpc.quotes.getLive.queryOptions());
+
+  if (isLoading) return <QuoteElementSkeleton />;
+
+  if (data && data.length > 0)
+    return (
+      <div>
+        <Gutter>
+          <SectionTitle
+            title="Quotes I live by"
+            title_fr="Citations que j'aime"
+          />
+          <Carousel>
+            <CarouselContent className="py-4">
+              {data.map((quote) => (
+                <CarouselItem key={quote.id} className="py-4">
+                  <QuoteElement {...quote} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </Gutter>
+      </div>
+    );
 };
 
 export default Quotes;
 
-const QuoteElement = (quote: {
-  id: number;
-  quote: string;
-  quote_fr: string | null;
-  author: string;
-}) => {
+const QuoteElement = (quote: Quote) => {
   const t = useTrans();
   return (
     <div className="relative max-w-4xl mx-auto">

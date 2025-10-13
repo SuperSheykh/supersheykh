@@ -54,6 +54,12 @@ const DASHBOARD_SECTIONS = [
     description: "Where people can find me on the web",
     newPath: "/dashboard/socials/new",
   },
+  // {
+  //   title: "images",
+  //   path: "/dashboard/images",
+  //   description: "Images I've uploaded on the project",
+  //   newPath: "/dashboard/images/new",
+  // },
 ];
 
 function RouteComponent() {

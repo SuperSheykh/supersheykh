@@ -19,6 +19,11 @@ const config = defineConfig({
       configPath: "./wrangler.json",
     }),
   ],
+  server: {
+    watch: {
+      ignored: ["**/.wrangler/**", "**/better-auth-schema.sqlite"],
+    },
+  },
 });
 
 export default config;

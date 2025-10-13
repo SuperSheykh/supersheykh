@@ -2,54 +2,42 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { TrpcRouterOutputs } from "@/types";
 import { ArrowUpDown, Delete, Edit } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import TableMoreBtn from "@/components/table-more-btn";
+import { delBillboard } from "actions/billboards";
 
 type Billboard = TrpcRouterOutputs["billboards"]["getAll"][number];
 
 export const columns: ColumnDef<Billboard>[] = [
   {
-    accessorKey: "greeting",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Greeting
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
     accessorKey: "title",
     header: "Title",
-  },
-  {
-    accessorKey: "description",
-    header: "Description",
   },
   {
     accessorKey: "actions",
     header: "",
     cell: ({ row }) => (
       <div className="flex gap-x-2 items-center justify-start flex-wrap">
-        <Link
-          to={"/dashboard/billboards/$billboardId"}
-          params={{ billboardId: row.original.id }}
-        >
-          <Button variant="outline" size="icon" className="hover:text-primary">
-            <Edit />
-          </Button>
-        </Link>
-        <Button
-          variant="outline"
-          size="icon"
-          className="hover:text-destructive"
-        >
-          <Delete />
-        </Button>
+        <MoreButtons id={row.original.id} />
       </div>
     ),
   },
 ];
+
+const MoreButtons = ({ id }: { id: string }) => {
+  const navigate = useNavigate();
+
+  return (
+    <TableMoreBtn
+      name="billboard"
+      onDelete={() => delBillboard({ data: { id } })}
+      onEdit={() =>
+        navigate({
+          to: "/dashboard/billboards/$billboardId",
+          params: { billboardId: id },
+        })
+      }
+    />
+  );
+};
+

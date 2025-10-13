@@ -11,4 +11,5 @@ export const quotes = sqliteTable("quotes", {
 });
 
 export const quoteSchema = createInsertSchema(quotes);
+export type Quote = typeof quotes.$inferSelect;
 export type QuoteInsert = typeof quotes.$inferInsert;

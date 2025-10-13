@@ -1,21 +1,28 @@
 import PageTitle from "@/components/page-title";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  useLoaderData,
+  useNavigate,
+} from "@tanstack/react-router";
 import Gutter from "@/components/gutter";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./-columns";
-import { trpc } from "@/router";
 import PageLoading from "@/components/page-loading";
 import { useQuery } from "@tanstack/react-query";
+import { useTRPC } from "@/lib/trpc";
+import { getAllBillboards } from "actions/billboards/get-all";
 
 export const Route = createFileRoute("/dashboard/billboards/")({
+  loader: () => getAllBillboards(),
+  shouldReload: false,
+  staleTime: Infinity,
   component: RouteComponent,
+  pendingComponent: PageLoading,
 });
 
 function RouteComponent() {
-  const { data, isLoading } = useQuery(trpc.billboards.getAll.queryOptions());
   const navigate = useNavigate();
-
-  if (isLoading) return <PageLoading />;
+  const data = useLoaderData({ from: "/dashboard/billboards/" }) ?? [];
 
   return (
     <Gutter>
@@ -36,4 +43,3 @@ function RouteComponent() {
     </Gutter>
   );
 }
-

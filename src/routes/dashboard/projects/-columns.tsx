@@ -1,13 +1,14 @@
-import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { Delete, Edit } from "lucide-react";
 import type { TrpcRouterOutputs } from "@/types";
+import TableMoreBtn from "@/components/table-more-btn";
+import { delProject } from "actions/projects";
+import { useNavigate } from "@tanstack/react-router";
 
 export const columns: ColumnDef<
   TrpcRouterOutputs["projects"]["getAll"][number]
 >[] = [
   {
-    accessorKey: "name",
+    accessorKey: "title",
     header: "Name",
   },
   {
@@ -18,19 +19,27 @@ export const columns: ColumnDef<
   {
     accessorKey: "actions",
     header: "",
-    cell: ({}) => (
+    cell: ({ row }) => (
       <div className="flex gap-x-2 items-center justify-start flex-wrap">
-        <Button variant="outline" size="icon" className="hover:text-primary">
-          <Edit />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          className="hover:text-destructive"
-        >
-          <Delete />
-        </Button>
+        <MoreButtons id={row.original.id} />
       </div>
     ),
   },
 ];
+
+const MoreButtons = ({ id }: { id: string }) => {
+  const navigate = useNavigate();
+
+  return (
+    <TableMoreBtn
+      name="project"
+      onDelete={() => delProject({ data: { id } })}
+      onEdit={() =>
+        navigate({
+          to: "/dashboard/projects/$projectId",
+          params: { projectId: id },
+        })
+      }
+    />
+  );
+};

@@ -1,9 +1,11 @@
 
-import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { TrpcRouterOutputs } from "@/types";
-import { ArrowUpDown, Delete, Edit } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { ArrowUpDown } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
+import TableMoreBtn from "@/components/table-more-btn";
+import { delSocial } from "actions/socials";
+import { Button } from "@/components/ui/button";
 
 type Social = TrpcRouterOutputs["socials"]["getAll"][number];
 
@@ -31,22 +33,25 @@ export const columns: ColumnDef<Social>[] = [
     header: "",
     cell: ({ row }) => (
       <div className="flex gap-x-2 items-center justify-start flex-wrap">
-        <Link
-          to={"/dashboard/socials/$socialId"}
-          params={{ socialId: row.original.id }}
-        >
-          <Button variant="outline" size="icon" className="hover:text-primary">
-            <Edit />
-          </Button>
-        </Link>
-        <Button
-          variant="outline"
-          size="icon"
-          className="hover:text-destructive"
-        >
-          <Delete />
-        </Button>
+        <MoreButtons id={row.original.id} />
       </div>
     ),
   },
 ];
+
+const MoreButtons = ({ id }: { id: string }) => {
+  const navigate = useNavigate();
+
+  return (
+    <TableMoreBtn
+      name="social"
+      onDelete={() => delSocial({ data: { id } })}
+      onEdit={() =>
+        navigate({
+          to: "/dashboard/socials/$socialId",
+          params: { socialId: id },
+        })
+      }
+    />
+  );
+};
