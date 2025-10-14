@@ -1,6 +1,6 @@
 import { createTRPCRouter as router } from "@worker/trpc/trpc";
 import { listImages } from "./list";
-import { uploadImage } from "./upload-image";
+import { uploadImage } from "./upload";
 import { removeImage } from "./remove";
 import { viewImage } from "./view";
 

@@ -8,10 +8,10 @@ import Gutter from "@/components/gutter";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./-columns";
 import PageLoading from "@/components/page-loading";
-import { useTRPC } from "@/lib/trpc";
+import { getAllImages } from "actions/images";
 
 export const Route = createFileRoute("/dashboard/images/")({
-  loader: async ({ context: { trpc } }) => trpc.images.list.query(),
+  loader: () => getAllImages(),
   shouldReload: false,
   staleTime: Infinity,
   component: RouteComponent,

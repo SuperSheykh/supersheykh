@@ -2,7 +2,6 @@ import {
   createFileRoute,
   useLoaderData,
   useNavigate,
-  useParams,
 } from "@tanstack/react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -23,10 +22,12 @@ import { Input } from "@/components/ui/input";
 import { FormButtons } from "@/components/form-buttons";
 import { useState } from "react";
 import { toast } from "sonner";
-import { getBillboard, upsertBillboard } from "actions/billboards";
+import { getBillboard } from "actions/billboards";
 import PageLoading from "@/components/page-loading";
 import { billboardSchema } from "@/db/schema/billboards";
 import ImageUploader from "@/components/image-uploader";
+import { useTRPC } from "@/lib/trpc";
+import { useMutation } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/dashboard/billboards/$billboardId")({
   loader: ({ params: { billboardId } }) =>
@@ -40,22 +41,24 @@ export const Route = createFileRoute("/dashboard/billboards/$billboardId")({
 type FormValues = z.infer<typeof billboardSchema>;
 
 function RouteComponent() {
+  const trpc = useTRPC();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const data =
     useLoaderData({ from: "/dashboard/billboards/$billboardId" }) ?? {};
+
+  const { mutateAsync: upsertBillboard } = useMutation(
+    trpc.billboards.upsert.mutationOptions(),
+  );
 
   const form = useForm<FormValues>({
     resolver: zodResolver(billboardSchema),
     defaultValues: data,
   });
 
-  const imageUrl = form.watch("imageUrl");
-  console.log("imageUrl:", imageUrl);
-
   const onSubmit = (values: FormValues) => {
     setLoading(true);
-    toast.promise(upsertBillboard({ data: values }), {
+    toast.promise(upsertBillboard(values), {
       loading: "Submitting...",
       success: () => {
         navigate({ to: ".." });
@@ -67,10 +70,11 @@ function RouteComponent() {
   };
 
   return (
-    <Gutter className="space-y-8">
+    <Gutter className="space-y-4">
       <PageTitle
-        title={data ? "Edit" : "Create"}
-        description={data ? "Edit the billboard" : "Create a new billboard"}
+        title={data.id ? "Edit" : "Create"}
+        description={data.id ? "Edit the billboard" : "Create a new billboard"}
+        separator
       />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -200,36 +204,6 @@ function RouteComponent() {
             />
             <FormField
               control={form.control}
-              name="buttonLink"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Button Link</FormLabel>
-                  <FormControl>
-                    <Input placeholder="/contact" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="imageAlt"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Image Alt</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Alt text for image"
-                      {...field}
-                      value={field.value ?? ""}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="subText"
               render={({ field }) => (
                 <FormItem>
@@ -257,6 +231,19 @@ function RouteComponent() {
                       {...field}
                       value={field.value ?? ""}
                     />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="buttonLink"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Button Link</FormLabel>
+                  <FormControl>
+                    <Input placeholder="/contact" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -315,12 +302,15 @@ function RouteComponent() {
             />
             <FormField
               control={form.control}
-              name="imageUrl"
+              name="imageKey"
               render={({ field }) => (
                 <FormItem className="col-span-full">
                   <FormLabel>Image URL</FormLabel>
                   <FormControl>
-                    <ImageUploader onUpload={field.onChange} />
+                    <ImageUploader
+                      value={field.value ?? undefined}
+                      onChange={field.onChange}
+                    />
                   </FormControl>
                   <FormDescription>
                     Better choose a square image with a transparent background.

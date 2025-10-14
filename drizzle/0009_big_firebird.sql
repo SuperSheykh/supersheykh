@@ -1,0 +1,1 @@
+ALTER TABLE `billboards` DROP COLUMN `image_alt`;

@@ -8,8 +8,6 @@ import Gutter from "@/components/gutter";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./-columns";
 import PageLoading from "@/components/page-loading";
-import { useQuery } from "@tanstack/react-query";
-import { useTRPC } from "@/lib/trpc";
 import { getAllBillboards } from "actions/billboards/get-all";
 
 export const Route = createFileRoute("/dashboard/billboards/")({

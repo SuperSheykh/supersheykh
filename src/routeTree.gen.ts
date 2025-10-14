@@ -15,8 +15,9 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as BlogRouteRouteImport } from './routes/blog/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PortfolioIndexRouteImport } from './routes/portfolio/index'
+import { Route as ImagesIndexRouteImport } from './routes/images/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
-import { Route as ImagesImageKeyRouteImport } from './routes/images/$imageKey'
+import { Route as ImagesKeyRouteImport } from './routes/images/$key'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as PortfolioProjectIdIndexRouteImport } from './routes/portfolio/$projectId/index'
 import { Route as DashboardSocialsIndexRouteImport } from './routes/dashboard/socials/index'
@@ -64,14 +65,19 @@ const PortfolioIndexRoute = PortfolioIndexRouteImport.update({
   path: '/portfolio/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ImagesIndexRoute = ImagesIndexRouteImport.update({
+  id: '/images/',
+  path: '/images/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/dashboard/',
   path: '/dashboard/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ImagesImageKeyRoute = ImagesImageKeyRouteImport.update({
-  id: '/images/$imageKey',
-  path: '/images/$imageKey',
+const ImagesKeyRoute = ImagesKeyRouteImport.update({
+  id: '/images/$key',
+  path: '/images/$key',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
@@ -166,8 +172,9 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/socials': typeof SocialsRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/images/$imageKey': typeof ImagesImageKeyRoute
+  '/images/$key': typeof ImagesKeyRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/images': typeof ImagesIndexRoute
   '/portfolio': typeof PortfolioIndexRoute
   '/dashboard/billboards/$billboardId': typeof DashboardBillboardsBillboardIdRoute
   '/dashboard/blogs/$blogId': typeof DashboardBlogsBlogIdRoute
@@ -192,8 +199,9 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/socials': typeof SocialsRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/images/$imageKey': typeof ImagesImageKeyRoute
+  '/images/$key': typeof ImagesKeyRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/images': typeof ImagesIndexRoute
   '/portfolio': typeof PortfolioIndexRoute
   '/dashboard/billboards/$billboardId': typeof DashboardBillboardsBillboardIdRoute
   '/dashboard/blogs/$blogId': typeof DashboardBlogsBlogIdRoute
@@ -219,8 +227,9 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/socials': typeof SocialsRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/images/$imageKey': typeof ImagesImageKeyRoute
+  '/images/$key': typeof ImagesKeyRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/images/': typeof ImagesIndexRoute
   '/portfolio/': typeof PortfolioIndexRoute
   '/dashboard/billboards/$billboardId': typeof DashboardBillboardsBillboardIdRoute
   '/dashboard/blogs/$blogId': typeof DashboardBlogsBlogIdRoute
@@ -247,8 +256,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/socials'
     | '/blog/$slug'
-    | '/images/$imageKey'
+    | '/images/$key'
     | '/dashboard'
+    | '/images'
     | '/portfolio'
     | '/dashboard/billboards/$billboardId'
     | '/dashboard/blogs/$blogId'
@@ -273,8 +283,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/socials'
     | '/blog/$slug'
-    | '/images/$imageKey'
+    | '/images/$key'
     | '/dashboard'
+    | '/images'
     | '/portfolio'
     | '/dashboard/billboards/$billboardId'
     | '/dashboard/blogs/$blogId'
@@ -299,8 +310,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/socials'
     | '/blog/$slug'
-    | '/images/$imageKey'
+    | '/images/$key'
     | '/dashboard/'
+    | '/images/'
     | '/portfolio/'
     | '/dashboard/billboards/$billboardId'
     | '/dashboard/blogs/$blogId'
@@ -325,8 +337,9 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   SocialsRoute: typeof SocialsRoute
-  ImagesImageKeyRoute: typeof ImagesImageKeyRoute
+  ImagesKeyRoute: typeof ImagesKeyRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
+  ImagesIndexRoute: typeof ImagesIndexRoute
   PortfolioIndexRoute: typeof PortfolioIndexRoute
   DashboardBillboardsBillboardIdRoute: typeof DashboardBillboardsBillboardIdRoute
   DashboardBlogsBlogIdRoute: typeof DashboardBlogsBlogIdRoute
@@ -389,6 +402,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortfolioIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/images/': {
+      id: '/images/'
+      path: '/images'
+      fullPath: '/images'
+      preLoaderRoute: typeof ImagesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard/': {
       id: '/dashboard/'
       path: '/dashboard'
@@ -396,11 +416,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/images/$imageKey': {
-      id: '/images/$imageKey'
-      path: '/images/$imageKey'
-      fullPath: '/images/$imageKey'
-      preLoaderRoute: typeof ImagesImageKeyRouteImport
+    '/images/$key': {
+      id: '/images/$key'
+      path: '/images/$key'
+      fullPath: '/images/$key'
+      preLoaderRoute: typeof ImagesKeyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/$slug': {
@@ -536,8 +556,9 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   SocialsRoute: SocialsRoute,
-  ImagesImageKeyRoute: ImagesImageKeyRoute,
+  ImagesKeyRoute: ImagesKeyRoute,
   DashboardIndexRoute: DashboardIndexRoute,
+  ImagesIndexRoute: ImagesIndexRoute,
   PortfolioIndexRoute: PortfolioIndexRoute,
   DashboardBillboardsBillboardIdRoute: DashboardBillboardsBillboardIdRoute,
   DashboardBlogsBlogIdRoute: DashboardBlogsBlogIdRoute,

@@ -12,7 +12,7 @@ export const getR2Image = createServerFn()
   .handler(async ({ data: { key } }) => {
     const res = await env.BK.get(key);
 
-    if (!res) throw new Error("Failed to get image from R2");
+    if (!res) return new Response("Not found", { status: 404 });
 
     return new Response(res.body, {
       headers: {

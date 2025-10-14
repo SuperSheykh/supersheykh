@@ -8,9 +8,7 @@ import { billboards } from "./billboards";
 
 export const images = sqliteTable("images", {
   id: text("id").primaryKey().$defaultFn(uuidv4),
-  key: text("key").notNull(),
-  url: text("url").notNull(),
-  filename: text("filename").notNull(),
+  alt: text("alt"),
   size: integer("size"),
   type: text("type"),
   uploadedAt: text("uploadedAt")

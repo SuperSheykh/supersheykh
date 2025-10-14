@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "@tanstack/react-router";
 import { Spinner } from "./ui/spinner";
+import { Download, RefreshCcw } from "lucide-react";
 
 type FormButtonsProps = {
   isPending: boolean;
@@ -24,13 +25,14 @@ export function FormButtons({ isPending, onCancel, texts }: FormButtonsProps) {
   };
 
   return (
-    <div className="flex items-center justify-end gap-4">
+    <div className="grid grid-cols-2 md:flex md:items-center justify-end gap-4">
       <Button
         type="button"
         variant="outline"
         onClick={handleCancel}
         disabled={isPending}
       >
+        <RefreshCcw className="mr-2" />
         {texts?.cancel ?? "Cancel"}
       </Button>
       <Button type="submit" disabled={isPending}>
@@ -40,9 +42,13 @@ export function FormButtons({ isPending, onCancel, texts }: FormButtonsProps) {
             {texts?.saving ?? "Submitting..."}
           </>
         ) : (
-          (texts?.save ?? "Submit")
+          <>
+            <Download className="mr-2" />
+            {texts?.save ?? "Submit"}
+          </>
         )}
       </Button>
     </div>
   );
 }
+

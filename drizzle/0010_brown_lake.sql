@@ -1,0 +1,1 @@
+ALTER TABLE `billboards` ADD `image_key` text REFERENCES images(key);

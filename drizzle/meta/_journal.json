@@ -50,6 +50,34 @@
       "when": 1760387490869,
       "tag": "0007_early_enchantress",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1760451448242,
+      "tag": "0008_great_franklin_storm",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1760451767199,
+      "tag": "0009_big_firebird",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1760451945933,
+      "tag": "0010_brown_lake",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "6",
+      "when": 1760477535830,
+      "tag": "0011_peaceful_starhawk",
+      "breakpoints": true
     }
   ]
 }

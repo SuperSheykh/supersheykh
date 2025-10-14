@@ -15,20 +15,19 @@ export const billboards = sqliteTable("billboards", {
   buttonText: text("button_text").notNull(),
   buttonText_fr: text("button_text_fr").notNull(),
   buttonLink: text("button_link").notNull(),
-  imageUrl: text("image_url")
-    .notNull()
-    .references(() => images.id),
-  imageAlt: text("image_alt"),
   subText: text("sub_text"),
   subText_fr: text("sub_text_fr"),
   subLink: text("sub_link"),
   subLinkText: text("sub_link_text"),
   subLinkText_fr: text("sub_link_text_fr"),
+  imageKey: text("image_key")
+    .notNull()
+    .references(() => images.id),
 });
 
 export const billboard_relations = relations(billboards, ({ one }) => ({
   image: one(images, {
-    fields: [billboards.imageUrl],
+    fields: [billboards.imageKey],
     references: [images.id],
   }),
 }));
