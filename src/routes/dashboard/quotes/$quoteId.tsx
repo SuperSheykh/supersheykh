@@ -71,7 +71,7 @@ function RouteComponent() {
       {
         loading: "Submitting...",
         success: () => {
-          navigate({ to: "/dashboard/quotes" });
+          navigate({ to: "..", replace: true });
           return "Quote updated!";
         },
         error: "Something went wrong!",
@@ -157,4 +157,3 @@ function RouteComponent() {
     </Gutter>
   );
 }
-

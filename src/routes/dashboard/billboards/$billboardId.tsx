@@ -32,8 +32,6 @@ import { useMutation } from "@tanstack/react-query";
 export const Route = createFileRoute("/dashboard/billboards/$billboardId")({
   loader: ({ params: { billboardId } }) =>
     getBillboard({ data: { id: billboardId } }),
-  shouldReload: false,
-  staleTime: Infinity,
   component: RouteComponent,
   pendingComponent: PageLoading,
 });
@@ -60,7 +58,7 @@ function RouteComponent() {
     toast.promise(upsertBillboard(values), {
       loading: "Submitting...",
       success: () => {
-        navigate({ to: ".." });
+        navigate({ to: "..", replace: true });
         return "Billboard updated!";
       },
       error: "Something went wrong!",

@@ -18,7 +18,6 @@ import Gutter from "@/components/gutter";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -35,8 +34,6 @@ export const Route = createFileRoute("/dashboard/blogs/$blogId")({
     if (blogId === "new") return;
     return getBlog({ data: { id: blogId } });
   },
-  shouldReload: false,
-  staleTime: Infinity,
   component: RouteComponent,
   pendingComponent: PageLoading,
 });
@@ -71,7 +68,7 @@ function RouteComponent() {
       {
         loading: "Submitting...",
         success: () => {
-          navigate({ to: "/dashboard/blogs" });
+          navigate({ to: "..", replace: true });
           return "Blog post updated!";
         },
         error: "Something went wrong!",
