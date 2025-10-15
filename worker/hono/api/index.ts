@@ -1,10 +1,11 @@
 import { Hono } from "hono";
-import { auth } from "@/auth";
 import { images } from "./images";
+import { auth } from "@/auth";
 
 export const api = new Hono()
-  // let better-auth handle all /api/auth requests
   .use("/auth", (c) => {
+    console.log("auth handler");
     return auth.handler(c.req.raw);
   })
+  // let better-auth handle all /api/auth requests
   .route("/images", images);

@@ -26,7 +26,7 @@ import { getBillboard } from "actions/billboards";
 import PageLoading from "@/components/page-loading";
 import { billboardSchema } from "@/db/schema/billboards";
 import ImageUploader from "@/components/image-uploader";
-import { useTRPC } from "@/lib/trpc";
+import { trpc } from "@/router";
 import { useMutation } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/dashboard/billboards/$billboardId")({
@@ -41,7 +41,6 @@ export const Route = createFileRoute("/dashboard/billboards/$billboardId")({
 type FormValues = z.infer<typeof billboardSchema>;
 
 function RouteComponent() {
-  const trpc = useTRPC();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const data =
@@ -305,7 +304,7 @@ function RouteComponent() {
               name="imageKey"
               render={({ field }) => (
                 <FormItem className="col-span-full">
-                  <FormLabel>Image URL</FormLabel>
+                  <FormLabel>Image</FormLabel>
                   <FormControl>
                     <ImageUploader
                       value={field.value ?? undefined}

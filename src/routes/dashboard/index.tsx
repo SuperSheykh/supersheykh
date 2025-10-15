@@ -1,4 +1,4 @@
-import { useRouter } from "@tanstack/react-router";
+import { redirect, useRouter } from "@tanstack/react-router";
 import Gutter from "@/components/gutter";
 import PageTitle from "@/components/page-title";
 import { createFileRoute } from "@tanstack/react-router";
@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/item";
 import { ListChecks, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSession } from "@/lib/auth-client";
 
 export const Route = createFileRoute("/dashboard/")({
   component: RouteComponent,
@@ -55,15 +56,25 @@ const DASHBOARD_SECTIONS = [
     newPath: "/dashboard/socials/new",
   },
   {
-    title: "images",
+    title: "Images",
     path: "/dashboard/images",
     description: "Images I've uploaded on the project",
-    newPath: "/dashboard/images/new",
+    newPath: "",
+  },
+
+  {
+    title: "Users",
+    path: "/dashboard/users",
+    description: "Users of the website and their roles",
+    newPath: "",
   },
 ];
 
 function RouteComponent() {
   const router = useRouter();
+  const { data } = useSession.get();
+  if (!data) redirect({ to: "/login", search: { type: "signin" } });
+
   return (
     <Gutter>
       <PageTitle title="Dashboard" />

@@ -6,12 +6,12 @@ import { useTrans } from "@/hooks/use-trans";
 import { Skeleton } from "./ui/skeleton";
 
 import type { Quote } from "@/db/schema/quotes";
-import { useTRPC } from "@/lib/trpc";
+import { trpc } from "@/router";
 import { useQuery } from "@tanstack/react-query";
 import SectionTitle from "./section-title";
 
 const Quotes = () => {
-  const trpc = useTRPC();
+  // const trpc = useTRPC();
   const { data, isLoading } = useQuery(trpc.quotes.getLive.queryOptions());
 
   if (isLoading) return <QuoteElementSkeleton />;

@@ -49,10 +49,8 @@ export function DataTable<TData, TValue>({
             className="hover:text-primary mb-2"
             onClick={onAdd}
           >
-            <span className="flex gap-x-2">
-              <Plus className="mr-2" />
-              Add
-            </span>
+            <Plus className="mr-2" />
+            Add
           </Button>
         )}
       </div>

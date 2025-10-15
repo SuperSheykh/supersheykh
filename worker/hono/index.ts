@@ -21,10 +21,9 @@ app.use(
 );
 
 // Let tanstack handle all other requests
-app.all("*", (c) => {
-  return handler.fetch(c.req.raw, {
-    context: {},
-  });
+app.all("*", async (c) => {
+  //create a trpc caller at each request pass it to the handler context
+  return handler.fetch(c.req.raw);
 });
 
 export { app };

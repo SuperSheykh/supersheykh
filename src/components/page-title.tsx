@@ -17,7 +17,7 @@ const PageTitle = ({
 }) => {
   const t = useTrans();
   return (
-    <div className="py-8">
+    <div className="py-6">
       <Gutter className="text-center md:text-left">
         <h1 className="text-4xl font-bold ">{t(title, title_fr)}</h1>
         {description && (

@@ -21,5 +21,12 @@
       "binding": "BK",
       "bucket_name": "supersheykh-bucket",
     }
+  ],
+  "secrets_store_secrets": [
+    {
+      "binding": "FACEBOOK_CLIENT_ID",
+      "store_id": "6a44311287ab4e14a16f010f89408e90",
+      "secret_name": "FACEBOOK_CLIENT_ID"
+    }
   ]
 }

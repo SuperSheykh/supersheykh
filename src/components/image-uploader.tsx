@@ -116,7 +116,7 @@ const ImageUploader = ({
         ) : (
           <div className="flex flex-col items-center space-y-2 text-center">
             <ImageIcon className="h-8 w-8" />
-            <p className="text-base font-normal">
+            <p className="text-sm font-normal">
               Drag 'n' drop some files here, or click to select files
             </p>
             <p className="text-sm text-muted-foreground">
@@ -130,4 +130,3 @@ const ImageUploader = ({
 };
 
 export default ImageUploader;
-

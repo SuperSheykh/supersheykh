@@ -25,10 +25,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { NumericFormat } from "react-number-format";
 import { Textarea } from "@/components/ui/textarea";
 import { FormButtons } from "@/components/form-buttons";
-import { getProject, upsertProject } from "actions/projects";
+import { getProject } from "actions/projects";
 import { Checkbox } from "@/components/ui/checkbox";
+import ImageUploader from "@/components/image-uploader";
+import { trpc } from "@/router";
+import { useMutation } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/dashboard/projects/$projectId")({
   loader: ({ params: { projectId } }) => {
@@ -61,6 +65,9 @@ function RouteComponent() {
   const navigate = useNavigate();
   const data = useLoaderData({ from: "/dashboard/projects/$projectId" });
   const [isPending, setIsPending] = useState(false);
+  const { mutateAsync: upsertProject } = useMutation(
+    trpc.projects.upsert.mutationOptions(),
+  );
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -73,12 +80,13 @@ function RouteComponent() {
     setIsPending(true);
     toast.promise(
       upsertProject({
-        data: { ...values, id: isNew ? undefined : projectId },
+        ...values,
+        id: isNew ? undefined : projectId,
       }),
       {
         loading: "Submitting...",
         success: () => {
-          navigate({ to: "/dashboard/projects" });
+          navigate({ to: "/dashboard/projects", replace: true });
           return "Project updated!";
         },
         error: "Something went wrong!",
@@ -88,7 +96,7 @@ function RouteComponent() {
   };
 
   return (
-    <Gutter className="space-y-8">
+    <Gutter className="space-y-6">
       <PageTitle
         title={data ? "Edit Project" : "Create Project"}
         description={data ? "Edit the project" : "Create a new project"}
@@ -96,6 +104,22 @@ function RouteComponent() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <FormField
+              control={form.control}
+              name="cover"
+              render={({ field }) => (
+                <FormItem className="col-span-full">
+                  <FormLabel>Image</FormLabel>
+                  <FormControl>
+                    <ImageUploader
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="title"
@@ -140,26 +164,6 @@ function RouteComponent() {
             />
             <FormField
               control={form.control}
-              name="cover"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Cover Image</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Image ID"
-                      {...field}
-                      value={field.value ?? ""}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    The ID of the image from the images table.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="github"
               render={({ field }) => (
                 <FormItem>
@@ -182,11 +186,19 @@ function RouteComponent() {
                 <FormItem>
                   <FormLabel>Completion</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <NumericFormat
+                      customInput={Input}
+                      allowNegative={false}
+                      suffix=" %"
+                      value={field.value * 100}
+                      onValueChange={({ floatValue }) => {
+                        const value =
+                          floatValue === undefined ? 0 : floatValue / 100;
+                        field.onChange(value);
+                      }}
+                    />
                   </FormControl>
-                  <FormDescription>
-                    A number between 0 and 1.
-                  </FormDescription>
+                  <FormDescription>A number between 0 and 100.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

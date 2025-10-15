@@ -2,14 +2,14 @@ import { ColumnDef } from "@tanstack/react-table";
 import { TrpcRouterOutputs } from "@/types";
 import { useNavigate } from "@tanstack/react-router";
 import TableMoreBtn from "@/components/table-more-btn";
-import { useTRPC } from "@/lib/trpc";
+import { trpc } from "@/router";
 import { useMutation } from "@tanstack/react-query";
 
 type Image = TrpcRouterOutputs["images"]["list"][number];
 
 export const columns: ColumnDef<Image>[] = [
   {
-    accessorKey: "key",
+    accessorKey: "id",
     header: "Key",
   },
   {
@@ -25,7 +25,6 @@ export const columns: ColumnDef<Image>[] = [
 
 const MoreButtons = ({ id }: { id: string }) => {
   const navigate = useNavigate();
-  const trpc = useTRPC();
   const { mutateAsync: removeImage } = useMutation(
     trpc.images.remove.mutationOptions(),
   );

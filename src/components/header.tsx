@@ -12,6 +12,8 @@ import { useMenuDrawer } from "@/hooks/use-menu-drawer";
 import { useTrans } from "@/hooks/use-trans";
 
 export default function Header() {
+  // const trans = useTrans();
+  // const navigate = useNavigate();
   return (
     <header className="sticky top-0 z-50 w-full bg-background border-b-0 shadow-xs">
       <Gutter>
@@ -27,6 +29,15 @@ export default function Header() {
               />
             ))}
             <div className="ml-3 flex gap-x-2">
+              {/* <Button */}
+              {/*   variant="outline" */}
+              {/*   className="hidden md:inline-block" */}
+              {/*   onClick={() => */}
+              {/*     navigate({ to: "/login", search: { type: "signin" } }) */}
+              {/*   } */}
+              {/* > */}
+              {/*   {trans("Join", "Rejoindre")} */}
+              {/* </Button> */}
               <LocalSwitcher />
               <ThemeSwitcher />
               <MenuBtn />

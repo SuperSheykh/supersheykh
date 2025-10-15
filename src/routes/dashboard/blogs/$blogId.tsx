@@ -28,6 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FormButtons } from "@/components/form-buttons";
 import { getBlog, upsertBlog } from "actions/blogs";
+import ImageUploader from "@/components/image-uploader";
 
 export const Route = createFileRoute("/dashboard/blogs/$blogId")({
   loader: ({ params: { blogId } }) => {
@@ -65,15 +66,18 @@ function RouteComponent() {
 
   const onSubmit = (values: FormValues) => {
     setIsPending(true);
-    toast.promise(upsertBlog({ data: { ...values, id: isNew ? undefined : blogId } }), {
-      loading: "Submitting...",
-      success: () => {
-        navigate({ to: "/dashboard/blogs" });
-        return "Blog post updated!";
+    toast.promise(
+      upsertBlog({ data: { ...values, id: isNew ? undefined : blogId } }),
+      {
+        loading: "Submitting...",
+        success: () => {
+          navigate({ to: "/dashboard/blogs" });
+          return "Blog post updated!";
+        },
+        error: "Something went wrong!",
+        finally: () => setIsPending(false),
       },
-      error: "Something went wrong!",
-      finally: () => setIsPending(false),
-    });
+    );
   };
 
   return (
@@ -84,6 +88,22 @@ function RouteComponent() {
       />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="cover"
+            render={({ field }) => (
+              <FormItem className="col-span-full">
+                <FormLabel>Cover Image</FormLabel>
+                <FormControl>
+                  <ImageUploader
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <FormField
               control={form.control}
@@ -107,42 +127,6 @@ function RouteComponent() {
                   <FormControl>
                     <Input placeholder="Titre du Blog" {...field} />
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="slug"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Slug</FormLabel>
-                  <FormControl>
-                    <Input placeholder="blog-title" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This will be used in the URL.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="cover"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Cover Image</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Image ID"
-                      {...field}
-                      value={field.value ?? ""}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    The ID of the image from the images table.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
