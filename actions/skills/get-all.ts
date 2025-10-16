@@ -1,7 +1,11 @@
 import { createServerFn } from "@tanstack/react-start";
 import db from "@/db";
-import { skills } from "@/db/schema";
 
 export const getAllSkills = createServerFn().handler(async () => {
-  return db.select().from(skills).all();
+  return db.query.skill_categories.findMany({
+    with: {
+      skills: true,
+    },
+  });
 });
+

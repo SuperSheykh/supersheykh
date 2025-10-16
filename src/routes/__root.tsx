@@ -8,6 +8,7 @@ import Header from "@/components/header";
 import appCss from "@/styles/app.css?url";
 import ThemeProvider from "@/components/providers/theme-provider";
 import MenuDrawerProvider from "@/components/providers/menu-drawer-provider";
+import DialogProvider from "@/components/providers/dialog-provider";
 import Footer from "@/components/footer";
 import BreadcrumbComponent from "@/components/breadcrumb";
 import { themeScript } from "@/lib/utils/themeScript";
@@ -48,6 +49,7 @@ export function RootDocument({ children }: { children: React.ReactNode }) {
         <I18nextProvider i18n={i18n}>
           <ThemeProvider>
             <MenuDrawerProvider />
+            <DialogProvider />
             <div className="flex flex-col min-h-screen gap-y-12">
               <Header />
               <div className="h-full">

@@ -19,6 +19,7 @@ export const upsertBillboard = publicProcedure
         uploadedAt: new Date().toISOString(),
         alt: data.title,
       })
+      .onConflictDoNothing()
       .returning();
 
     if (img)

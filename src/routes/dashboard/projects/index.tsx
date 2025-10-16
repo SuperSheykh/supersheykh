@@ -4,13 +4,11 @@ import {
   useLoaderData,
   useNavigate,
 } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
 import Gutter from "@/components/gutter";
 import { DataTable } from "@/components/ui/data-table";
 
 import { columns } from "./-columns";
 import PageLoading from "@/components/page-loading";
-import { useTRPC } from "@/lib/trpc";
 
 import { getAllProjects } from "actions/projects/get-all";
 

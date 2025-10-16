@@ -31,4 +31,8 @@ export const skill_category_relations = relations(
 );
 
 export const skillSchema = createInsertSchema(skills);
+export const skillCategorySchema = createInsertSchema(skill_categories);
+export type Skill = typeof skills.$inferSelect;
 export type SkillInsert = typeof skills.$inferInsert;
+export type SkillCategory = typeof skill_categories.$inferSelect;
+export type SkillCategoryInsert = typeof skill_categories.$inferInsert;

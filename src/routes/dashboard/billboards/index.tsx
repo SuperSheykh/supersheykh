@@ -12,8 +12,6 @@ import { getAllBillboards } from "actions/billboards/get-all";
 
 export const Route = createFileRoute("/dashboard/billboards/")({
   loader: () => getAllBillboards(),
-  shouldReload: false,
-  staleTime: Infinity,
   component: RouteComponent,
   pendingComponent: PageLoading,
 });

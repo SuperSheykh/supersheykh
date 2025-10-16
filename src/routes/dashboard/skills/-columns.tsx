@@ -1,32 +1,30 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { TrpcRouterOutputs } from "@/types";
-import { ArrowUpDown } from "lucide-react";
-import { useNavigate } from "@tanstack/react-router";
 import TableMoreBtn from "@/components/table-more-btn";
 import { delSkill } from "actions/skills";
 import { Button } from "@/components/ui/button";
+import { Skill, SkillCategory } from "@/db/schema/skills";
+import { useDialog } from "@/hooks/use-dialog";
+import SkillForm from "@/components/form-skill";
+import SkillCategoryForm from "@/components/form-skill-category";
 
-type Skill = TrpcRouterOutputs["skills"]["getAll"][number];
+type SkillCategoryWithSkills = SkillCategory & {
+  skills: Skill[];
+};
 
-export const columns: ColumnDef<Skill>[] = [
+export const columns: ColumnDef<SkillCategoryWithSkills>[] = [
   {
     accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "category",
-    header: "Category",
-    cell: ({ row }) => row.original.category?.name,
+    header: "Name",
+    cell: ({ row }) => (
+      <div>
+        <p className="font-medium">{row.original.name}</p>
+        <div className="flex flex-wrap gap-x-2 mt-2">
+          {row.original.skills.map((skill) => (
+            <SkillBtn key={skill.id} id={skill.id} name={skill.name} />
+          ))}
+        </div>
+      </div>
+    ),
   },
   {
     accessorKey: "actions",
@@ -39,17 +37,39 @@ export const columns: ColumnDef<Skill>[] = [
   },
 ];
 
+const SkillBtn = ({ id, name }: { id: string; name: string }) => {
+  const open = useDialog((state) => state.open);
+
+  return (
+    <Button
+      variant="secondary"
+      size="sm"
+      className="cursor-pointer"
+      onClick={() =>
+        open({
+          title: "Edit Skill",
+          description: "Edit an existing skill",
+          content: <SkillForm id={id} />,
+        })
+      }
+    >
+      {name}
+    </Button>
+  );
+};
+
 const MoreButtons = ({ id }: { id: string }) => {
-  const navigate = useNavigate();
+  const open = useDialog((state) => state.open);
 
   return (
     <TableMoreBtn
       name="skill"
       onDelete={() => delSkill({ data: { id } })}
       onEdit={() =>
-        navigate({
-          to: "/dashboard/skills/$skillId",
-          params: { skillId: id },
+        open({
+          title: "Edit Skill",
+          description: "Create a new skill",
+          content: <SkillCategoryForm id={id} />,
         })
       }
     />

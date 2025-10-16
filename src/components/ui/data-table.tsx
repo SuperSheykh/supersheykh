@@ -18,17 +18,20 @@ import {
 import { Plus } from "lucide-react";
 import { Button } from "./button";
 import { Input } from "./input";
+import { ReactNode } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   onAdd?: () => void;
+  moreBtn?: { label: string; onClick: () => void; icon?: ReactNode }[];
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   onAdd,
+  moreBtn,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -43,16 +46,30 @@ export function DataTable<TData, TValue>({
           className="w-full md:w-auto md:min-w-1/2"
           placeholder="Search..."
         />
-        {onAdd && (
-          <Button
-            variant="outline"
-            className="hover:text-primary mb-2"
-            onClick={onAdd}
-          >
-            <Plus className="mr-2" />
-            Add
-          </Button>
-        )}
+        <div className="flex gap-x-2 items-center">
+          {moreBtn?.map(({ label, onClick, icon }) => (
+            <Button
+              key={label}
+              variant="outline"
+              className="hover:text-primary"
+              onClick={onClick}
+            >
+              {icon}
+              {label}
+            </Button>
+          ))}
+
+          {onAdd && (
+            <Button
+              variant="outline"
+              className="hover:text-primary"
+              onClick={onAdd}
+            >
+              <Plus className="mr-2" />
+              Add
+            </Button>
+          )}
+        </div>
       </div>
       <div className="overflow-hidden rounded-none border">
         <Table>

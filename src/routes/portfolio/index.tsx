@@ -1,4 +1,4 @@
-import { Link, createFileRoute, Outlet } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import Gutter from "@/components/gutter";
 import SectionTitle from "@/components/section-title";
 import ProjectCard from "@/components/project-card";
@@ -53,14 +53,9 @@ const PROJECTS = [
 
 export const Route = createFileRoute("/portfolio/")({
   component: RouteComponent,
-  handle: {
-    crumb: () => "Portfolio",
-  },
 });
 
 import PageTitle from "@/components/page-title";
-
-// ... other imports
 
 function RouteComponent() {
   return (
