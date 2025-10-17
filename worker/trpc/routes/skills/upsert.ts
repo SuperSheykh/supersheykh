@@ -1,14 +1,25 @@
 import { publicProcedure } from "@worker/trpc/trpc";
 import { skills } from "@/db/schema";
-import { skillSchema } from "@/db/schema/skills";
+import { skillFormSchema, skillSchema } from "@/db/schema/skills";
+import { generateObject } from "ai";
+import { getPrompt } from "@/lib/utils/get-translate-prompt";
+import { groq } from "@ai-sdk/groq";
 
 export const upsertSkill = publicProcedure
-  .input(skillSchema)
-  .mutation(async ({ ctx: { db }, input: data }) => {
-    const { id, ...rest } = data;
-    await db
+  .input(skillFormSchema)
+  .mutation(async ({ ctx, input: data }) => {
+    const prompt = getPrompt(data, "skills");
+
+    const { object } = await generateObject({
+      model: groq("openai/gpt-oss-20b"),
+      schema: skillSchema,
+      prompt,
+    });
+
+    const { id, ...rest } = object;
+    await ctx.db
       .insert(skills)
-      .values(data)
+      .values(object)
       .onConflictDoUpdate({ target: skills.id, set: rest })
       .returning();
   });

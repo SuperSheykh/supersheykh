@@ -7,10 +7,8 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-
-import { projectSchema } from "@/db/schema/projects";
 
 import PageLoading from "@/components/page-loading";
 import PageTitle from "@/components/page-title";
@@ -33,6 +31,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import ImageUploader from "@/components/image-uploader";
 import { trpc } from "@/router";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+import { projectFormSchema } from "@/db/schema/projects";
+import { useTrans } from "@/hooks/use-trans";
 
 export const Route = createFileRoute("/dashboard/projects/$projectId")({
   loader: ({ params: { projectId } }) => {
@@ -45,21 +46,13 @@ export const Route = createFileRoute("/dashboard/projects/$projectId")({
   pendingComponent: PageLoading,
 });
 
-const formSchema = projectSchema.pick({
-  title: true,
-  title_fr: true,
-  description: true,
-  description_fr: true,
-  slug: true,
-  cover: true,
-  live: true,
-  completion: true,
-  github: true,
-});
-
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof projectFormSchema>;
 
 function RouteComponent() {
+  const {
+    i18n: { language },
+  } = useTranslation();
+  const t = useTrans();
   const { projectId } = useParams({ from: "/dashboard/projects/$projectId" });
   const isNew = projectId === "new";
   const navigate = useNavigate();
@@ -70,11 +63,16 @@ function RouteComponent() {
   );
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(projectFormSchema),
     defaultValues: data
       ? { ...data, live: data.live === "1" ? "1" : "0" }
       : { completion: 0, live: "1" },
   });
+
+  useEffect(() => {
+    if (language === "fr") form.setValue("lang", "fr");
+    else form.setValue("lang", "en");
+  }, [language, form]);
 
   const onSubmit = (values: FormValues) => {
     setIsPending(true);
@@ -103,7 +101,7 @@ function RouteComponent() {
       />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-4">
             <FormField
               control={form.control}
               name="cover"
@@ -125,39 +123,13 @@ function RouteComponent() {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
+                  <FormLabel>{t("Title", "Titre")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Project Title" {...field} />
+                    <Input
+                      placeholder={t("Project Title", "Titre du projet")}
+                      {...field}
+                    />
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="title_fr"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title (French)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Titre du Projet" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="slug"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Slug</FormLabel>
-                  <FormControl>
-                    <Input placeholder="project-title" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This will be used in the URL.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -179,6 +151,7 @@ function RouteComponent() {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="completion"
@@ -207,7 +180,7 @@ function RouteComponent() {
               control={form.control}
               name="live"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-nonw border p-4">
                   <FormControl>
                     <Checkbox
                       checked={field.value === "1"}
@@ -235,23 +208,6 @@ function RouteComponent() {
                 <FormControl>
                   <Textarea
                     placeholder="Write your project description here..."
-                    {...field}
-                    rows={10}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="description_fr"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description (French)</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Écrivez votre description de projet ici..."
                     {...field}
                     rows={10}
                   />

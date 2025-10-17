@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { images } from "./images";
 import { relations } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
+import z from "zod";
 
 export const projects = sqliteTable(
   "projects",
@@ -39,3 +40,16 @@ export const project_relations = relations(projects, ({ one }) => ({
 export type Project = typeof projects.$inferSelect;
 export type ProjectInsert = typeof projects.$inferInsert;
 export const projectSchema = createInsertSchema(projects);
+export const projectFormSchema = projectSchema
+  .pick({
+    title: true,
+    description: true,
+    cover: true,
+    live: true,
+    completion: true,
+    github: true,
+  })
+  .extend({
+    id: z.string().optional(),
+    lang: z.enum(["en", "fr"]),
+  });

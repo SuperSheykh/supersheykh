@@ -3,6 +3,7 @@ import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { v4 as uuidv4 } from "uuid";
 import { images } from "./images";
 import { createInsertSchema } from "drizzle-zod";
+import z from "zod";
 
 export const blogs = sqliteTable("blogs", {
   id: text("id").primaryKey().$defaultFn(uuidv4),
@@ -24,4 +25,15 @@ export const blog_relations = relations(blogs, ({ one }) => ({
 }));
 
 export const blogSchema = createInsertSchema(blogs);
+export const blogFormSchema = blogSchema
+  .pick({
+    slug: true,
+    title: true,
+    content: true,
+    cover: true,
+  })
+  .extend({
+    id: z.string().optional(),
+    lang: z.enum(["en", "fr"]),
+  });
 export type BlogInsert = typeof blogs.$inferInsert;

@@ -7,10 +7,10 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { blogSchema } from "@/db/schema/blogs";
+import { blogFormSchema } from "@/db/schema/blogs";
 
 import PageLoading from "@/components/page-loading";
 import PageTitle from "@/components/page-title";
@@ -28,6 +28,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { FormButtons } from "@/components/form-buttons";
 import { getBlog, upsertBlog } from "actions/blogs";
 import ImageUploader from "@/components/image-uploader";
+import { useTranslation } from "react-i18next";
+import { useTrans } from "@/hooks/use-trans";
 
 export const Route = createFileRoute("/dashboard/blogs/$blogId")({
   loader: ({ params: { blogId } }) => {
@@ -38,18 +40,13 @@ export const Route = createFileRoute("/dashboard/blogs/$blogId")({
   pendingComponent: PageLoading,
 });
 
-const formSchema = blogSchema.pick({
-  title: true,
-  title_fr: true,
-  slug: true,
-  content: true,
-  content_fr: true,
-  cover: true,
-});
-
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof blogFormSchema>;
 
 function RouteComponent() {
+  const {
+    i18n: { language },
+  } = useTranslation();
+  const t = useTrans();
   const { blogId } = useParams({ from: "/dashboard/blogs/$blogId" });
   const isNew = blogId === "new";
   const navigate = useNavigate();
@@ -57,9 +54,14 @@ function RouteComponent() {
   const [isPending, setIsPending] = useState(false);
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(blogFormSchema),
     defaultValues: data ?? {},
   });
+
+  useEffect(() => {
+    if (language === "fr") form.setValue("lang", "fr");
+    else form.setValue("lang", "en");
+  }, [language, form]);
 
   const onSubmit = (values: FormValues) => {
     setIsPending(true);
@@ -80,8 +82,13 @@ function RouteComponent() {
   return (
     <Gutter className="space-y-8">
       <PageTitle
-        title={data ? "Edit Blog" : "Create Blog"}
-        description={data ? "Edit the blog post" : "Create a new blog post"}
+        title={t(data ? "Edit Blog" : "Create Blog", data ? "Modifier le blog" : "Créer un blog")}
+        description={t(
+          data ? "Edit the blog post" : "Create a new blog post",
+          data
+            ? "Modifier l'article de blog"
+            : "Créer un nouvel article de blog",
+        )}
       />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -90,7 +97,7 @@ function RouteComponent() {
             name="cover"
             render={({ field }) => (
               <FormItem className="col-span-full">
-                <FormLabel>Cover Image</FormLabel>
+                <FormLabel>{t("Cover Image", "Image de couverture")}</FormLabel>
                 <FormControl>
                   <ImageUploader
                     value={field.value}
@@ -101,45 +108,16 @@ function RouteComponent() {
               </FormItem>
             )}
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Blog Title" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="title_fr"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title (French)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Titre du Blog" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
           <FormField
             control={form.control}
-            name="content"
+            name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Content</FormLabel>
+                <FormLabel>{t("Title", "Titre")}</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="Write your blog post here..."
+                  <Input
+                    placeholder={t("Blog Title", "Titre du Blog")}
                     {...field}
-                    rows={15}
                   />
                 </FormControl>
                 <FormMessage />
@@ -148,13 +126,16 @@ function RouteComponent() {
           />
           <FormField
             control={form.control}
-            name="content_fr"
+            name="content"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Content (French)</FormLabel>
+                <FormLabel>{t("Content", "Contenu")}</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Écrivez votre article de blog ici..."
+                    placeholder={t(
+                      "Write your blog post here...",
+                      "Écrivez votre article de blog ici...",
+                    )}
                     {...field}
                     rows={15}
                   />

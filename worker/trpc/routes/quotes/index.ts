@@ -1,4 +1,4 @@
-import { createTRPCRouter as router } from "@worker/trpc/trpc";
+import { router } from "@worker/trpc/trpc";
 import { getAllQuotes } from "./getAll";
 import { getQuote } from "./get";
 import { getLiveQuotes } from "./get-live";

@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { skillSchema } from "@/db/schema/skills";
+import { skillFormSchema } from "@/db/schema/skills";
 
 import {
   Form,
@@ -29,16 +29,16 @@ import { useQuery } from "@tanstack/react-query";
 import { useDialog } from "@/hooks/use-dialog";
 import PageLoading from "./page-loading";
 import { useRouter } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
+import { useTrans } from "@/hooks/use-trans";
 
-const formSchema = skillSchema.pick({
-  name: true,
-  name_fr: true,
-  category_id: true,
-});
-
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof skillFormSchema>;
 
 function SkillForm({ id, onSuccess }: { id?: string; onSuccess?: () => void }) {
+  const {
+    i18n: { language },
+  } = useTranslation();
+  const t = useTrans();
   const router = useRouter();
   const [isPending, setIsPending] = useState(false);
   const { close } = useDialog();
@@ -62,8 +62,8 @@ function SkillForm({ id, onSuccess }: { id?: string; onSuccess?: () => void }) {
   );
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: { name: "", name_fr: "", category_id: null },
+    resolver: zodResolver(skillFormSchema),
+    defaultValues: { name: "", category_id: null },
   });
 
   useEffect(() => {
@@ -72,8 +72,10 @@ function SkillForm({ id, onSuccess }: { id?: string; onSuccess?: () => void }) {
     }
   }, [data, form]);
 
-  //Lets make sure the form cattegory select is updated after all categories are loaded.
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (language === "fr") form.setValue("lang", "fr");
+    else form.setValue("lang", "en");
+  }, [language, form]);
 
   const onSubmit = (values: FormValues) => {
     setIsPending(true);
@@ -108,26 +110,9 @@ function SkillForm({ id, onSuccess }: { id?: string; onSuccess?: () => void }) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>{t("Name", "Nom")}</FormLabel>
               <FormControl>
-                <Input placeholder="Skill Name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="name_fr"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name (French)</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Nom de la compétence"
-                  {...field}
-                  value={field.value ?? ""}
-                />
+                <Input placeholder={t("Skill Name", "Nom de la compétence")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -139,14 +124,14 @@ function SkillForm({ id, onSuccess }: { id?: string; onSuccess?: () => void }) {
             name="category_id"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Category</FormLabel>
+                <FormLabel>{t("Category", "Catégorie")}</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   value={field.value ?? undefined}
                 >
                   <FormControl>
                     <SelectTrigger className="w-full rounded-none">
-                      <SelectValue placeholder="Select a category" />
+                      <SelectValue placeholder={t("Select a category", "Sélectionnez une catégorie")} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>

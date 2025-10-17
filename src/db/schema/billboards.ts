@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { images } from "./images";
 import { relations } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
+import z from "zod";
 
 export const billboards = sqliteTable("billboards", {
   id: text("id").primaryKey().$defaultFn(uuidv4),
@@ -33,5 +34,21 @@ export const billboard_relations = relations(billboards, ({ one }) => ({
 }));
 
 export const billboardSchema = createInsertSchema(billboards);
+export const billboardFormSchema = billboardSchema
+  .pick({
+    greeting: true,
+    title: true,
+    description: true,
+    buttonText: true,
+    buttonLink: true,
+    subText: true,
+    subLink: true,
+    subLinkText: true,
+    imageKey: true,
+  })
+  .extend({
+    id: z.string().optional(),
+    lang: z.enum(["en", "fr"]),
+  });
 export type BillboardInsert = typeof billboards.$inferInsert;
 export type Billboard = typeof billboards.$inferSelect;

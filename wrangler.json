@@ -5,7 +5,6 @@
   "compatibility_flags": ["nodejs_compat"],
   "main": "./worker/index.ts",
   "vars": {
-    "MY_VAR": "Hello from Cloudflare"
   },
   "d1_databases": [
     {

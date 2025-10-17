@@ -1,22 +1,23 @@
 import { publicProcedure } from "@worker/trpc/trpc";
 import { images, projects } from "@/db/schema";
-import { projectSchema } from "@/db/schema/projects";
+import { projectFormSchema, projectSchema } from "@/db/schema/projects";
+import slugify from "@/lib/utils/slugify";
+import { generateObject } from "ai";
+import { groq } from "@ai-sdk/groq";
+import { getPrompt } from "@/lib/utils/get-translate-prompt";
 
 export const upsertProject = publicProcedure
-  .input(projectSchema)
-  .mutation(async ({ ctx: { db, env }, input: data }) => {
-    const { id, ...rest } = data;
-    console.log("data:", data);
-
-    const imgObject = await env.BK.get(rest.cover);
+  .input(projectFormSchema)
+  .mutation(async ({ ctx, input: data }) => {
+    const imgObject = await ctx.env.BK.get(data.cover);
 
     if (!imgObject) throw new Error("Image not found");
 
-    const [newImg] = await db
+    const [newImg] = await ctx.db
       .insert(images)
       .values({
-        id: rest.cover,
-        alt: rest.title,
+        id: data.cover,
+        alt: data.title,
         // size: imgObject.size,
         // type: imgObject.httpMetadata?.contentType,
         uploadedAt: new Date().toISOString(),
@@ -24,12 +25,24 @@ export const upsertProject = publicProcedure
       .onConflictDoNothing()
       .returning();
 
-    const [project] = await db
+    const prompt = getPrompt(data, "projects");
+
+    const { object } = await generateObject({
+      model: groq("openai/gpt-oss-20b"),
+      schema: projectSchema,
+      prompt,
+    });
+
+    const { id, ...rest } = object;
+
+    const slug = slugify(object.title);
+
+    const [project] = await ctx.db
       .insert(projects)
-      .values(data)
+      .values({ ...object, slug })
       .onConflictDoUpdate({
         target: projects.id,
-        set: { ...rest, cover: newImg.id },
+        set: { ...rest, slug, cover: newImg.id },
       })
       .returning();
 

@@ -1,4 +1,4 @@
-import { createTRPCRouter as router } from "./trpc";
+import { router } from "./trpc";
 import { projectsRouter } from "./routes/projects";
 import { billboardsRouter } from "./routes/billboards";
 import { blogsRouter } from "./routes/blogs";

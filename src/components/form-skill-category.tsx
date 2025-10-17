@@ -1,4 +1,4 @@
-import { SkillCategoryInsert, skillCategorySchema } from "@/db/schema/skills";
+import { SkillCategoryInsert, skillCategoryFormSchema } from "@/db/schema/skills";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -19,8 +19,14 @@ import { toast } from "sonner";
 import { useDialog } from "@/hooks/use-dialog";
 import PageLoading from "./page-loading";
 import { useRouter } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
+import { useTrans } from "@/hooks/use-trans";
 
 const SkillCategoryForm = ({ id }: { id?: string }) => {
+  const {
+    i18n: { language },
+  } = useTranslation();
+  const t = useTrans();
   const close = useDialog((state) => state.close);
   const [isPending, setIsPending] = useState(false);
   const router = useRouter();
@@ -31,8 +37,8 @@ const SkillCategoryForm = ({ id }: { id?: string }) => {
     }),
   );
 
-  const form = useForm<z.infer<typeof skillCategorySchema>>({
-    resolver: zodResolver(skillCategorySchema),
+  const form = useForm<z.infer<typeof skillCategoryFormSchema>>({
+    resolver: zodResolver(skillCategoryFormSchema),
     defaultValues: {},
   });
 
@@ -41,6 +47,11 @@ const SkillCategoryForm = ({ id }: { id?: string }) => {
       form.reset(category);
     }
   }, [category]);
+
+  useEffect(() => {
+    if (language === "fr") form.setValue("lang", "fr");
+    else form.setValue("lang", "en");
+  }, [language, form]);
 
   const { mutateAsync: upsertSkillCategory } = useMutation(
     trpc.skillCategories.upsert.mutationOptions(),
@@ -70,26 +81,9 @@ const SkillCategoryForm = ({ id }: { id?: string }) => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>{t("Name", "Nom")}</FormLabel>
               <FormControl>
-                <Input placeholder="Name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="name_fr"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name (French)</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Name (French)"
-                  {...field}
-                  value={field.value ?? undefined}
-                />
+                <Input placeholder={t("Name", "Nom")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

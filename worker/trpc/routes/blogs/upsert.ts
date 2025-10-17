@@ -1,14 +1,26 @@
 import { publicProcedure } from "@worker/trpc/trpc";
 import { blogs } from "@/db/schema";
-import { blogSchema } from "@/db/schema/blogs";
+import { blogFormSchema, blogSchema } from "@/db/schema/blogs";
+import { generateObject } from "ai";
+import { groq } from "@ai-sdk/groq";
+import { getPrompt } from "@/lib/utils/get-translate-prompt";
 
 export const upsertBlog = publicProcedure
-  .input(blogSchema)
-  .mutation(async ({ ctx: { db }, input: data }) => {
-    const { id, ...rest } = data;
-    await db
+  .input(blogFormSchema)
+  .mutation(async ({ ctx, input: data }) => {
+    const prompt = getPrompt(data, "blogs");
+
+    const { object } = await generateObject({
+      model: groq("openai/gpt-oss-20b"),
+      schema: blogSchema,
+      prompt,
+    });
+
+    const { id, ...rest } = object;
+
+    await ctx.db
       .insert(blogs)
-      .values(data)
+      .values(object)
       .onConflictDoUpdate({ target: blogs.id, set: rest })
       .returning();
   });

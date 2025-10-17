@@ -20,14 +20,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { FormButtons } from "@/components/form-buttons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { getBillboard } from "actions/billboards";
 import PageLoading from "@/components/page-loading";
-import { billboardSchema } from "@/db/schema/billboards";
+import { billboardFormSchema } from "@/db/schema/billboards";
 import ImageUploader from "@/components/image-uploader";
 import { trpc } from "@/router";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+import { useTrans } from "@/hooks/use-trans";
 
 export const Route = createFileRoute("/dashboard/billboards/$billboardId")({
   loader: ({ params: { billboardId } }) =>
@@ -36,9 +38,13 @@ export const Route = createFileRoute("/dashboard/billboards/$billboardId")({
   pendingComponent: PageLoading,
 });
 
-type FormValues = z.infer<typeof billboardSchema>;
+type FormValues = z.infer<typeof billboardFormSchema>;
 
 function RouteComponent() {
+  const {
+    i18n: { language },
+  } = useTranslation();
+  const t = useTrans();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const data =
@@ -49,9 +55,14 @@ function RouteComponent() {
   );
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(billboardSchema),
+    resolver: zodResolver(billboardFormSchema),
     defaultValues: data,
   });
+
+  useEffect(() => {
+    if (language === "fr") form.setValue("lang", "fr");
+    else form.setValue("lang", "en");
+  }, [language, form]);
 
   const onSubmit = (values: FormValues) => {
     setLoading(true);
@@ -81,27 +92,10 @@ function RouteComponent() {
               name="greeting"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Greeting</FormLabel>
+                  <FormLabel>{t("Greeting", "Salutation")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Hello there"
-                      {...field}
-                      value={field.value ?? ""}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="greeting_fr"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Greeting (French)</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Bonjour"
+                      placeholder={t("Hello there", "Bonjour")}
                       {...field}
                       value={field.value ?? ""}
                     />
@@ -115,23 +109,13 @@ function RouteComponent() {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Welcome to my portfolio" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="title_fr"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title (French)</FormLabel>
+                  <FormLabel>{t("Title", "Titre")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Bienvenue sur mon portfolio"
+                      placeholder={t(
+                        "Welcome to my portfolio",
+                        "Bienvenue sur mon portfolio",
+                      )}
                       {...field}
                     />
                   </FormControl>
@@ -144,27 +128,10 @@ function RouteComponent() {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>{t("Description", "Description")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Short description"
-                      {...field}
-                      value={field.value ?? ""}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description_fr"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description (French)</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Description courte"
+                      placeholder={t("Short description", "Description courte")}
                       {...field}
                       value={field.value ?? ""}
                     />
@@ -178,22 +145,12 @@ function RouteComponent() {
               name="buttonText"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Button Text</FormLabel>
+                  <FormLabel>{t("Button Text", "Texte du bouton")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Click me" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="buttonText_fr"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Button Text (French)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Cliquez-moi" {...field} />
+                    <Input
+                      placeholder={t("Click me", "Cliquez-moi")}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -204,27 +161,10 @@ function RouteComponent() {
               name="subText"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Sub Text</FormLabel>
+                  <FormLabel>{t("Sub Text", "Sous-texte")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Some subtext"
-                      {...field}
-                      value={field.value ?? ""}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="subText_fr"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sub Text (French)</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Un peu de sous-texte"
+                      placeholder={t("Some subtext", "Un peu de sous-texte")}
                       {...field}
                       value={field.value ?? ""}
                     />
@@ -238,7 +178,7 @@ function RouteComponent() {
               name="buttonLink"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Button Link</FormLabel>
+                  <FormLabel>{t("Button Link", "Lien du bouton")}</FormLabel>
                   <FormControl>
                     <Input placeholder="/contact" {...field} />
                   </FormControl>
@@ -251,7 +191,7 @@ function RouteComponent() {
               name="subLink"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Sub Link</FormLabel>
+                  <FormLabel>{t("Sub Link", "Sous-lien")}</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="/about"
@@ -268,27 +208,12 @@ function RouteComponent() {
               name="subLinkText"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Sub Link Text</FormLabel>
+                  <FormLabel>
+                    {t("Sub Link Text", "Texte du sous-lien")}
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Read more"
-                      {...field}
-                      value={field.value ?? ""}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="subLinkText_fr"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sub Link Text (French)</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Lire la suite"
+                      placeholder={t("Read more", "Lire la suite")}
                       {...field}
                       value={field.value ?? ""}
                     />
@@ -302,7 +227,7 @@ function RouteComponent() {
               name="imageKey"
               render={({ field }) => (
                 <FormItem className="col-span-full">
-                  <FormLabel>Image</FormLabel>
+                  <FormLabel>{t("Image", "Image")}</FormLabel>
                   <FormControl>
                     <ImageUploader
                       value={field.value ?? undefined}
@@ -310,7 +235,10 @@ function RouteComponent() {
                     />
                   </FormControl>
                   <FormDescription>
-                    Better choose a square image with a transparent background.
+                    {t(
+                      "Better choose a square image with a transparent background.",
+                      "Il est préférable de choisir une image carrée avec un fond transparent.",
+                    )}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

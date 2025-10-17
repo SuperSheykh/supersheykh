@@ -1,4 +1,4 @@
-import { createTRPCRouter as router } from "@worker/trpc/trpc";
+import { router } from "@worker/trpc/trpc";
 import { getAllSkillCategories } from "./getAll";
 import { upsertSkillCategory } from "./upsert";
 import { getAllWithSkills } from "./getAllWithSkills";
