@@ -1,9 +1,9 @@
 import { createServerFn } from "@tanstack/react-start";
 import db from "@/db";
-import { blogs, blogSchema } from "@/db/schema/blogs";
+import { blogFormSchema, blogs, blogSchema } from "@/db/schema/blogs";
 
 export const upsertBlog = createServerFn()
-  .inputValidator(blogSchema)
+  .inputValidator(blogFormSchema)
   .handler(async ({ data }) => {
     const { id, ...rest } = data;
 

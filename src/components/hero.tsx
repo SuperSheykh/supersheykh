@@ -101,7 +101,13 @@ const HeroItem = ({
         </Button>
       </div>
       <div className="md:w-1/2">
-        <img src={`/images/${imageKey}`} alt={""} className="w-full" />
+        <div className="w-full aspect-square overflow-hidden">
+          <img
+            src={`/images/${imageKey}`}
+            alt={""}
+            className="w-full object-cover"
+          />
+        </div>
         {subText && subLink && subLinkText && (
           <div className="border-2 rounded-none flex gap-4 items-center p-2 px-4 md:p-4">
             <div className="w-4 aspect-square bg-primary" />

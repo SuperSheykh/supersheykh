@@ -9,6 +9,19 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import {
+  MDXEditor,
+  headingsPlugin,
+  listsPlugin,
+  linkPlugin,
+  quotePlugin,
+  imagePlugin,
+  tablePlugin,
+  thematicBreakPlugin,
+  frontmatterPlugin,
+  markdownShortcutPlugin,
+} from "@mdxeditor/editor";
+import "@mdxeditor/editor/style.css";
 
 import { blogFormSchema } from "@/db/schema/blogs";
 
@@ -24,17 +37,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { FormButtons } from "@/components/form-buttons";
-import { getBlog, upsertBlog } from "actions/blogs";
+import { getBlogBySlug, upsertBlog } from "actions/blogs";
 import ImageUploader from "@/components/image-uploader";
 import { useTranslation } from "react-i18next";
 import { useTrans } from "@/hooks/use-trans";
 
-export const Route = createFileRoute("/dashboard/blogs/$blogId")({
-  loader: ({ params: { blogId } }) => {
-    if (blogId === "new") return;
-    return getBlog({ data: { id: blogId } });
+export const Route = createFileRoute("/dashboard/blogs/$slug")({
+  loader: ({ params: { slug } }) => {
+    if (slug === "new") return null;
+    return getBlogBySlug({ data: { slug: slug } });
   },
   component: RouteComponent,
   pendingComponent: PageLoading,
@@ -47,10 +59,10 @@ function RouteComponent() {
     i18n: { language },
   } = useTranslation();
   const t = useTrans();
-  const { blogId } = useParams({ from: "/dashboard/blogs/$blogId" });
-  const isNew = blogId === "new";
+  const { slug } = useParams({ from: "/dashboard/blogs/$slug" });
+  const isNew = slug === "new";
   const navigate = useNavigate();
-  const data = useLoaderData({ from: "/dashboard/blogs/$blogId" });
+  const data = useLoaderData({ from: "/dashboard/blogs/$slug" });
   const [isPending, setIsPending] = useState(false);
 
   const form = useForm<FormValues>({
@@ -65,24 +77,24 @@ function RouteComponent() {
 
   const onSubmit = (values: FormValues) => {
     setIsPending(true);
-    toast.promise(
-      upsertBlog({ data: { ...values, id: isNew ? undefined : blogId } }),
-      {
-        loading: "Submitting...",
-        success: () => {
-          navigate({ to: "..", replace: true });
-          return "Blog post updated!";
-        },
-        error: "Something went wrong!",
-        finally: () => setIsPending(false),
+    toast.promise(upsertBlog({ data: values }), {
+      loading: "Submitting...",
+      success: () => {
+        navigate({ to: "..", replace: true });
+        return "Blog post updated!";
       },
-    );
+      error: "Something went wrong!",
+      finally: () => setIsPending(false),
+    });
   };
 
   return (
     <Gutter className="space-y-8">
       <PageTitle
-        title={t(data ? "Edit Blog" : "Create Blog", data ? "Modifier le blog" : "Créer un blog")}
+        title={t(
+          data ? "Edit Blog" : "Create Blog",
+          data ? "Modifier le blog" : "Créer un blog",
+        )}
         description={t(
           data ? "Edit the blog post" : "Create a new blog post",
           data
@@ -131,14 +143,22 @@ function RouteComponent() {
               <FormItem>
                 <FormLabel>{t("Content", "Contenu")}</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder={t(
-                      "Write your blog post here...",
-                      "Écrivez votre article de blog ici...",
-                    )}
-                    {...field}
-                    rows={15}
-                  />
+                  {/* <MDXEditor */}
+                  {/*   markdown={field.value} */}
+                  {/*   onChange={field.onChange} */}
+                  {/*   ref={field.ref} */}
+                  {/*   plugins={[ */}
+                  {/*     headingsPlugin(), */}
+                  {/*     listsPlugin(), */}
+                  {/*     linkPlugin(), */}
+                  {/*     quotePlugin(), */}
+                  {/*     imagePlugin(), */}
+                  {/*     tablePlugin(), */}
+                  {/*     thematicBreakPlugin(), */}
+                  {/*     frontmatterPlugin(), */}
+                  {/*     markdownShortcutPlugin(), */}
+                  {/*   ]} */}
+                  {/* /> */}
                 </FormControl>
                 <FormMessage />
               </FormItem>

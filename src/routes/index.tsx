@@ -1,4 +1,5 @@
 import Hero from "@/components/hero";
+import LatestBlogs from "@/components/latest-blogs";
 import Projects from "@/components/projects";
 import Quotes from "@/components/quotes";
 import Skills from "@/components/skills";
@@ -17,6 +18,7 @@ function RouteComponent() {
       <Projects />
       <Skills />
       <Quotes />
+      <LatestBlogs />
     </div>
   );
 }

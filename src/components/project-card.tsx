@@ -1,52 +1,75 @@
-import { Link } from "@tanstack/react-router";
+import {
+  Item,
+  ItemHeader,
+  ItemContent,
+  ItemTitle,
+  ItemDescription,
+  ItemActions,
+  ItemSeparator,
+} from "@/components/ui/item";
 import { Button } from "./ui/button";
+import { Link } from "@tanstack/react-router";
+import { TrpcRouterOutputs } from "@/types";
 import { useTrans } from "@/hooks/use-trans";
 
-interface ProjectCardProps {
-  title: string;
-  title_fr: string;
-  description: string;
-  description_fr: string;
-  imageUrl: string;
-  imageAlt: string;
-}
-
-const STACKS = ["React", "Next.js", "TailwindCSS", "PostgreSQL"];
-
 const ProjectCard = ({
-  imageAlt,
-  imageUrl,
+  id,
+  cover,
   title,
   title_fr,
   description,
   description_fr,
-}: ProjectCardProps) => {
+  live,
+  github,
+}: TrpcRouterOutputs["projects"]["getAll"][number]) => {
   const t = useTrans();
   return (
-    <div className="border-1 border-border hover:border-primary transition ease-in">
-      <div className="aspect-video">
-        <img src={imageUrl} alt={imageAlt} className="w-full object-cover" />
-      </div>
-      <div className="text-sm flex flex-wrap gap-4 p-2 md:p-4  border-t">
-        {STACKS.map((stack) => (
-          <span key={stack}>{stack}</span>
-        ))}
-      </div>
-      <div className="flex flex-col gap-4">
-        <p className="border-y p-2 md:p-4 text-lg md:text-xl font-bold">
-          {t(title, title_fr)}
-        </p>
-        <p className="p-2 md:p-4 ">{t(description, description_fr)}</p>
-        <div className="flex items-center gap-4 p-4">
-          <Button variant="outline">
-            <Link to={`/portfolio`}>View</Link>
-          </Button>
-          <Button variant="outline">
-            <Link to={`/portfolio`}>Live</Link>
-          </Button>
-        </div>
-      </div>
-    </div>
+    <Item className="hover:shadow-md border-border hover:border-accent rounded-none">
+      <ItemHeader>
+        <Link
+          to="/portfolio/$projectId"
+          params={{ projectId: id }}
+          className="w-full"
+        >
+          <img
+            src={`/images/${cover}`}
+            alt={title}
+            className="aspect-video w-full object-cover"
+          />
+        </Link>
+      </ItemHeader>
+      <ItemContent>
+        <Link
+          to="/portfolio/$projectId"
+          params={{ projectId: id }}
+          className="w-full"
+        >
+          <ItemTitle className="text-lg justify-start font-semibold">
+            {t(title, title_fr)}
+          </ItemTitle>
+        </Link>
+        <ItemSeparator />
+        <ItemDescription className="pt-2 pb-4 h-20">
+          {t(description, description_fr)}
+        </ItemDescription>
+        <ItemActions>
+          {github && (
+            <Button variant="outline" asChild>
+              <a href={github} target="_blank" rel="noreferrer">
+                Github
+              </a>
+            </Button>
+          )}
+          {live && (
+            <Button variant="outline" asChild>
+              <a href={live} target="_blank" rel="noreferrer">
+                Live
+              </a>
+            </Button>
+          )}
+        </ItemActions>
+      </ItemContent>
+    </Item>
   );
 };
 
