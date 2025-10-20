@@ -10,16 +10,14 @@ const LatestBlogs = () => {
   if (!data) return null;
 
   return (
-    <section className="container mx-auto py-12">
-      <Gutter>
-        <SectionTitle title="Latest Blogs" title_fr="Derniers articles" />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-          {data.map((blog) => (
-            <BlogCard key={blog.id} {...blog} />
-          ))}
-        </div>
-      </Gutter>
-    </section>
+    <Gutter className='py-12' >
+      <SectionTitle title="Latest Blogs" title_fr="Derniers articles" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+        {data.map((blog) => (
+          <BlogCard key={blog.id} {...blog} />
+        ))}
+      </div>
+    </Gutter>
   );
 };
 

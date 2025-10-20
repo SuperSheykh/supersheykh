@@ -24,26 +24,17 @@ export const columns: ColumnDef<Blog>[] = [
     },
   },
   {
-    accessorKey: "slug",
-    header: "Slug",
-  },
-  {
-    accessorKey: "createdAt",
-    header: "Created At",
-    cell: ({ row }) => new Date(row.original.createdAt).toLocaleDateString(),
-  },
-  {
     accessorKey: "actions",
     header: "",
     cell: ({ row }) => (
       <div className="flex gap-x-2 items-center justify-start flex-wrap">
-        <MoreButtons id={row.original.id} />
+        <MoreButtons slug={row.original.slug} id={row.original.id} />
       </div>
     ),
   },
 ];
 
-const MoreButtons = ({ id }: { id: string }) => {
+const MoreButtons = ({ slug, id }: { slug: string, id: string }) => {
   const navigate = useNavigate();
 
   return (
@@ -52,8 +43,8 @@ const MoreButtons = ({ id }: { id: string }) => {
       onDelete={() => delBlog({ data: { id } })}
       onEdit={() =>
         navigate({
-          to: "/dashboard/blogs/$blogId",
-          params: { blogId: id },
+          to: "/dashboard/blogs/$slug",
+          params: { slug },
         })
       }
     />

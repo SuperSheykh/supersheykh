@@ -25,10 +25,6 @@ export const columns: ColumnDef<Social>[] = [
     },
   },
   {
-    accessorKey: "url",
-    header: "URL",
-  },
-  {
     accessorKey: "actions",
     header: "",
     cell: ({ row }) => (

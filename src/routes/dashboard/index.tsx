@@ -76,14 +76,14 @@ function RouteComponent() {
   if (!data) redirect({ to: "/login", search: { type: "signin" } });
 
   return (
-    <Gutter>
+    <Gutter className='space-y-16'>
       <PageTitle title="Dashboard" />
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {DASHBOARD_SECTIONS.map((section) => (
           <Item
             key={section.path}
             variant="outline"
-            className="hover:border-accent hover:shadow-md hover:bg-card"
+            className="hover:border-accent hover:shadow-md hover:bg-card rounded-none"
           >
             <ItemHeader>
               <ItemTitle className="text-xl md:text-2xl">
