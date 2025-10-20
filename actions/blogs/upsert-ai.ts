@@ -9,7 +9,6 @@ import { images } from "@/db/schema";
 export const upsertAiBlog = createServerFn()
   .inputValidator(blogAiFormSchema)
   .handler(async ({ data, }) => {
-    console.log('data:', data)
 
     const prompt = `
 Context: You are an expert about Mali. You knows of its latest news, history and laws. 
@@ -38,8 +37,6 @@ and generate both relevant english and french content variations for a blog post
     })
       .onConflictDoNothing()
       .returning()
-
-    console.log('img:', img)
 
 
     const { id, ...objectRest } = object

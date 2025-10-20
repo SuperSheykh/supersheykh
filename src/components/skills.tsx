@@ -17,8 +17,6 @@ const Skills = () => {
     trpc.skillCategories.getAllWithSkills.queryOptions(),
   );
 
-  console.log("data", data);
-
   return (
     <section>
       <Gutter className="space-y-10">

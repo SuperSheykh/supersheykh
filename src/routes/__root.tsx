@@ -1,4 +1,15 @@
-import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
+import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
+import { type queryClient, type trpc } from "@/router";
+import { User } from 'better-auth/types'
+
+export interface RouterContext {
+  auth: {
+    user: User | null;
+    isLoading: boolean;
+  };
+  trpc: typeof trpc;
+  queryClient: typeof queryClient;
+}
 import { I18nextProvider } from "react-i18next";
 import i18n from "../i18n";
 import { Toaster } from "@/components/ui/sonner";
@@ -9,11 +20,12 @@ import appCss from "@/styles/app.css?url";
 import ThemeProvider from "@/components/providers/theme-provider";
 import MenuDrawerProvider from "@/components/providers/menu-drawer-provider";
 import DialogProvider from "@/components/providers/dialog-provider";
+import { AuthInitializer } from "@/components/auth-initializer";
 import Footer from "@/components/footer";
 import BreadcrumbComponent from "@/components/breadcrumb";
 import { themeScript } from "@/lib/utils/themeScript";
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<RouterContext>()({
   head: () => ({
     meta: [
       {
@@ -24,7 +36,7 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "SuperSheyh",
+        title: "SuperSheyh | Portfolio and Blog",
       },
     ],
     links: [
@@ -50,6 +62,7 @@ export function RootDocument({ children }: { children: React.ReactNode }) {
           <ThemeProvider>
             <MenuDrawerProvider />
             <DialogProvider />
+            <AuthInitializer />
             <div className="flex flex-col min-h-screen gap-y-12">
               <Header />
               <div className="h-full">

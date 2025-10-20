@@ -15,11 +15,6 @@ export const PAGES: Array<{ title: string; title_fr?: string; path: string }> =
       title_fr: "Contact",
       path: "/contact",
     },
-    {
-      title: "Dashboard",
-      title_fr: "Dashboard",
-      path: "/dashboard",
-    },
   ];
 
 export const HERO_ITEMS = [

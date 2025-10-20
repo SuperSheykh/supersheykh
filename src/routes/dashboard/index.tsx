@@ -15,6 +15,9 @@ import { Button } from "@/components/ui/button";
 import { useSession } from "@/lib/auth-client";
 
 export const Route = createFileRoute("/dashboard/")({
+  beforeLoad: async ({ context }) => {
+    if (!context.auth.user) throw redirect({ to: "/login", search: { type: "signin" } });
+  },
   component: RouteComponent,
 });
 

@@ -14,7 +14,6 @@ import { getLiveBlogs } from "actions/blogs";
 
 function RouteComponent() {
   const data = Route.useLoaderData();
-  console.log("data:", data);
 
   return (
     <div className="pb-16">
