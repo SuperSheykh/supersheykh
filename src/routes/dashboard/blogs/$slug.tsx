@@ -1,29 +1,14 @@
 import {
   createFileRoute,
-  useLoaderData,
   useNavigate,
-  useParams,
 } from "@tanstack/react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import {
-  MDXEditor,
-  headingsPlugin,
-  listsPlugin,
-  linkPlugin,
-  quotePlugin,
-  imagePlugin,
-  tablePlugin,
-  thematicBreakPlugin,
-  frontmatterPlugin,
-  markdownShortcutPlugin,
-} from "@mdxeditor/editor";
-import "@mdxeditor/editor/style.css";
 
-import { blogFormSchema } from "@/db/schema/blogs";
+import { blogAiFormSchema, } from "@/db/schema/blogs";
 
 import PageLoading from "@/components/page-loading";
 import PageTitle from "@/components/page-title";
@@ -38,7 +23,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { FormButtons } from "@/components/form-buttons";
-import { getBlogBySlug, upsertBlog } from "actions/blogs";
+import { getBlogBySlug, upsertAiBlog } from "actions/blogs";
 import ImageUploader from "@/components/image-uploader";
 import { useTranslation } from "react-i18next";
 import { useTrans } from "@/hooks/use-trans";
@@ -52,21 +37,19 @@ export const Route = createFileRoute("/dashboard/blogs/$slug")({
   pendingComponent: PageLoading,
 });
 
-type FormValues = z.infer<typeof blogFormSchema>;
+type FormValues = z.infer<typeof blogAiFormSchema>;
 
 function RouteComponent() {
   const {
     i18n: { language },
   } = useTranslation();
   const t = useTrans();
-  const { slug } = useParams({ from: "/dashboard/blogs/$slug" });
-  const isNew = slug === "new";
   const navigate = useNavigate();
-  const data = useLoaderData({ from: "/dashboard/blogs/$slug" });
+  const data = Route.useLoaderData()
   const [isPending, setIsPending] = useState(false);
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(blogFormSchema),
+    resolver: zodResolver(blogAiFormSchema),
     defaultValues: data ?? {},
   });
 
@@ -77,7 +60,7 @@ function RouteComponent() {
 
   const onSubmit = (values: FormValues) => {
     setIsPending(true);
-    toast.promise(upsertBlog({ data: values }), {
+    toast.promise(upsertAiBlog({ data: values }), {
       loading: "Submitting...",
       success: () => {
         navigate({ to: "..", replace: true });
@@ -131,34 +114,6 @@ function RouteComponent() {
                     placeholder={t("Blog Title", "Titre du Blog")}
                     {...field}
                   />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("Content", "Contenu")}</FormLabel>
-                <FormControl>
-                  {/* <MDXEditor */}
-                  {/*   markdown={field.value} */}
-                  {/*   onChange={field.onChange} */}
-                  {/*   ref={field.ref} */}
-                  {/*   plugins={[ */}
-                  {/*     headingsPlugin(), */}
-                  {/*     listsPlugin(), */}
-                  {/*     linkPlugin(), */}
-                  {/*     quotePlugin(), */}
-                  {/*     imagePlugin(), */}
-                  {/*     tablePlugin(), */}
-                  {/*     thematicBreakPlugin(), */}
-                  {/*     frontmatterPlugin(), */}
-                  {/*     markdownShortcutPlugin(), */}
-                  {/*   ]} */}
-                  {/* /> */}
                 </FormControl>
                 <FormMessage />
               </FormItem>

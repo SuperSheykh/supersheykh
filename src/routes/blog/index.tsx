@@ -4,16 +4,17 @@ import SectionTitle from "@/components/section-title";
 import { ItemGroup } from "@/components/ui/item";
 
 export const Route = createFileRoute("/blog/")({
+  loader: () => getLiveBlogs(),
   component: RouteComponent,
 });
 
 import PageTitle from "@/components/page-title";
-import { useQuery } from "@tanstack/react-query";
-import { trpc } from "@/router";
 import BlogCard from "@/components/blog-card";
+import { getLiveBlogs } from "actions/blogs";
 
 function RouteComponent() {
-  const { data } = useQuery(trpc.blogs.getAll.queryOptions());
+  const data = Route.useLoaderData();
+  console.log("data:", data);
 
   return (
     <div className="pb-16">

@@ -36,4 +36,11 @@ export const blogFormSchema = blogSchema
     id: z.string().optional(),
     lang: z.enum(["en", "fr"]),
   });
+export const blogAiFormSchema = createInsertSchema(blogs).pick({
+  cover: true,
+  title: true
+}).extend({
+  lang: z.enum(["en", "fr"]),
+})
+
 export type BlogInsert = typeof blogs.$inferInsert;
