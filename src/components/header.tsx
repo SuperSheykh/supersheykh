@@ -10,10 +10,8 @@ import { MenuIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useMenuDrawer } from "@/hooks/use-menu-drawer";
 import { useTrans } from "@/hooks/use-trans";
-import { useAuthStore } from "@/store/auth";
 
 export default function Header() {
-  const user = useAuthStore(state => state.user)
   return (
     <header className="sticky top-0 z-50 w-full bg-background border-b-0 shadow-xs">
       <Gutter>
@@ -28,7 +26,7 @@ export default function Header() {
                 title_fr={page.title_fr}
               />
             ))}
-            {user && <NavItem to="/dashboard" title="Dashboard" />}
+            {false && <NavItem to="/dashboard" title="Dashboard" />}
             <div className="ml-3 flex gap-x-2">
               <span className="hidden md:inline">
                 <LocalSwitcher />
