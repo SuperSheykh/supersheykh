@@ -57,7 +57,6 @@ export function RootDocument({ children }: { children: React.ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="bg-background text-foreground font-fira">
-        {/* <QueryProvider> */}
         <I18nextProvider i18n={i18n}>
           <ThemeProvider>
             <MenuDrawerProvider />
@@ -73,14 +72,7 @@ export function RootDocument({ children }: { children: React.ReactNode }) {
             </div>
             <Toaster />
           </ThemeProvider>
-          {/* <TanStackDevtools */}
-          {/*   config={{ */}
-          {/*     position: "bottom-left", */}
-          {/*   }} */}
-          {/*   plugins={[]} */}
-          {/* /> */}
         </I18nextProvider>
-        {/* </QueryProvider> */}
         <Scripts />
       </body>
     </html>

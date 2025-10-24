@@ -35,10 +35,6 @@ export const getRouter = () => {
         user: null,
         isLoading: false,
       }
-      // auth: {
-      // user: user ?? null,
-      // isLoading,
-      // },
     },
     Wrap: ({ children }) => (
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
