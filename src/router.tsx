@@ -1,5 +1,5 @@
 import { createRouter } from "@tanstack/react-router";
-import { useAuthStore } from "@/store/auth";
+// import { useAuthStore } from "@/store/auth";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
@@ -23,7 +23,7 @@ export const trpc = createTRPCOptionsProxy<AppRouter>({
 
 // Create a new router instance
 export const getRouter = () => {
-  const { user, isLoading } = useAuthStore.getState();
+  // const { user, isLoading } = useAuthStore.getState();
   return createRouter({
     routeTree,
     scrollRestoration: true,
@@ -32,9 +32,13 @@ export const getRouter = () => {
       trpc,
       queryClient,
       auth: {
-        user: user ?? null,
-        isLoading,
-      },
+        user: null,
+        isLoading: false,
+      }
+      // auth: {
+      // user: user ?? null,
+      // isLoading,
+      // },
     },
     Wrap: ({ children }) => (
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
