@@ -1,28 +1,12 @@
 import Logo from "./logo";
 import Gutter from "./gutter";
-import { GithubIcon, InstagramIcon, Mail } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 import { Button } from "./ui/button";
+import { QUICK_LINKS } from "@/lib/constants";
+import { useTrans } from "@/hooks/use-trans";
 
-const QUICK_LINKS: { name: string; url: string; icon: LucideIcon }[] = [
-  {
-    name: "Github",
-    url: "https://github.com/supersheykh",
-    icon: GithubIcon,
-  },
-  {
-    name: "Instagram",
-    url: "https://www.instagram.com/sekousidibe/",
-    icon: InstagramIcon,
-  },
-  {
-    name: "Mail",
-    url: "mailto:bahsekousidi@gmail.com",
-    icon: Mail,
-  },
-];
 
 const Footer = () => {
+  const t = useTrans()
   return (
     <div className="mt-auto bg-card text-card-foreground border-t-1 border-border ">
       <Gutter className="pt-8">
@@ -43,7 +27,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-8 text-center text-wrap text-xs text-card-foreground py-4">
-          <p>© 2025 SuperSheykh - All rights reserved</p>
+          <p>© 2025 SuperSheykh - {t("All rights reserved", "Tous droits réservés")}</p>
         </div>
       </Gutter>
     </div>

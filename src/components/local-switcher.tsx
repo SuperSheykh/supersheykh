@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Spinner } from "./ui/spinner";
 import ReactCountryFlag from "react-country-flag";
+import { cn } from "@/lib/utils";
 
 const LocalSwitcher = () => {
   const [mounted, setMounted] = React.useState(false);
@@ -23,11 +24,11 @@ const LocalSwitcher = () => {
   }
 
   return (
-    <Select value={language} onValueChange={changeLanguage}>
-      <SelectTrigger className="w-fit border-none" >
+    <Select value={language} onValueChange={changeLanguage}  >
+      <SelectTrigger className="w-fit rounded-none bg-background"  >
         <SelectValue placeholder="Language" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className={cn("rounded-none bg-background border-none",)}>
         <SelectItem value="en">
           <div className="flex items-center gap-2">
             <ReactCountryFlag countryCode="GB" svg />

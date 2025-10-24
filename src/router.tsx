@@ -32,7 +32,7 @@ export const getRouter = () => {
       trpc,
       queryClient,
       auth: {
-        user,
+        user: user ?? null,
         isLoading,
       },
     },

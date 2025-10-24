@@ -1,3 +1,5 @@
+import { GithubIcon, InstagramIcon, LucideIcon, Mail } from "lucide-react";
+
 export const PAGES: Array<{ title: string; title_fr?: string; path: string }> =
   [
     {
@@ -119,5 +121,23 @@ export const SOCIALS = [
     id: 3,
     name: "LinkedIn",
     url: "https://www.linkedin.com/in/sekousidibe/",
+  },
+];
+
+export const QUICK_LINKS: { name: string; url: string; icon: LucideIcon }[] = [
+  {
+    name: "Github",
+    url: "https://github.com/supersheykh",
+    icon: GithubIcon,
+  },
+  {
+    name: "Instagram",
+    url: "https://www.instagram.com/sekousidibe/",
+    icon: InstagramIcon,
+  },
+  {
+    name: "Mail",
+    url: "mailto:bahsekousidi@gmail.com",
+    icon: Mail,
   },
 ];
