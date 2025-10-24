@@ -4,12 +4,8 @@ import { trpcServer } from "@hono/trpc-server";
 import { appRouter } from "../trpc/router";
 import { createContext } from "../trpc/context";
 import { Env } from "@/types";
-import { api as apiRoutes } from "./api";
 
 const app = new Hono<{ Bindings: Env }>();
-
-// Handles all the /api requests
-app.route("/api", apiRoutes);
 
 // Setup tRPC server
 app.use(
