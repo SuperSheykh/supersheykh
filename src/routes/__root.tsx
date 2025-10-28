@@ -1,6 +1,6 @@
 import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
 import { type queryClient, type trpc } from "@/router";
-import { User } from 'better-auth/types'
+import type { User } from 'better-auth/types'
 
 import { I18nextProvider } from "react-i18next";
 import i18n from "../i18n";

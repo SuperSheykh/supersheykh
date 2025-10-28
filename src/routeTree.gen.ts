@@ -34,7 +34,6 @@ import { Route as DashboardQuotesQuoteIdRouteImport } from './routes/dashboard/q
 import { Route as DashboardProjectsProjectIdRouteImport } from './routes/dashboard/projects/$projectId'
 import { Route as DashboardBlogsSlugRouteImport } from './routes/dashboard/blogs/$slug'
 import { Route as DashboardBillboardsBillboardIdRouteImport } from './routes/dashboard/billboards/$billboardId'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 
 const SocialsRoute = SocialsRouteImport.update({
   id: '/socials',
@@ -165,11 +164,6 @@ const DashboardBillboardsBillboardIdRoute =
     path: '/dashboard/billboards/$billboardId',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -183,7 +177,6 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardIndexRoute
   '/images': typeof ImagesIndexRoute
   '/portfolio': typeof PortfolioIndexRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/billboards/$billboardId': typeof DashboardBillboardsBillboardIdRoute
   '/dashboard/blogs/$slug': typeof DashboardBlogsSlugRoute
   '/dashboard/projects/$projectId': typeof DashboardProjectsProjectIdRoute
@@ -211,7 +204,6 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardIndexRoute
   '/images': typeof ImagesIndexRoute
   '/portfolio': typeof PortfolioIndexRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/billboards/$billboardId': typeof DashboardBillboardsBillboardIdRoute
   '/dashboard/blogs/$slug': typeof DashboardBlogsSlugRoute
   '/dashboard/projects/$projectId': typeof DashboardProjectsProjectIdRoute
@@ -240,7 +232,6 @@ export interface FileRoutesById {
   '/dashboard/': typeof DashboardIndexRoute
   '/images/': typeof ImagesIndexRoute
   '/portfolio/': typeof PortfolioIndexRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/billboards/$billboardId': typeof DashboardBillboardsBillboardIdRoute
   '/dashboard/blogs/$slug': typeof DashboardBlogsSlugRoute
   '/dashboard/projects/$projectId': typeof DashboardProjectsProjectIdRoute
@@ -270,7 +261,6 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/images'
     | '/portfolio'
-    | '/api/auth/$'
     | '/dashboard/billboards/$billboardId'
     | '/dashboard/blogs/$slug'
     | '/dashboard/projects/$projectId'
@@ -298,7 +288,6 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/images'
     | '/portfolio'
-    | '/api/auth/$'
     | '/dashboard/billboards/$billboardId'
     | '/dashboard/blogs/$slug'
     | '/dashboard/projects/$projectId'
@@ -326,7 +315,6 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/images/'
     | '/portfolio/'
-    | '/api/auth/$'
     | '/dashboard/billboards/$billboardId'
     | '/dashboard/blogs/$slug'
     | '/dashboard/projects/$projectId'
@@ -355,7 +343,6 @@ export interface RootRouteChildren {
   DashboardIndexRoute: typeof DashboardIndexRoute
   ImagesIndexRoute: typeof ImagesIndexRoute
   PortfolioIndexRoute: typeof PortfolioIndexRoute
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   DashboardBillboardsBillboardIdRoute: typeof DashboardBillboardsBillboardIdRoute
   DashboardBlogsSlugRoute: typeof DashboardBlogsSlugRoute
   DashboardProjectsProjectIdRoute: typeof DashboardProjectsProjectIdRoute
@@ -549,13 +536,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardBillboardsBillboardIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -571,7 +551,6 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardIndexRoute: DashboardIndexRoute,
   ImagesIndexRoute: ImagesIndexRoute,
   PortfolioIndexRoute: PortfolioIndexRoute,
-  ApiAuthSplatRoute: ApiAuthSplatRoute,
   DashboardBillboardsBillboardIdRoute: DashboardBillboardsBillboardIdRoute,
   DashboardBlogsSlugRoute: DashboardBlogsSlugRoute,
   DashboardProjectsProjectIdRoute: DashboardProjectsProjectIdRoute,
