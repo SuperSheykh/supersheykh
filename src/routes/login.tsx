@@ -5,6 +5,7 @@ import AuthForm from "@/components/auth-form";
 // Validate the search parameter from the URL
 const loginSearchSchema = z.object({
   type: z.enum(["signin", "signup"]).default("signin"),
+  redirectTo: z.string().optional()
 });
 
 export const Route = createFileRoute("/login")({

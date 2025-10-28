@@ -29,10 +29,10 @@ export default function Header() {
             {false && <NavItem to="/dashboard" title="Dashboard" />}
             <div className="ml-3 flex gap-x-2">
               <span className="hidden md:inline">
-                <LocalSwitcher />
+                <ThemeSwitcher />
               </span>
               <span className="hidden md:inline">
-                <ThemeSwitcher />
+                <LocalSwitcher />
               </span>
               <MenuBtn />
             </div>

@@ -18,8 +18,8 @@ const Projects = () => {
       <ScrollArea className="w-full whitespace-nowrap pb-4">
         <ItemGroup className="flex w-max flex-row space-x-4">
           {data?.map((project) => (
-            <div className="w-[350px]">
-              <ProjectCard key={project.id} {...project} />
+            <div className="w-[350px]" key={project.id}>
+              <ProjectCard {...project} />
             </div>
           ))}
         </ItemGroup>

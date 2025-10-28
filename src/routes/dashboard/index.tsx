@@ -12,68 +12,17 @@ import {
 } from "@/components/ui/item";
 import { ListChecks, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useSession } from "@/lib/auth-client";
+import { DASHBOARD_SECTIONS } from "@/lib/constants";
 
 export const Route = createFileRoute("/dashboard/")({
+  beforeLoad: ({ }) => {
+    throw redirect({ to: '/login', search: { type: 'signin', redirectTo: '/dashboard' } })
+  },
   component: RouteComponent,
 });
 
-const DASHBOARD_SECTIONS = [
-  {
-    title: "Projects",
-    path: "/dashboard/projects",
-    description: "All of projects built or in progress",
-    newPath: "/dashboard/projects/new",
-  },
-  {
-    title: "Billboards",
-    path: "/dashboard/billboards",
-    description: "website hero billboards",
-    newPath: "/dashboard/billboards/new",
-  },
-  {
-    title: "Blogs",
-    path: "/dashboard/blogs",
-    description: "Articles I've written or chosen to publish.",
-    newPath: "/dashboard/blogs/new",
-  },
-  {
-    title: "Skills & Experience",
-    path: "/dashboard/skills",
-    description: "My skills and working tools",
-    newPath: "/dashboard/skills/new",
-  },
-  {
-    title: "Quotes",
-    path: "/dashboard/quotes",
-    description: "Quotes that inspire me in day to day life",
-    newPath: "/dashboard/quotes/new",
-  },
-  {
-    title: "Socials",
-    path: "/dashboard/socials",
-    description: "Where people can find me on the web",
-    newPath: "/dashboard/socials/new",
-  },
-  {
-    title: "Images",
-    path: "/dashboard/images",
-    description: "Images I've uploaded on the project",
-    newPath: "",
-  },
-
-  {
-    title: "Users",
-    path: "/dashboard/users",
-    description: "Users of the website and their roles",
-    newPath: "",
-  },
-];
-
 function RouteComponent() {
   const router = useRouter();
-  const { data } = useSession.get();
-  if (!data) redirect({ to: "/login", search: { type: "signin" } });
 
   return (
     <Gutter className='space-y-16'>

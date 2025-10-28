@@ -2,14 +2,6 @@ import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/reac
 import { type queryClient, type trpc } from "@/router";
 import { User } from 'better-auth/types'
 
-export interface RouterContext {
-  auth: {
-    user: User | null;
-    isLoading: boolean;
-  };
-  trpc: typeof trpc;
-  queryClient: typeof queryClient;
-}
 import { I18nextProvider } from "react-i18next";
 import i18n from "../i18n";
 import { Toaster } from "@/components/ui/sonner";
@@ -23,6 +15,15 @@ import DialogProvider from "@/components/providers/dialog-provider";
 import Footer from "@/components/footer";
 import BreadcrumbComponent from "@/components/breadcrumb";
 import { themeScript } from "@/lib/utils/themeScript";
+
+export interface RouterContext {
+  auth: {
+    user: User | null;
+    isLoading: boolean;
+  };
+  trpc: typeof trpc;
+  queryClient: typeof queryClient;
+}
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   head: () => ({
