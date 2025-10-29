@@ -16,6 +16,7 @@ import Footer from "@/components/footer";
 import BreadcrumbComponent from "@/components/breadcrumb";
 import { themeScript } from "@/lib/utils/themeScript";
 import { getUser } from "actions/auth/get-user";
+import NotFound from "@/components/not-found";
 
 export interface RouterContext {
   auth: {
@@ -48,6 +49,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     ],
   }),
   shellComponent: RootDocument,
+  notFoundComponent: NotFound,
   beforeLoad: async () => {
     const user = await getUser()
     return {

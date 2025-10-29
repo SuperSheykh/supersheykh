@@ -4,21 +4,20 @@
   "compatibility_date": "2025-09-02",
   "compatibility_flags": ["nodejs_compat"],
   "main": "./worker/index.ts",
-  "vars": {
-  },
+  "vars": {},
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "supersheykh_db",
       "database_id": "ad7a302c-f4ae-4797-86a3-ab30e12c13bd",
       "preview_database_id": "ad7a302c-f4ae-4797-86a3-ab30e12c13bd",
-      "migrations_dir":"./drizzle/"
+      "migrations_dir": "./drizzle/"
     }
-  ], 
+  ],
   "r2_buckets": [
     {
       "binding": "BK",
-      "bucket_name": "supersheykh-bucket",
+      "bucket_name": "supersheykh-bucket"
     }
-  ],
+  ]
 }

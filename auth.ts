@@ -3,6 +3,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 // import { db } from "@/db/db-cli"; //NOTE: When using the @better-auth/cli
 import db from "@/db";
 import { reactStartCookies } from "better-auth/react-start";
+import { admin } from "better-auth/plugins";
 import * as schema from "@/db/schema";
 
 export const auth = betterAuth({
@@ -11,6 +12,7 @@ export const auth = betterAuth({
     provider: "sqlite",
     schema,
   }),
+  appName: "SuperSheykh",
   emailAndPassword: {
     enabled: true,
   },
@@ -28,5 +30,10 @@ export const auth = betterAuth({
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
     },
   },
-  plugins: [reactStartCookies()],
+  plugins: [
+    admin({
+      adminUserIds: [process.env.ADMIN_USER_ID as string],
+    }),
+    reactStartCookies(),
+  ],
 });

@@ -12,8 +12,10 @@ import { cn } from "@/lib/utils";
 import LocalSwitcher from "../local-switcher";
 import ThemeSwitcher from "../theme-switcher";
 import { useTrans } from "@/hooks/use-trans";
+import { useSession } from "@/lib/auth-client";
 
 const MenuDrawerProvider = () => {
+  const { data } = useSession()
   const t = useTrans()
   const open = useMenuDrawer((state) => state.isOpen);
   const close = useMenuDrawer((state) => state.close);
@@ -29,6 +31,19 @@ const MenuDrawerProvider = () => {
         <div className="flex justify-between">
           <ThemeSwitcher />
           <LocalSwitcher />
+        </div>
+        <div className="flex justify-start">
+          <Button variant='link' asChild >
+            {
+              data
+                ? <Link to='/dashboard' onClick={close} >
+                  Dashboard
+                </Link>
+                : <Link to='/login' search={{ type: 'signin', redirectTo: '/dashboard' }} onClick={close} >
+                  {t('login', "s'identifier")}
+                </Link>
+            }
+          </Button>
         </div>
         <div className="mt-4 p-4 flex flex-col gap-4">
           {PAGES.map((item) => {

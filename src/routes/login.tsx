@@ -1,6 +1,7 @@
 import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { z } from "zod";
 import AuthForm from "@/components/auth-form";
+import Gutter from "@/components/gutter";
 
 // Validate the search parameter from the URL
 const loginSearchSchema = z.object({
@@ -17,9 +18,9 @@ function RouteComponent() {
   const { type, redirectTo } = useSearch({ from: "/login" });
 
   return (
-    <div className="w-full min-h-screen flex items-center justify-center">
+    <Gutter className="w-full h-full flex items-center justify-center">
       <AuthForm type={type} callbackURL={redirectTo} />
-    </div>
+    </Gutter>
   );
 }
 

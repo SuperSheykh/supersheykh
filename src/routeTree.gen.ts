@@ -13,6 +13,8 @@ import { Route as SocialsRouteImport } from './routes/socials'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as R404RouteImport } from './routes/404'
+import { Route as DashboardRouteRouteImport } from './routes/dashboard/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PortfolioIndexRouteImport } from './routes/portfolio/index'
 import { Route as ImagesIndexRouteImport } from './routes/images/index'
@@ -55,6 +57,16 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const R404Route = R404RouteImport.update({
+  id: '/404',
+  path: '/404',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRouteRoute = DashboardRouteRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -71,9 +83,9 @@ const ImagesIndexRoute = ImagesIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
-  id: '/dashboard/',
-  path: '/dashboard/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRouteRoute,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
@@ -96,77 +108,79 @@ const PortfolioProjectIdIndexRoute = PortfolioProjectIdIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardUsersIndexRoute = DashboardUsersIndexRouteImport.update({
-  id: '/dashboard/users/',
-  path: '/dashboard/users/',
-  getParentRoute: () => rootRouteImport,
+  id: '/users/',
+  path: '/users/',
+  getParentRoute: () => DashboardRouteRoute,
 } as any)
 const DashboardSocialsIndexRoute = DashboardSocialsIndexRouteImport.update({
-  id: '/dashboard/socials/',
-  path: '/dashboard/socials/',
-  getParentRoute: () => rootRouteImport,
+  id: '/socials/',
+  path: '/socials/',
+  getParentRoute: () => DashboardRouteRoute,
 } as any)
 const DashboardSkillsIndexRoute = DashboardSkillsIndexRouteImport.update({
-  id: '/dashboard/skills/',
-  path: '/dashboard/skills/',
-  getParentRoute: () => rootRouteImport,
+  id: '/skills/',
+  path: '/skills/',
+  getParentRoute: () => DashboardRouteRoute,
 } as any)
 const DashboardQuotesIndexRoute = DashboardQuotesIndexRouteImport.update({
-  id: '/dashboard/quotes/',
-  path: '/dashboard/quotes/',
-  getParentRoute: () => rootRouteImport,
+  id: '/quotes/',
+  path: '/quotes/',
+  getParentRoute: () => DashboardRouteRoute,
 } as any)
 const DashboardProjectsIndexRoute = DashboardProjectsIndexRouteImport.update({
-  id: '/dashboard/projects/',
-  path: '/dashboard/projects/',
-  getParentRoute: () => rootRouteImport,
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => DashboardRouteRoute,
 } as any)
 const DashboardImagesIndexRoute = DashboardImagesIndexRouteImport.update({
-  id: '/dashboard/images/',
-  path: '/dashboard/images/',
-  getParentRoute: () => rootRouteImport,
+  id: '/images/',
+  path: '/images/',
+  getParentRoute: () => DashboardRouteRoute,
 } as any)
 const DashboardBlogsIndexRoute = DashboardBlogsIndexRouteImport.update({
-  id: '/dashboard/blogs/',
-  path: '/dashboard/blogs/',
-  getParentRoute: () => rootRouteImport,
+  id: '/blogs/',
+  path: '/blogs/',
+  getParentRoute: () => DashboardRouteRoute,
 } as any)
 const DashboardBillboardsIndexRoute =
   DashboardBillboardsIndexRouteImport.update({
-    id: '/dashboard/billboards/',
-    path: '/dashboard/billboards/',
-    getParentRoute: () => rootRouteImport,
+    id: '/billboards/',
+    path: '/billboards/',
+    getParentRoute: () => DashboardRouteRoute,
   } as any)
 const DashboardSocialsSocialIdRoute =
   DashboardSocialsSocialIdRouteImport.update({
-    id: '/dashboard/socials/$socialId',
-    path: '/dashboard/socials/$socialId',
-    getParentRoute: () => rootRouteImport,
+    id: '/socials/$socialId',
+    path: '/socials/$socialId',
+    getParentRoute: () => DashboardRouteRoute,
   } as any)
 const DashboardQuotesQuoteIdRoute = DashboardQuotesQuoteIdRouteImport.update({
-  id: '/dashboard/quotes/$quoteId',
-  path: '/dashboard/quotes/$quoteId',
-  getParentRoute: () => rootRouteImport,
+  id: '/quotes/$quoteId',
+  path: '/quotes/$quoteId',
+  getParentRoute: () => DashboardRouteRoute,
 } as any)
 const DashboardProjectsProjectIdRoute =
   DashboardProjectsProjectIdRouteImport.update({
-    id: '/dashboard/projects/$projectId',
-    path: '/dashboard/projects/$projectId',
-    getParentRoute: () => rootRouteImport,
+    id: '/projects/$projectId',
+    path: '/projects/$projectId',
+    getParentRoute: () => DashboardRouteRoute,
   } as any)
 const DashboardBlogsSlugRoute = DashboardBlogsSlugRouteImport.update({
-  id: '/dashboard/blogs/$slug',
-  path: '/dashboard/blogs/$slug',
-  getParentRoute: () => rootRouteImport,
+  id: '/blogs/$slug',
+  path: '/blogs/$slug',
+  getParentRoute: () => DashboardRouteRoute,
 } as any)
 const DashboardBillboardsBillboardIdRoute =
   DashboardBillboardsBillboardIdRouteImport.update({
-    id: '/dashboard/billboards/$billboardId',
-    path: '/dashboard/billboards/$billboardId',
-    getParentRoute: () => rootRouteImport,
+    id: '/billboards/$billboardId',
+    path: '/billboards/$billboardId',
+    getParentRoute: () => DashboardRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/404': typeof R404Route
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
@@ -174,7 +188,7 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/images/$key': typeof ImagesKeyRoute
   '/blog': typeof BlogIndexRoute
-  '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/': typeof DashboardIndexRoute
   '/images': typeof ImagesIndexRoute
   '/portfolio': typeof PortfolioIndexRoute
   '/dashboard/billboards/$billboardId': typeof DashboardBillboardsBillboardIdRoute
@@ -194,6 +208,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/404': typeof R404Route
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
@@ -222,6 +237,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/404': typeof R404Route
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
@@ -251,6 +268,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/dashboard'
+    | '/404'
     | '/about'
     | '/contact'
     | '/login'
@@ -258,7 +277,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/images/$key'
     | '/blog'
-    | '/dashboard'
+    | '/dashboard/'
     | '/images'
     | '/portfolio'
     | '/dashboard/billboards/$billboardId'
@@ -278,6 +297,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/404'
     | '/about'
     | '/contact'
     | '/login'
@@ -305,6 +325,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/dashboard'
+    | '/404'
     | '/about'
     | '/contact'
     | '/login'
@@ -333,6 +355,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
+  R404Route: typeof R404Route
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   LoginRoute: typeof LoginRoute
@@ -340,22 +364,8 @@ export interface RootRouteChildren {
   BlogSlugRoute: typeof BlogSlugRoute
   ImagesKeyRoute: typeof ImagesKeyRoute
   BlogIndexRoute: typeof BlogIndexRoute
-  DashboardIndexRoute: typeof DashboardIndexRoute
   ImagesIndexRoute: typeof ImagesIndexRoute
   PortfolioIndexRoute: typeof PortfolioIndexRoute
-  DashboardBillboardsBillboardIdRoute: typeof DashboardBillboardsBillboardIdRoute
-  DashboardBlogsSlugRoute: typeof DashboardBlogsSlugRoute
-  DashboardProjectsProjectIdRoute: typeof DashboardProjectsProjectIdRoute
-  DashboardQuotesQuoteIdRoute: typeof DashboardQuotesQuoteIdRoute
-  DashboardSocialsSocialIdRoute: typeof DashboardSocialsSocialIdRoute
-  DashboardBillboardsIndexRoute: typeof DashboardBillboardsIndexRoute
-  DashboardBlogsIndexRoute: typeof DashboardBlogsIndexRoute
-  DashboardImagesIndexRoute: typeof DashboardImagesIndexRoute
-  DashboardProjectsIndexRoute: typeof DashboardProjectsIndexRoute
-  DashboardQuotesIndexRoute: typeof DashboardQuotesIndexRoute
-  DashboardSkillsIndexRoute: typeof DashboardSkillsIndexRoute
-  DashboardSocialsIndexRoute: typeof DashboardSocialsIndexRoute
-  DashboardUsersIndexRoute: typeof DashboardUsersIndexRoute
   PortfolioProjectIdIndexRoute: typeof PortfolioProjectIdIndexRoute
 }
 
@@ -389,6 +399,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/404': {
+      id: '/404'
+      path: '/404'
+      fullPath: '/404'
+      preLoaderRoute: typeof R404RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -412,10 +436,10 @@ declare module '@tanstack/react-router' {
     }
     '/dashboard/': {
       id: '/dashboard/'
-      path: '/dashboard'
-      fullPath: '/dashboard'
+      path: '/'
+      fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DashboardRouteRoute
     }
     '/blog/': {
       id: '/blog/'
@@ -447,110 +471,117 @@ declare module '@tanstack/react-router' {
     }
     '/dashboard/users/': {
       id: '/dashboard/users/'
-      path: '/dashboard/users'
+      path: '/users'
       fullPath: '/dashboard/users'
       preLoaderRoute: typeof DashboardUsersIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DashboardRouteRoute
     }
     '/dashboard/socials/': {
       id: '/dashboard/socials/'
-      path: '/dashboard/socials'
+      path: '/socials'
       fullPath: '/dashboard/socials'
       preLoaderRoute: typeof DashboardSocialsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DashboardRouteRoute
     }
     '/dashboard/skills/': {
       id: '/dashboard/skills/'
-      path: '/dashboard/skills'
+      path: '/skills'
       fullPath: '/dashboard/skills'
       preLoaderRoute: typeof DashboardSkillsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DashboardRouteRoute
     }
     '/dashboard/quotes/': {
       id: '/dashboard/quotes/'
-      path: '/dashboard/quotes'
+      path: '/quotes'
       fullPath: '/dashboard/quotes'
       preLoaderRoute: typeof DashboardQuotesIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DashboardRouteRoute
     }
     '/dashboard/projects/': {
       id: '/dashboard/projects/'
-      path: '/dashboard/projects'
+      path: '/projects'
       fullPath: '/dashboard/projects'
       preLoaderRoute: typeof DashboardProjectsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DashboardRouteRoute
     }
     '/dashboard/images/': {
       id: '/dashboard/images/'
-      path: '/dashboard/images'
+      path: '/images'
       fullPath: '/dashboard/images'
       preLoaderRoute: typeof DashboardImagesIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DashboardRouteRoute
     }
     '/dashboard/blogs/': {
       id: '/dashboard/blogs/'
-      path: '/dashboard/blogs'
+      path: '/blogs'
       fullPath: '/dashboard/blogs'
       preLoaderRoute: typeof DashboardBlogsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DashboardRouteRoute
     }
     '/dashboard/billboards/': {
       id: '/dashboard/billboards/'
-      path: '/dashboard/billboards'
+      path: '/billboards'
       fullPath: '/dashboard/billboards'
       preLoaderRoute: typeof DashboardBillboardsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DashboardRouteRoute
     }
     '/dashboard/socials/$socialId': {
       id: '/dashboard/socials/$socialId'
-      path: '/dashboard/socials/$socialId'
+      path: '/socials/$socialId'
       fullPath: '/dashboard/socials/$socialId'
       preLoaderRoute: typeof DashboardSocialsSocialIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DashboardRouteRoute
     }
     '/dashboard/quotes/$quoteId': {
       id: '/dashboard/quotes/$quoteId'
-      path: '/dashboard/quotes/$quoteId'
+      path: '/quotes/$quoteId'
       fullPath: '/dashboard/quotes/$quoteId'
       preLoaderRoute: typeof DashboardQuotesQuoteIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DashboardRouteRoute
     }
     '/dashboard/projects/$projectId': {
       id: '/dashboard/projects/$projectId'
-      path: '/dashboard/projects/$projectId'
+      path: '/projects/$projectId'
       fullPath: '/dashboard/projects/$projectId'
       preLoaderRoute: typeof DashboardProjectsProjectIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DashboardRouteRoute
     }
     '/dashboard/blogs/$slug': {
       id: '/dashboard/blogs/$slug'
-      path: '/dashboard/blogs/$slug'
+      path: '/blogs/$slug'
       fullPath: '/dashboard/blogs/$slug'
       preLoaderRoute: typeof DashboardBlogsSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DashboardRouteRoute
     }
     '/dashboard/billboards/$billboardId': {
       id: '/dashboard/billboards/$billboardId'
-      path: '/dashboard/billboards/$billboardId'
+      path: '/billboards/$billboardId'
       fullPath: '/dashboard/billboards/$billboardId'
       preLoaderRoute: typeof DashboardBillboardsBillboardIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DashboardRouteRoute
     }
   }
 }
 
-const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  ContactRoute: ContactRoute,
-  LoginRoute: LoginRoute,
-  SocialsRoute: SocialsRoute,
-  BlogSlugRoute: BlogSlugRoute,
-  ImagesKeyRoute: ImagesKeyRoute,
-  BlogIndexRoute: BlogIndexRoute,
+interface DashboardRouteRouteChildren {
+  DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardBillboardsBillboardIdRoute: typeof DashboardBillboardsBillboardIdRoute
+  DashboardBlogsSlugRoute: typeof DashboardBlogsSlugRoute
+  DashboardProjectsProjectIdRoute: typeof DashboardProjectsProjectIdRoute
+  DashboardQuotesQuoteIdRoute: typeof DashboardQuotesQuoteIdRoute
+  DashboardSocialsSocialIdRoute: typeof DashboardSocialsSocialIdRoute
+  DashboardBillboardsIndexRoute: typeof DashboardBillboardsIndexRoute
+  DashboardBlogsIndexRoute: typeof DashboardBlogsIndexRoute
+  DashboardImagesIndexRoute: typeof DashboardImagesIndexRoute
+  DashboardProjectsIndexRoute: typeof DashboardProjectsIndexRoute
+  DashboardQuotesIndexRoute: typeof DashboardQuotesIndexRoute
+  DashboardSkillsIndexRoute: typeof DashboardSkillsIndexRoute
+  DashboardSocialsIndexRoute: typeof DashboardSocialsIndexRoute
+  DashboardUsersIndexRoute: typeof DashboardUsersIndexRoute
+}
+
+const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
   DashboardIndexRoute: DashboardIndexRoute,
-  ImagesIndexRoute: ImagesIndexRoute,
-  PortfolioIndexRoute: PortfolioIndexRoute,
   DashboardBillboardsBillboardIdRoute: DashboardBillboardsBillboardIdRoute,
   DashboardBlogsSlugRoute: DashboardBlogsSlugRoute,
   DashboardProjectsProjectIdRoute: DashboardProjectsProjectIdRoute,
@@ -564,6 +595,25 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardSkillsIndexRoute: DashboardSkillsIndexRoute,
   DashboardSocialsIndexRoute: DashboardSocialsIndexRoute,
   DashboardUsersIndexRoute: DashboardUsersIndexRoute,
+}
+
+const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
+  DashboardRouteRouteChildren,
+)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  DashboardRouteRoute: DashboardRouteRouteWithChildren,
+  R404Route: R404Route,
+  AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
+  LoginRoute: LoginRoute,
+  SocialsRoute: SocialsRoute,
+  BlogSlugRoute: BlogSlugRoute,
+  ImagesKeyRoute: ImagesKeyRoute,
+  BlogIndexRoute: BlogIndexRoute,
+  ImagesIndexRoute: ImagesIndexRoute,
+  PortfolioIndexRoute: PortfolioIndexRoute,
   PortfolioProjectIdIndexRoute: PortfolioProjectIdIndexRoute,
 }
 export const routeTree = rootRouteImport

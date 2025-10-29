@@ -1,4 +1,4 @@
-import { redirect, useRouter } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
 import Gutter from "@/components/gutter";
 import PageTitle from "@/components/page-title";
 import { createFileRoute } from "@tanstack/react-router";
@@ -15,10 +15,6 @@ import { Button } from "@/components/ui/button";
 import { DASHBOARD_SECTIONS } from "@/lib/constants";
 
 export const Route = createFileRoute("/dashboard/")({
-  beforeLoad: ({ context }) => {
-    if (context.auth.user)
-      throw redirect({ to: '/login', search: { type: 'signin', redirectTo: '/dashboard' } })
-  },
   component: RouteComponent,
 });
 

@@ -2,11 +2,11 @@ import { Link } from "@tanstack/react-router";
 import { ClassNameValue } from "tailwind-merge";
 import { cn } from "@/lib/utils";
 
-const Logo = ({ className, style = 'horizontal' }: { className?: ClassNameValue, style?: 'horizontal' | 'vertical' }) => {
+const Logo = ({ className, }: { className?: ClassNameValue }) => {
   return (
-    <Link to="/" className={cn(className, style === 'horizontal' ? 'flex items-center justify-center' : 'flex flex-col items-center justify-center', 'gap-4 text-foreground')}>
-      <img src='/logo.png' alt='logo' className='w-8 h-8' />
-      <span className='text-foreground text-xl font-bold'>
+    <Link to="/" className={cn('flex items-center justify-center', 'gap-4 text-foreground', className)}>
+      <img src='/logo.png' alt='logo' className='w-6 h-6 md:w-8 md:h-8' />
+      <span className='text-foreground text-lg md:text-xl font-bold'>
         SuperSheykh
       </span>
     </Link>
