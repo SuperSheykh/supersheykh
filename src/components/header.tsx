@@ -13,7 +13,7 @@ import { useTrans } from "@/hooks/use-trans";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full bg-background border-b-0 shadow-xs">
+    <header className="sticky top-0 z-50 w-full bg-background border-b-0 shadow-md">
       <Gutter>
         <nav className="py-2 flex justify-between items-center">
           <Logo className="text-base" />

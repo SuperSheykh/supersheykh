@@ -15,8 +15,9 @@ import { Button } from "@/components/ui/button";
 import { DASHBOARD_SECTIONS } from "@/lib/constants";
 
 export const Route = createFileRoute("/dashboard/")({
-  beforeLoad: ({ }) => {
-    throw redirect({ to: '/login', search: { type: 'signin', redirectTo: '/dashboard' } })
+  beforeLoad: ({ context }) => {
+    if (context.auth.user)
+      throw redirect({ to: '/login', search: { type: 'signin', redirectTo: '/dashboard' } })
   },
   component: RouteComponent,
 });

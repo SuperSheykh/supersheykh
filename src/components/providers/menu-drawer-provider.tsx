@@ -37,7 +37,7 @@ const MenuDrawerProvider = () => {
         </div>
         <SheetFooter>
           <p className="text-center text-sm">{t("Follow me on:", 'Suivez moi sur:')}</p>
-          <div className="flex flex-row justify-center">
+          <div className="flex flex-row justify-center gap-x-2">
             {QUICK_LINKS.map(({ name, url, icon: Icon }) => (
               <Button key={name} asChild size="icon" variant="outline">
                 <a href={url} className="flex items-center gap-2">

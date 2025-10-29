@@ -7,6 +7,7 @@ import { skillCategoriesRouter } from "./routes/skill-categories";
 import { quotesRouter } from "./routes/quotes";
 import { socialsRouter } from "./routes/socials";
 import { imagesRouter } from "./routes/images";
+import { authRouter } from "./routes/auth";
 
 export const appRouter = router({
   projects: projectsRouter,
@@ -17,6 +18,7 @@ export const appRouter = router({
   quotes: quotesRouter,
   socials: socialsRouter,
   images: imagesRouter,
+  auth: authRouter,
 });
 
 export type AppRouter = typeof appRouter;

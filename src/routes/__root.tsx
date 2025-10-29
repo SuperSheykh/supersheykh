@@ -15,6 +15,7 @@ import DialogProvider from "@/components/providers/dialog-provider";
 import Footer from "@/components/footer";
 import BreadcrumbComponent from "@/components/breadcrumb";
 import { themeScript } from "@/lib/utils/themeScript";
+import { getUser } from "actions/auth/get-user";
 
 export interface RouterContext {
   auth: {
@@ -47,6 +48,15 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     ],
   }),
   shellComponent: RootDocument,
+  beforeLoad: async () => {
+    const user = await getUser()
+    return {
+      auth: {
+        user,
+      }
+    }
+  }
+
 });
 
 export function RootDocument({ children }: { children: React.ReactNode }) {

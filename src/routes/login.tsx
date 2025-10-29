@@ -14,11 +14,11 @@ export const Route = createFileRoute("/login")({
 });
 
 function RouteComponent() {
-  const { type } = useSearch({ from: "/login" });
+  const { type, redirectTo } = useSearch({ from: "/login" });
 
   return (
-    <div className="w-full h-screen flex items-center justify-center">
-      <AuthForm type={type} />
+    <div className="w-full min-h-screen flex items-center justify-center">
+      <AuthForm type={type} callbackURL={redirectTo} />
     </div>
   );
 }

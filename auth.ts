@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 // import { db } from "@/db/db-cli"; //NOTE: When using the @better-auth/cli
 import db from "@/db";
-
+import { reactStartCookies } from "better-auth/react-start";
 import * as schema from "@/db/schema";
 
 export const auth = betterAuth({
@@ -28,4 +28,5 @@ export const auth = betterAuth({
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
     },
   },
+  plugins: [reactStartCookies()],
 });

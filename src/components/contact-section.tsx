@@ -66,6 +66,7 @@ const ContactSection = () => {
                 url={social.url}
                 fgColor="var(--primary)"
                 bgColor="transparent"
+                style={{ width: "2rem", height: "2rem" }}
               />
             </Button>
           ))}

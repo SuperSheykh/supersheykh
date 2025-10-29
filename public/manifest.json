@@ -1,6 +1,8 @@
 {
-  "short_name": "TanStack App",
-  "name": "Create TanStack App Sample",
+  "version": "1.0",
+  "manifest_version": 2,
+  "short_name": "SuperSheykh",
+  "name": "SuperSheykh | Personal Website",
   "icons": [
     {
       "src": "favicon.ico",

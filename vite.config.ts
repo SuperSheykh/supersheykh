@@ -15,7 +15,7 @@ const config = defineConfig({
     }),
     tailwindcss(),
     cloudflare({
-      viteEnvironment: { name: 'ssr' },
+      viteEnvironment: { name: "ssr" },
       configPath: "./wrangler.json",
     }),
   ],

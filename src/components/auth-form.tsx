@@ -26,13 +26,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "./ui/spinner";
-// import { signIn, signUp } from "@/lib/auth-client";
+import { signIn, signUp } from "@/lib/auth-client";
 
 interface AuthFormProps {
   type: "signin" | "signup";
+  callbackURL?: string;
 }
 
-const AuthForm = ({ type }: AuthFormProps) => {
+const AuthForm = ({ type, callbackURL }: AuthFormProps) => {
   const t = useTrans();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -69,32 +70,32 @@ const AuthForm = ({ type }: AuthFormProps) => {
 
   const onSubmit = async (values: FormValues) => {
 
-    //   const action =
-    //     type === "signin"
-    //       ? signIn.email({
-    //         email: values.email,
-    //         password: values.password,
-    //         callbackURL: "/dashboard",
-    //       })
-    //       : signUp.email({
-    //         name: values.name || "",
-    //         email: values.email,
-    //         password: values.password,
-    //         callbackURL: "/dashboard",
-    //       });
-    //
-    //   toast.promise(action, {
-    //     loading: t("Submitting...", "Envoi en cours..."),
-    //     success: ({ error }) => {
-    //       if (error) {
-    //         throw error;
-    //       }
-    //       return t("Success! Redirecting...", "Succès ! Redirection...");
-    //     },
-    //     error: (err) =>
-    //       err.message || t("Something went wrong!", "Une erreur est survenue !"),
-    //     finally: () => setIsLoading(false),
-    //   });
+    const action =
+      type === "signin"
+        ? signIn.email({
+          email: values.email,
+          password: values.password,
+          callbackURL: "/dashboard",
+        })
+        : signUp.email({
+          name: values.name || "",
+          email: values.email,
+          password: values.password,
+          callbackURL: "/dashboard",
+        });
+
+    toast.promise(action, {
+      loading: t("Submitting...", "Envoi en cours..."),
+      success: ({ error }) => {
+        if (error) {
+          throw error;
+        }
+        return t("Success! Redirecting...", "Succès ! Redirection...");
+      },
+      error: (err) =>
+        err.message || t("Something went wrong!", "Une erreur est survenue !"),
+      finally: () => setIsLoading(false),
+    });
   };
   return (
     <Card className="w-full max-w-sm">
@@ -190,18 +191,30 @@ const AuthForm = ({ type }: AuthFormProps) => {
           <Button
             variant="outline"
             disabled={isLoading}
+            onClick={() => signIn.social({
+              provider: 'github',
+              callbackURL: callbackURL,
+            })}
           >
             <Github className="h-5 w-5" />
           </Button>
           <Button
             variant="outline"
             disabled={isLoading}
+            onClick={() => signIn.social({
+              provider: 'google',
+              callbackURL: callbackURL,
+            })}
           >
             <GoalIcon className="h-5 w-5" />
           </Button>
           <Button
             variant="outline"
             disabled={isLoading}
+            onClick={() => signIn.social({
+              provider: 'facebook',
+              callbackURL: callbackURL,
+            })}
           >
             <Facebook className="h-5 w-5" />
           </Button>
@@ -238,5 +251,5 @@ const AuthForm = ({ type }: AuthFormProps) => {
   );
 };
 
-export default AuthForm;
 
+export default AuthForm;
