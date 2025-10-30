@@ -3,6 +3,7 @@ import Gutter from "./gutter";
 import { Button } from "./ui/button";
 import { QUICK_LINKS } from "@/lib/constants";
 import { useTrans } from "@/hooks/use-trans";
+import QuickLinks from "./quick-links";
 
 
 const Footer = () => {
@@ -25,7 +26,8 @@ const Footer = () => {
             ))}
           </div>
         </div>
-        <div className="mt-8 text-center text-wrap text-xs text-card-foreground py-4">
+        <div className="mt-8 flex flex-col md:flex-row text-center text-wrap text-xs text-card-foreground py-4">
+          <QuickLinks />
           <p>© 2025 SuperSheykh - <span>
             {t("All rights reserved", "Tous droits réservés")}
           </span></p>

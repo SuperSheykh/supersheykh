@@ -6,12 +6,11 @@ export const useTrans = () => {
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    setMounted(true)
-  }, [setMounted])
+    setMounted(true);
+  }, [setMounted]);
 
   const t = (name: string, nameFr?: string | null) => {
-    if (mounted)
-      return i18n.language === "fr" ? nameFr || name : name;
+    if (mounted) return i18n.language === "fr" ? nameFr || name : name;
   };
 
   return t;

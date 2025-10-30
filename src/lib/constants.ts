@@ -179,13 +179,18 @@ export const DASHBOARD_SECTIONS = [
     description: "Where people can find me on the web",
     newPath: "/dashboard/socials/new",
   },
+  // {
+  //   title: "Images",
+  //   path: "/dashboard/images",
+  //   description: "Images I've uploaded on the project",
+  //   newPath: "",
+  // },
   {
-    title: "Images",
-    path: "/dashboard/images",
-    description: "Images I've uploaded on the project",
-    newPath: "",
+    title: "Policies",
+    path: "/dashboard/policies",
+    description: "All of policies and legal mentions of the website",
+    newPath: "/dashboard/policies/new",
   },
-
   {
     title: "Users",
     path: "/dashboard/users",
@@ -193,4 +198,3 @@ export const DASHBOARD_SECTIONS = [
     newPath: "",
   },
 ];
-
