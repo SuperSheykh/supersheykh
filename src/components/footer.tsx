@@ -5,9 +5,8 @@ import { QUICK_LINKS } from "@/lib/constants";
 import { useTrans } from "@/hooks/use-trans";
 import QuickLinks from "./quick-links";
 
-
 const Footer = () => {
-  const t = useTrans()
+  const t = useTrans();
   return (
     <div className="mt-auto bg-card text-card-foreground border-t-1 border-border ">
       <Gutter className="pt-8">
@@ -26,11 +25,12 @@ const Footer = () => {
             ))}
           </div>
         </div>
-        <div className="mt-8 flex flex-col md:flex-row text-center text-wrap text-xs text-card-foreground py-4">
+        <div className="mt-8 text-xs text-card-foreground py-4 md:flex md:flex-wrap md:justify-between md:items-baseline gap-2 space-y-2 border-t border-t-accent">
           <QuickLinks />
-          <p>© 2025 SuperSheykh - <span>
-            {t("All rights reserved", "Tous droits réservés")}
-          </span></p>
+          <p className="inline-block md:ml-auto">
+            © 2025 SuperSheykh -{" "}
+            <span>{t("All rights reserved", "Tous droits réservés")}</span>
+          </p>
         </div>
       </Gutter>
     </div>
