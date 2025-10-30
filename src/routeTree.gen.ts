@@ -11,15 +11,18 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SocialsRouteImport } from './routes/socials'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as DeleteMyDataRouteImport } from './routes/delete-my-data'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as DashboardRouteRouteImport } from './routes/dashboard/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PortfolioIndexRouteImport } from './routes/portfolio/index'
+import { Route as LegalIndexRouteImport } from './routes/legal/index'
 import { Route as ImagesIndexRouteImport } from './routes/images/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as LegalSlugRouteImport } from './routes/legal/$slug'
 import { Route as ImagesKeyRouteImport } from './routes/images/$key'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as PortfolioProjectIdIndexRouteImport } from './routes/portfolio/$projectId/index'
@@ -45,6 +48,11 @@ const SocialsRoute = SocialsRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeleteMyDataRoute = DeleteMyDataRouteImport.update({
+  id: '/delete-my-data',
+  path: '/delete-my-data',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -77,6 +85,11 @@ const PortfolioIndexRoute = PortfolioIndexRouteImport.update({
   path: '/portfolio/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LegalIndexRoute = LegalIndexRouteImport.update({
+  id: '/legal/',
+  path: '/legal/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ImagesIndexRoute = ImagesIndexRouteImport.update({
   id: '/images/',
   path: '/images/',
@@ -90,6 +103,11 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalSlugRoute = LegalSlugRouteImport.update({
+  id: '/legal/$slug',
+  path: '/legal/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ImagesKeyRoute = ImagesKeyRouteImport.update({
@@ -183,13 +201,16 @@ export interface FileRoutesByFullPath {
   '/404': typeof R404Route
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/delete-my-data': typeof DeleteMyDataRoute
   '/login': typeof LoginRoute
   '/socials': typeof SocialsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/images/$key': typeof ImagesKeyRoute
+  '/legal/$slug': typeof LegalSlugRoute
   '/blog': typeof BlogIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/images': typeof ImagesIndexRoute
+  '/legal': typeof LegalIndexRoute
   '/portfolio': typeof PortfolioIndexRoute
   '/dashboard/billboards/$billboardId': typeof DashboardBillboardsBillboardIdRoute
   '/dashboard/blogs/$slug': typeof DashboardBlogsSlugRoute
@@ -211,13 +232,16 @@ export interface FileRoutesByTo {
   '/404': typeof R404Route
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/delete-my-data': typeof DeleteMyDataRoute
   '/login': typeof LoginRoute
   '/socials': typeof SocialsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/images/$key': typeof ImagesKeyRoute
+  '/legal/$slug': typeof LegalSlugRoute
   '/blog': typeof BlogIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/images': typeof ImagesIndexRoute
+  '/legal': typeof LegalIndexRoute
   '/portfolio': typeof PortfolioIndexRoute
   '/dashboard/billboards/$billboardId': typeof DashboardBillboardsBillboardIdRoute
   '/dashboard/blogs/$slug': typeof DashboardBlogsSlugRoute
@@ -241,13 +265,16 @@ export interface FileRoutesById {
   '/404': typeof R404Route
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/delete-my-data': typeof DeleteMyDataRoute
   '/login': typeof LoginRoute
   '/socials': typeof SocialsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/images/$key': typeof ImagesKeyRoute
+  '/legal/$slug': typeof LegalSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/images/': typeof ImagesIndexRoute
+  '/legal/': typeof LegalIndexRoute
   '/portfolio/': typeof PortfolioIndexRoute
   '/dashboard/billboards/$billboardId': typeof DashboardBillboardsBillboardIdRoute
   '/dashboard/blogs/$slug': typeof DashboardBlogsSlugRoute
@@ -272,13 +299,16 @@ export interface FileRouteTypes {
     | '/404'
     | '/about'
     | '/contact'
+    | '/delete-my-data'
     | '/login'
     | '/socials'
     | '/blog/$slug'
     | '/images/$key'
+    | '/legal/$slug'
     | '/blog'
     | '/dashboard/'
     | '/images'
+    | '/legal'
     | '/portfolio'
     | '/dashboard/billboards/$billboardId'
     | '/dashboard/blogs/$slug'
@@ -300,13 +330,16 @@ export interface FileRouteTypes {
     | '/404'
     | '/about'
     | '/contact'
+    | '/delete-my-data'
     | '/login'
     | '/socials'
     | '/blog/$slug'
     | '/images/$key'
+    | '/legal/$slug'
     | '/blog'
     | '/dashboard'
     | '/images'
+    | '/legal'
     | '/portfolio'
     | '/dashboard/billboards/$billboardId'
     | '/dashboard/blogs/$slug'
@@ -329,13 +362,16 @@ export interface FileRouteTypes {
     | '/404'
     | '/about'
     | '/contact'
+    | '/delete-my-data'
     | '/login'
     | '/socials'
     | '/blog/$slug'
     | '/images/$key'
+    | '/legal/$slug'
     | '/blog/'
     | '/dashboard/'
     | '/images/'
+    | '/legal/'
     | '/portfolio/'
     | '/dashboard/billboards/$billboardId'
     | '/dashboard/blogs/$slug'
@@ -359,12 +395,15 @@ export interface RootRouteChildren {
   R404Route: typeof R404Route
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  DeleteMyDataRoute: typeof DeleteMyDataRoute
   LoginRoute: typeof LoginRoute
   SocialsRoute: typeof SocialsRoute
   BlogSlugRoute: typeof BlogSlugRoute
   ImagesKeyRoute: typeof ImagesKeyRoute
+  LegalSlugRoute: typeof LegalSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   ImagesIndexRoute: typeof ImagesIndexRoute
+  LegalIndexRoute: typeof LegalIndexRoute
   PortfolioIndexRoute: typeof PortfolioIndexRoute
   PortfolioProjectIdIndexRoute: typeof PortfolioProjectIdIndexRoute
 }
@@ -383,6 +422,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/delete-my-data': {
+      id: '/delete-my-data'
+      path: '/delete-my-data'
+      fullPath: '/delete-my-data'
+      preLoaderRoute: typeof DeleteMyDataRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -427,6 +473,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortfolioIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/legal/': {
+      id: '/legal/'
+      path: '/legal'
+      fullPath: '/legal'
+      preLoaderRoute: typeof LegalIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/images/': {
       id: '/images/'
       path: '/images'
@@ -446,6 +499,13 @@ declare module '@tanstack/react-router' {
       path: '/blog'
       fullPath: '/blog'
       preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/$slug': {
+      id: '/legal/$slug'
+      path: '/legal/$slug'
+      fullPath: '/legal/$slug'
+      preLoaderRoute: typeof LegalSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/images/$key': {
@@ -607,12 +667,15 @@ const rootRouteChildren: RootRouteChildren = {
   R404Route: R404Route,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  DeleteMyDataRoute: DeleteMyDataRoute,
   LoginRoute: LoginRoute,
   SocialsRoute: SocialsRoute,
   BlogSlugRoute: BlogSlugRoute,
   ImagesKeyRoute: ImagesKeyRoute,
+  LegalSlugRoute: LegalSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   ImagesIndexRoute: ImagesIndexRoute,
+  LegalIndexRoute: LegalIndexRoute,
   PortfolioIndexRoute: PortfolioIndexRoute,
   PortfolioProjectIdIndexRoute: PortfolioProjectIdIndexRoute,
 }

@@ -10,24 +10,8 @@ import { MenuIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useMenuDrawer } from "@/hooks/use-menu-drawer";
 import { useTrans } from "@/hooks/use-trans";
-import { useSession } from "@/lib/auth-client";
-import { useMemo } from "react";
 
 export default function Header() {
-  const { data } = useSession()
-  const t = useTrans()
-
-  const to = useMemo(() => {
-    if (data)
-      return '/dashboard'
-    return '/login'
-  }, [data])
-
-  const loginName = useMemo(() => {
-    if (data)
-      return 'Dashboard'
-    return t('login', "s'identifier")
-  }, [data, t])
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background border-b-0 shadow-md">
@@ -50,13 +34,6 @@ export default function Header() {
               </span>
               <span className="hidden md:inline">
                 <LocalSwitcher />
-              </span>
-              <span className="hidden md:inline">
-                <Button variant='default' size='sm' asChild >
-                  <Link to={to} >
-                    {loginName}
-                  </Link>
-                </Button>
               </span>
               <MenuBtn />
             </div>
@@ -83,6 +60,7 @@ const NavItem = ({
     <Button
       variant="ghost"
       className={cn(
+        "text-foreground hover:border-b-2 hover:border-primary hover:bg-background active:border-b-2 active:border-primary active:bg-background",
         "w-auto px-2 hidden md:inline-block transition font-normal",
         isActive && "font-bold",
       )}

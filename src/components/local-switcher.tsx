@@ -22,10 +22,10 @@ const LocalSwitcher = () => {
 
   return (
     <Select value={language} onValueChange={changeLanguage}  >
-      <SelectTrigger className="w-fit border-none"  >
-        <SelectValue placeholder="Language" />
+      <SelectTrigger className="w-fit border-none rounded-none hover:bg-accent cursor-pointer" style={{ background: 'transparent' }} >
+        <SelectValue placeholder="Language" className="bg-background" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="bg-background">
         <SelectItem value="en">
           <div className="flex items-center gap-2">
             <ReactCountryFlag countryCode="GB" svg />
