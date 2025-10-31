@@ -23,8 +23,13 @@ const ContactSection = () => {
         <div className="text-lg max-w-2xl mx-auto text-center space-y-4">
           <p>{t(messages.en, messages.fr)}</p>
         </div>
-        <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
-          <Button asChild variant={"outline"} size={"lg"}>
+        <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
+          <Button
+            asChild
+            variant={"outline"}
+            size={"lg"}
+            className="w-full md:w-auto"
+          >
             <a
               href="mailto:me@example.com"
               className="flex items-center gap-2 p-4 rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80"
@@ -33,7 +38,12 @@ const ContactSection = () => {
               <h3>Email</h3>
             </a>
           </Button>
-          <Button asChild variant={"outline"}>
+          <Button
+            asChild
+            variant={"outline"}
+            size={"lg"}
+            className="w-full md:w-auto"
+          >
             <a
               href="tel:+1234567890"
               className="flex items-center gap-2 p-4 rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80"
@@ -42,7 +52,12 @@ const ContactSection = () => {
               <h3>Phone</h3>
             </a>
           </Button>
-          <Button asChild variant={"outline"}>
+          <Button
+            asChild
+            variant={"outline"}
+            size={"lg"}
+            className="w-full md:w-auto"
+          >
             <a
               href="tel:+1234567890"
               className="flex items-center gap-2 p-4 rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80"
@@ -66,7 +81,7 @@ const ContactSection = () => {
                 url={social.url}
                 fgColor="var(--primary)"
                 bgColor="transparent"
-                style={{ width: "2rem", height: "2rem" }}
+                style={{ width: "3rem", height: "3rem" }}
               />
             </Button>
           ))}

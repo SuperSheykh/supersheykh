@@ -9,14 +9,10 @@ import { PAGES, QUICK_LINKS } from "@/lib/constants";
 import { Button } from "../ui/button";
 import { Link, useLocation } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
-import LocalSwitcher from "../local-switcher";
-import ThemeSwitcher from "../theme-switcher";
 import { useTrans } from "@/hooks/use-trans";
-import { useSession } from "@/lib/auth-client";
 
 const MenuDrawerProvider = () => {
-  const { data } = useSession()
-  const t = useTrans()
+  const t = useTrans();
   const open = useMenuDrawer((state) => state.isOpen);
   const close = useMenuDrawer((state) => state.close);
   const onChange = (open: boolean) => {
@@ -28,30 +24,15 @@ const MenuDrawerProvider = () => {
         <SheetHeader className="border-b">
           <p className="text-2xl font-semibold text-center">Menu</p>
         </SheetHeader>
-        <div className="flex justify-between">
-          <ThemeSwitcher />
-          <LocalSwitcher />
-        </div>
-        <div className="flex justify-start">
-          <Button variant='link' asChild >
-            {
-              data
-                ? <Link to='/dashboard' onClick={close} >
-                  Dashboard
-                </Link>
-                : <Link to='/login' search={{ type: 'signin', redirectTo: '/dashboard' }} onClick={close} >
-                  {t('login', "s'identifier")}
-                </Link>
-            }
-          </Button>
-        </div>
         <div className="mt-4 p-4 flex flex-col gap-4">
           {PAGES.map((item) => {
             return <NavItem {...item} />;
           })}
         </div>
         <SheetFooter>
-          <p className="text-center text-sm">{t("Follow me on:", 'Suivez moi sur:')}</p>
+          <p className="text-center text-sm">
+            {t("Follow me on:", "Suivez moi sur:")}
+          </p>
           <div className="flex flex-row justify-center gap-x-2">
             {QUICK_LINKS.map(({ name, url, icon: Icon }) => (
               <Button key={name} asChild size="icon" variant="outline">
@@ -61,7 +42,6 @@ const MenuDrawerProvider = () => {
               </Button>
             ))}
           </div>
-
         </SheetFooter>
       </SheetContent>
     </Sheet>

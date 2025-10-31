@@ -17,12 +17,14 @@ const LocalSwitcher = () => {
 
   useEffect(() => setMounted(true), []);
 
-  if (!mounted)
-    return null
+  if (!mounted) return null;
 
   return (
-    <Select value={language} onValueChange={changeLanguage}  >
-      <SelectTrigger className="w-fit border-none rounded-none hover:bg-accent cursor-pointer" style={{ background: 'transparent' }} >
+    <Select value={language} onValueChange={changeLanguage}>
+      <SelectTrigger
+        className="w-fit border-none rounded-none hover:bg-accent cursor-pointer"
+        size="sm"
+      >
         <SelectValue placeholder="Language" className="bg-background" />
       </SelectTrigger>
       <SelectContent className="bg-background">

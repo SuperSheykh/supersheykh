@@ -8,7 +8,6 @@ import {
   FormControl,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
 import { FormButtons } from "@/components/form-buttons";
 import { toast } from "sonner";
@@ -19,6 +18,8 @@ import { useTranslation } from "react-i18next";
 import { zodResolver } from "@hookform/resolvers/zod";
 import slugify from "@/lib/utils/slugify";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Checkbox } from "@/components/ui/checkbox";
+import MDTextArea from "@/components/ui/md-text-area";
 
 const PolicyForm = ({ policy }: { policy: Policy | null }) => {
   const [loading, setLoading] = useState(false);
@@ -74,9 +75,13 @@ const PolicyForm = ({ policy }: { policy: Policy | null }) => {
           )}
         />
         <Tabs defaultValue={language}>
-          <TabsList>
-            <TabsTrigger value="en">English</TabsTrigger>
-            <TabsTrigger value="fr">French</TabsTrigger>
+          <TabsList className="w-full rounded-none">
+            <TabsTrigger value="en" className="w-full rounded-none">
+              English
+            </TabsTrigger>
+            <TabsTrigger value="fr" className="w-full rounded-none">
+              French
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="en">
             <div className="flex flex-col gap-4 pt-4">
@@ -99,7 +104,7 @@ const PolicyForm = ({ policy }: { policy: Policy | null }) => {
                   <FormItem>
                     <FormLabel>Content</FormLabel>
                     <FormControl>
-                      <Textarea {...field} placeholder="Content" />
+                      <MDTextArea {...field} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -127,7 +132,7 @@ const PolicyForm = ({ policy }: { policy: Policy | null }) => {
                   <FormItem>
                     <FormLabel>French Content</FormLabel>
                     <FormControl>
-                      <Textarea {...field} placeholder="French Content" />
+                      <MDTextArea {...field} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -135,6 +140,36 @@ const PolicyForm = ({ policy }: { policy: Policy | null }) => {
             </div>
           </TabsContent>
         </Tabs>
+
+        <FormField
+          control={form.control}
+          name="version"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Version</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="Version" />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="published"
+          render={({ field }) => (
+            <FormItem className="border p-4  border-border rounded-none">
+              <FormControl className="flex items-center gap-x-2">
+                <div>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <FormLabel>Published?</FormLabel>
+                </div>
+              </FormControl>
+            </FormItem>
+          )}
+        />
         <FormButtons isPending={loading} />
       </form>
     </Form>
@@ -142,4 +177,3 @@ const PolicyForm = ({ policy }: { policy: Policy | null }) => {
 };
 
 export default PolicyForm;
-

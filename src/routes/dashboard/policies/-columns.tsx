@@ -3,6 +3,7 @@ import TableMoreBtn from "@/components/table-more-btn";
 import { deletePolicy } from "actions/policies";
 import { useNavigate } from "@tanstack/react-router";
 import { Policy } from "@/db/schema/policies";
+import { View } from "lucide-react";
 
 export const columns: ColumnDef<Policy>[] = [
   {
@@ -29,10 +30,19 @@ const MoreButtons = ({ id }: { id: string }) => {
       onDelete={() => deletePolicy({ data: { id } })}
       onEdit={() =>
         navigate({
-          to: "/dashboard/projects/$projectId",
-          params: { projectId: id },
+          to: "/dashboard/policies/$id",
+          params: { id },
+          search: { type: "edit" },
         })
       }
+      moreBtn={[
+        {
+          icon: <View />,
+          label: "View",
+          onClick: () =>
+            navigate({ to: `/dashboard/policies/$id/view`, params: { id } }),
+        },
+      ]}
     />
   );
 };

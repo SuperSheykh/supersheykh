@@ -38,9 +38,10 @@ import { Route as DashboardBillboardsIndexRouteImport } from './routes/dashboard
 import { Route as DashboardSocialsSocialIdRouteImport } from './routes/dashboard/socials/$socialId'
 import { Route as DashboardQuotesQuoteIdRouteImport } from './routes/dashboard/quotes/$quoteId'
 import { Route as DashboardProjectsProjectIdRouteImport } from './routes/dashboard/projects/$projectId'
-import { Route as DashboardPoliciesIdRouteImport } from './routes/dashboard/policies/$id'
 import { Route as DashboardBlogsSlugRouteImport } from './routes/dashboard/blogs/$slug'
 import { Route as DashboardBillboardsBillboardIdRouteImport } from './routes/dashboard/billboards/$billboardId'
+import { Route as DashboardPoliciesIdIndexRouteImport } from './routes/dashboard/policies/$id/index'
+import { Route as DashboardPoliciesIdViewRouteImport } from './routes/dashboard/policies/$id/view'
 
 const SocialsRoute = SocialsRouteImport.update({
   id: '/socials',
@@ -190,11 +191,6 @@ const DashboardProjectsProjectIdRoute =
     path: '/projects/$projectId',
     getParentRoute: () => DashboardRouteRoute,
   } as any)
-const DashboardPoliciesIdRoute = DashboardPoliciesIdRouteImport.update({
-  id: '/policies/$id',
-  path: '/policies/$id',
-  getParentRoute: () => DashboardRouteRoute,
-} as any)
 const DashboardBlogsSlugRoute = DashboardBlogsSlugRouteImport.update({
   id: '/blogs/$slug',
   path: '/blogs/$slug',
@@ -206,6 +202,17 @@ const DashboardBillboardsBillboardIdRoute =
     path: '/billboards/$billboardId',
     getParentRoute: () => DashboardRouteRoute,
   } as any)
+const DashboardPoliciesIdIndexRoute =
+  DashboardPoliciesIdIndexRouteImport.update({
+    id: '/policies/$id/',
+    path: '/policies/$id/',
+    getParentRoute: () => DashboardRouteRoute,
+  } as any)
+const DashboardPoliciesIdViewRoute = DashboardPoliciesIdViewRouteImport.update({
+  id: '/policies/$id/view',
+  path: '/policies/$id/view',
+  getParentRoute: () => DashboardRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -226,7 +233,6 @@ export interface FileRoutesByFullPath {
   '/portfolio': typeof PortfolioIndexRoute
   '/dashboard/billboards/$billboardId': typeof DashboardBillboardsBillboardIdRoute
   '/dashboard/blogs/$slug': typeof DashboardBlogsSlugRoute
-  '/dashboard/policies/$id': typeof DashboardPoliciesIdRoute
   '/dashboard/projects/$projectId': typeof DashboardProjectsProjectIdRoute
   '/dashboard/quotes/$quoteId': typeof DashboardQuotesQuoteIdRoute
   '/dashboard/socials/$socialId': typeof DashboardSocialsSocialIdRoute
@@ -240,6 +246,8 @@ export interface FileRoutesByFullPath {
   '/dashboard/socials': typeof DashboardSocialsIndexRoute
   '/dashboard/users': typeof DashboardUsersIndexRoute
   '/portfolio/$projectId': typeof PortfolioProjectIdIndexRoute
+  '/dashboard/policies/$id/view': typeof DashboardPoliciesIdViewRoute
+  '/dashboard/policies/$id': typeof DashboardPoliciesIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -259,7 +267,6 @@ export interface FileRoutesByTo {
   '/portfolio': typeof PortfolioIndexRoute
   '/dashboard/billboards/$billboardId': typeof DashboardBillboardsBillboardIdRoute
   '/dashboard/blogs/$slug': typeof DashboardBlogsSlugRoute
-  '/dashboard/policies/$id': typeof DashboardPoliciesIdRoute
   '/dashboard/projects/$projectId': typeof DashboardProjectsProjectIdRoute
   '/dashboard/quotes/$quoteId': typeof DashboardQuotesQuoteIdRoute
   '/dashboard/socials/$socialId': typeof DashboardSocialsSocialIdRoute
@@ -273,6 +280,8 @@ export interface FileRoutesByTo {
   '/dashboard/socials': typeof DashboardSocialsIndexRoute
   '/dashboard/users': typeof DashboardUsersIndexRoute
   '/portfolio/$projectId': typeof PortfolioProjectIdIndexRoute
+  '/dashboard/policies/$id/view': typeof DashboardPoliciesIdViewRoute
+  '/dashboard/policies/$id': typeof DashboardPoliciesIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -294,7 +303,6 @@ export interface FileRoutesById {
   '/portfolio/': typeof PortfolioIndexRoute
   '/dashboard/billboards/$billboardId': typeof DashboardBillboardsBillboardIdRoute
   '/dashboard/blogs/$slug': typeof DashboardBlogsSlugRoute
-  '/dashboard/policies/$id': typeof DashboardPoliciesIdRoute
   '/dashboard/projects/$projectId': typeof DashboardProjectsProjectIdRoute
   '/dashboard/quotes/$quoteId': typeof DashboardQuotesQuoteIdRoute
   '/dashboard/socials/$socialId': typeof DashboardSocialsSocialIdRoute
@@ -308,6 +316,8 @@ export interface FileRoutesById {
   '/dashboard/socials/': typeof DashboardSocialsIndexRoute
   '/dashboard/users/': typeof DashboardUsersIndexRoute
   '/portfolio/$projectId/': typeof PortfolioProjectIdIndexRoute
+  '/dashboard/policies/$id/view': typeof DashboardPoliciesIdViewRoute
+  '/dashboard/policies/$id/': typeof DashboardPoliciesIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -330,7 +340,6 @@ export interface FileRouteTypes {
     | '/portfolio'
     | '/dashboard/billboards/$billboardId'
     | '/dashboard/blogs/$slug'
-    | '/dashboard/policies/$id'
     | '/dashboard/projects/$projectId'
     | '/dashboard/quotes/$quoteId'
     | '/dashboard/socials/$socialId'
@@ -344,6 +353,8 @@ export interface FileRouteTypes {
     | '/dashboard/socials'
     | '/dashboard/users'
     | '/portfolio/$projectId'
+    | '/dashboard/policies/$id/view'
+    | '/dashboard/policies/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -363,7 +374,6 @@ export interface FileRouteTypes {
     | '/portfolio'
     | '/dashboard/billboards/$billboardId'
     | '/dashboard/blogs/$slug'
-    | '/dashboard/policies/$id'
     | '/dashboard/projects/$projectId'
     | '/dashboard/quotes/$quoteId'
     | '/dashboard/socials/$socialId'
@@ -377,6 +387,8 @@ export interface FileRouteTypes {
     | '/dashboard/socials'
     | '/dashboard/users'
     | '/portfolio/$projectId'
+    | '/dashboard/policies/$id/view'
+    | '/dashboard/policies/$id'
   id:
     | '__root__'
     | '/'
@@ -397,7 +409,6 @@ export interface FileRouteTypes {
     | '/portfolio/'
     | '/dashboard/billboards/$billboardId'
     | '/dashboard/blogs/$slug'
-    | '/dashboard/policies/$id'
     | '/dashboard/projects/$projectId'
     | '/dashboard/quotes/$quoteId'
     | '/dashboard/socials/$socialId'
@@ -411,6 +422,8 @@ export interface FileRouteTypes {
     | '/dashboard/socials/'
     | '/dashboard/users/'
     | '/portfolio/$projectId/'
+    | '/dashboard/policies/$id/view'
+    | '/dashboard/policies/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -637,13 +650,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardProjectsProjectIdRouteImport
       parentRoute: typeof DashboardRouteRoute
     }
-    '/dashboard/policies/$id': {
-      id: '/dashboard/policies/$id'
-      path: '/policies/$id'
-      fullPath: '/dashboard/policies/$id'
-      preLoaderRoute: typeof DashboardPoliciesIdRouteImport
-      parentRoute: typeof DashboardRouteRoute
-    }
     '/dashboard/blogs/$slug': {
       id: '/dashboard/blogs/$slug'
       path: '/blogs/$slug'
@@ -658,6 +664,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardBillboardsBillboardIdRouteImport
       parentRoute: typeof DashboardRouteRoute
     }
+    '/dashboard/policies/$id/': {
+      id: '/dashboard/policies/$id/'
+      path: '/policies/$id'
+      fullPath: '/dashboard/policies/$id'
+      preLoaderRoute: typeof DashboardPoliciesIdIndexRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
+    '/dashboard/policies/$id/view': {
+      id: '/dashboard/policies/$id/view'
+      path: '/policies/$id/view'
+      fullPath: '/dashboard/policies/$id/view'
+      preLoaderRoute: typeof DashboardPoliciesIdViewRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
   }
 }
 
@@ -665,7 +685,6 @@ interface DashboardRouteRouteChildren {
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardBillboardsBillboardIdRoute: typeof DashboardBillboardsBillboardIdRoute
   DashboardBlogsSlugRoute: typeof DashboardBlogsSlugRoute
-  DashboardPoliciesIdRoute: typeof DashboardPoliciesIdRoute
   DashboardProjectsProjectIdRoute: typeof DashboardProjectsProjectIdRoute
   DashboardQuotesQuoteIdRoute: typeof DashboardQuotesQuoteIdRoute
   DashboardSocialsSocialIdRoute: typeof DashboardSocialsSocialIdRoute
@@ -678,13 +697,14 @@ interface DashboardRouteRouteChildren {
   DashboardSkillsIndexRoute: typeof DashboardSkillsIndexRoute
   DashboardSocialsIndexRoute: typeof DashboardSocialsIndexRoute
   DashboardUsersIndexRoute: typeof DashboardUsersIndexRoute
+  DashboardPoliciesIdViewRoute: typeof DashboardPoliciesIdViewRoute
+  DashboardPoliciesIdIndexRoute: typeof DashboardPoliciesIdIndexRoute
 }
 
 const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardBillboardsBillboardIdRoute: DashboardBillboardsBillboardIdRoute,
   DashboardBlogsSlugRoute: DashboardBlogsSlugRoute,
-  DashboardPoliciesIdRoute: DashboardPoliciesIdRoute,
   DashboardProjectsProjectIdRoute: DashboardProjectsProjectIdRoute,
   DashboardQuotesQuoteIdRoute: DashboardQuotesQuoteIdRoute,
   DashboardSocialsSocialIdRoute: DashboardSocialsSocialIdRoute,
@@ -697,6 +717,8 @@ const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
   DashboardSkillsIndexRoute: DashboardSkillsIndexRoute,
   DashboardSocialsIndexRoute: DashboardSocialsIndexRoute,
   DashboardUsersIndexRoute: DashboardUsersIndexRoute,
+  DashboardPoliciesIdViewRoute: DashboardPoliciesIdViewRoute,
+  DashboardPoliciesIdIndexRoute: DashboardPoliciesIdIndexRoute,
 }
 
 const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(

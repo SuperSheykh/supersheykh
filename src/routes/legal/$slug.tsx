@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { getPolicy } from "actions/policies";
-import PageTitle from "@/components/page-title";
 import Gutter from "@/components/gutter";
+import MDRenderer from "@/components/ui/md-renderer";
+import { useTranslation } from "react-i18next";
 
 export const Route = createFileRoute("/legal/$slug")({
   loader: ({ params }) => getPolicy({ data: { slug: params.slug } }),
@@ -10,9 +11,14 @@ export const Route = createFileRoute("/legal/$slug")({
 
 function RouteComponent() {
   const policy = Route.useLoaderData();
+  const {
+    i18n: { language },
+  } = useTranslation();
   return (
-    <Gutter>
-      <PageTitle title={policy.title} title_fr={policy.titleFr} />
+    <Gutter className="py-8">
+      <MDRenderer
+        source={language === "en" ? policy.content : policy.contentFr}
+      />
     </Gutter>
   );
 }

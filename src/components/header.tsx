@@ -4,15 +4,13 @@ import { Button } from "./ui/button";
 import Logo from "./logo";
 
 import { PAGES } from "@/lib/constants";
-import LocalSwitcher from "./local-switcher";
-import ThemeSwitcher from "./theme-switcher";
 import { MenuIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useMenuDrawer } from "@/hooks/use-menu-drawer";
 import { useTrans } from "@/hooks/use-trans";
+import LoginBtn from "./auth/login-btn";
 
 export default function Header() {
-
   return (
     <header className="sticky top-0 z-50 w-full bg-background border-b-0 shadow-md">
       <Gutter>
@@ -27,14 +25,8 @@ export default function Header() {
                 title_fr={page.title_fr}
               />
             ))}
-            {false && <NavItem to="/dashboard" title="Dashboard" />}
-            <div className="ml-3 flex gap-x-2">
-              <span className="hidden md:inline">
-                <ThemeSwitcher />
-              </span>
-              <span className="hidden md:inline">
-                <LocalSwitcher />
-              </span>
+            <div className="ml-3 flex gap-x-1">
+              <LoginBtn />
               <MenuBtn />
             </div>
           </div>
