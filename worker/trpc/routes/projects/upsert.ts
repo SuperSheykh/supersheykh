@@ -9,6 +9,8 @@ import { getPrompt } from "@/lib/utils/get-translate-prompt";
 export const upsertProject = publicProcedure
   .input(projectFormSchema)
   .mutation(async ({ ctx, input: data }) => {
+    const { id } = data;
+
     const imgObject = await ctx.env.BK.get(data.cover);
 
     if (!imgObject) throw new Error("Image not found");
@@ -18,31 +20,37 @@ export const upsertProject = publicProcedure
       .values({
         id: data.cover,
         alt: data.title,
-        // size: imgObject.size,
-        // type: imgObject.httpMetadata?.contentType,
         uploadedAt: new Date().toISOString(),
       })
       .onConflictDoNothing()
       .returning();
 
-    const prompt = getPrompt(data, "projects");
+    const prompt =
+      getPrompt(data, "projects") +
+      `
+      in the title don't translate the name part like in:
+      Title: Store - Buy retail products online
+      Title_fr: Store - Acheter des produits en ligne
+      `;
 
     const { object } = await generateObject({
       model: groq("openai/gpt-oss-20b"),
-      schema: projectSchema,
+      schema: projectSchema.omit({ id: true }),
       prompt,
     });
 
-    const { id, ...rest } = object;
-
-    const slug = slugify(object.title);
+    const { slug, ...rest } = object;
 
     const [project] = await ctx.db
       .insert(projects)
-      .values({ ...object, slug })
+      .values({ ...object, id, slug })
       .onConflictDoUpdate({
         target: projects.id,
-        set: { ...rest, slug, cover: newImg.id },
+        set: {
+          ...rest,
+          slug: slug ?? slugify(object.title),
+          cover: newImg ? newImg.id : data.cover,
+        },
       })
       .returning();
 

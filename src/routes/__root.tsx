@@ -1,6 +1,10 @@
-import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
+import {
+  HeadContent,
+  Scripts,
+  createRootRouteWithContext,
+} from "@tanstack/react-router";
 import { type queryClient, type trpc } from "@/router";
-import type { User } from 'better-auth/types'
+import type { User } from "better-auth/types";
 
 import { I18nextProvider } from "react-i18next";
 import i18n from "../i18n";
@@ -51,14 +55,13 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   shellComponent: RootDocument,
   notFoundComponent: NotFound,
   beforeLoad: async () => {
-    const user = await getUser()
+    const user = await getUser();
     return {
       auth: {
         user,
-      }
-    }
-  }
-
+      },
+    };
+  },
 });
 
 export function RootDocument({ children }: { children: React.ReactNode }) {

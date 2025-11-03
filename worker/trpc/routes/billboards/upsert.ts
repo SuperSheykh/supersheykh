@@ -33,10 +33,12 @@ export const upsertBillboard = publicProcedure
       .onConflictDoNothing()
       .returning();
 
-    if (img)
-      return await ctx.db
-        .insert(billboards)
-        .values(object)
-        .onConflictDoUpdate({ target: billboards.id, set: rest })
-        .returning();
+    return await ctx.db
+      .insert(billboards)
+      .values({ ...object, id, imageKey: img?.id ?? imgObject.key })
+      .onConflictDoUpdate({
+        target: billboards.id,
+        set: { ...rest, imageKey: img?.id ?? imgObject.key },
+      })
+      .returning();
   });

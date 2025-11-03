@@ -37,7 +37,7 @@ const MoreButtons = ({ id }: { id: string }) => {
       }
       moreBtn={[
         {
-          icon: <View />,
+          icon: <View className="mr-2" />,
           label: "View",
           onClick: () =>
             navigate({ to: `/dashboard/policies/$id/view`, params: { id } }),

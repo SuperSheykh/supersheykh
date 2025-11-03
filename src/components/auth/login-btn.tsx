@@ -8,6 +8,7 @@ import {
 import { Link } from "@tanstack/react-router";
 import { User, LogOut } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useState } from "react";
 
 interface Props {
   inMenu?: boolean;
@@ -15,6 +16,7 @@ interface Props {
 
 const LoginBtn = ({}: Props) => {
   const { data: session, isPending } = useSession();
+  const [open, setOpen] = useState(false);
 
   if (isPending) {
     return (
@@ -26,7 +28,7 @@ const LoginBtn = ({}: Props) => {
 
   if (session?.user) {
     return (
-      <Popover>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button size="icon" variant="ghost" className="rounded-full">
             <User className="h-5 w-5" />
@@ -42,7 +44,11 @@ const LoginBtn = ({}: Props) => {
             </div>
             <div className="grid gap-2">
               <Button asChild>
-                <Link to="/dashboard" className="flex items-center gap-2">
+                <Link
+                  to="/dashboard"
+                  className="flex items-center gap-2"
+                  onClick={() => setOpen(false)}
+                >
                   Dashboard
                 </Link>
               </Button>
