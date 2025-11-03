@@ -6,6 +6,7 @@ import { createContext } from "../trpc/context";
 import { Env } from "@/types";
 import { auth } from "auth";
 import type { User, Session } from "better-auth";
+import apiRoutes from "./api";
 
 const app = new Hono<{
   Bindings: Env;
@@ -39,6 +40,10 @@ app.use(
       createContext(c.env, c.get("user"), c.get("session")),
   }),
 );
+
+// Setup API routes - I chose this over the tanstack react-start approach but I guess It both will workout.
+// since the start handler will take over if there no matching route.
+app.route("/api", apiRoutes);
 
 // Let tanstack handle all other requests
 app.all("*", async (c) => {

@@ -8,7 +8,7 @@ import { Spinner } from "./ui/spinner";
 import { deleteR2Image } from "actions/images/delete-r2-image";
 
 const uploadFile = async (formData: FormData) => {
-  const res = await fetch("/api/images", {
+  const res = await fetch("/api/bucket", {
     method: "POST",
     body: formData,
   });
@@ -97,7 +97,7 @@ const ImageUploader = ({
         ) : value ? (
           <div className="relative w-full h-full flex items-center justify-center">
             <img
-              src={`/api/images/${value}`} // could also be /images/${value}
+              src={`/api/bucket/${value}`} // could also be /api/${value}
               alt="Preview"
               className="max-h-[300px] max-w-full object-contain rounded-md"
             />
