@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import {
   Select,
@@ -15,9 +15,13 @@ const LocalSwitcher = () => {
     i18n: { language, changeLanguage },
   } = useTranslation();
 
-  useEffect(() => setMounted(true), []);
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  if (!mounted) return null;
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <Select value={language} onValueChange={changeLanguage}>
