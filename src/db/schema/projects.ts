@@ -20,6 +20,7 @@ export const projects = sqliteTable(
     live: text("live").default("1"),
     completion: real("completion").notNull(),
     github: text("github"),
+    productLink: text("product_link"),
     created_at: text("created_at").$defaultFn(() => new Date().toISOString()),
     updated_at: text("updated_at").$defaultFn(() => new Date().toISOString()),
   },

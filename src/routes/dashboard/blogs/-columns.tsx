@@ -1,6 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { TrpcRouterOutputs } from "@/types";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, View } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import TableMoreBtn from "@/components/table-more-btn";
 import { delBlog } from "actions/blogs";
@@ -34,7 +34,7 @@ export const columns: ColumnDef<Blog>[] = [
   },
 ];
 
-const MoreButtons = ({ slug, id }: { slug: string, id: string }) => {
+const MoreButtons = ({ slug, id }: { slug: string; id: string }) => {
   const navigate = useNavigate();
 
   return (
@@ -44,9 +44,18 @@ const MoreButtons = ({ slug, id }: { slug: string, id: string }) => {
       onEdit={() =>
         navigate({
           to: "/dashboard/blogs/$slug",
+          search: { type: "edit" },
           params: { slug },
         })
       }
+      moreBtn={[
+        {
+          label: "View",
+          icon: <View className="mr-2" />,
+          onClick: () =>
+            navigate({ to: `/dashboard/blogs/$slug/view`, params: { slug } }),
+        },
+      ]}
     />
   );
 };

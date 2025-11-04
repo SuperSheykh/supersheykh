@@ -58,7 +58,12 @@ const NavItem = ({
       )}
       asChild
     >
-      <Link to={to}>
+      <Link
+        to={to}
+        activeProps={{
+          className: "font-bold",
+        }}
+      >
         <span
           className={cn(" mr-1 text-foreground", isActive && "text-primary")}
         >

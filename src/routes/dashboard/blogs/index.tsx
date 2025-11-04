@@ -8,8 +8,6 @@ import Gutter from "@/components/gutter";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./-columns";
 import PageLoading from "@/components/page-loading";
-import { useQuery } from "@tanstack/react-query";
-import { useTRPC } from "@/lib/trpc";
 import { getAllBlogs } from "actions/blogs/get-all";
 
 export const Route = createFileRoute("/dashboard/blogs/")({
@@ -32,8 +30,9 @@ function RouteComponent() {
         data={data}
         onAdd={() =>
           navigate({
-            to: "/dashboard/blogs/$blogId",
-            params: { blogId: "new" },
+            to: "/dashboard/blogs/$slug",
+            search: { type: "ai" },
+            params: { slug: "new" },
           })
         }
       />

@@ -6,7 +6,11 @@ import { trpc } from "@/router";
 import { ItemGroup } from "@/components/ui/item";
 import ProjectCard from "./project-card";
 const Projects = () => {
-  const { data } = useQuery(trpc.projects.getAll.queryOptions());
+  const { data } = useQuery(
+    trpc.projects.getAll.queryOptions(undefined, {
+      staleTime: Infinity,
+    }),
+  );
 
   return (
     <Gutter className="space-y-12">

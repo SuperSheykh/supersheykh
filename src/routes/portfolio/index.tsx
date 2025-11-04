@@ -9,6 +9,7 @@ import { ItemGroup } from "@/components/ui/item";
 
 export const Route = createFileRoute("/portfolio/")({
   loader: () => getLiveProjects(),
+  staleTime: 60 * 60 * 8, // 8 hours
   component: RouteComponent,
 });
 

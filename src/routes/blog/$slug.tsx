@@ -1,42 +1,41 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { getBlogBySlug } from "actions/blogs";
 import { z } from "zod";
-import ReactMarkdown from "react-markdown";
 import { useTrans } from "@/hooks/use-trans";
+import Gutter from "@/components/gutter";
+import MDRenderer from "@/components/ui/md-renderer";
 
 export const Route = createFileRoute("/blog/$slug")({
   component: RouteComponent,
-  loader: async ({ params }) => {
-    return getBlogBySlug({ data: { slug: params.slug } });
-  },
+  loader: ({ params }) => getBlogBySlug({ data: { slug: params.slug } }),
+  // head: ({ params }) => {
+  //   return {
+  //     meta: {
+  //       title: "Blog",
+  //     },
+  //   };
+  // },
   validateSearch: z.object({
     lang: z.enum(["en", "fr"]).optional(),
   }),
 });
 
 function RouteComponent() {
-  const blog = Route.useLoaderData()
-  const t = useTrans()
+  const blog = Route.useLoaderData();
+  const t = useTrans();
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="bg-card text-card-foreground rounded-lg shadow-lg overflow-hidden">
-        {blog.cover && <img
+    <Gutter className="space-y-8 py-8">
+      {blog.cover && (
+        <img
           src={`/images/${blog.cover}`}
           alt={blog.title}
           className="w-full h-96 object-cover"
-        />}
-        <div className="p-6">
-          <h1 className="text-4xl font-bold mb-4">
-            {t(blog.title, blog.title_fr)}
-          </h1>
-          <div className="prose dark:prose-invert max-w-none">
-            <ReactMarkdown>
-              {t(blog.content, blog.content_fr)}
-            </ReactMarkdown>
-          </div>
-        </div>
+        />
+      )}
+      <div className="py-6 space-y-4">
+        <MDRenderer source={t(blog.content, blog.content_fr) ?? ""} />
       </div>
-    </div>
+    </Gutter>
   );
 }

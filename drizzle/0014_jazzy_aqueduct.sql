@@ -1,0 +1,1 @@
+ALTER TABLE `projects` ADD `product_link` text;

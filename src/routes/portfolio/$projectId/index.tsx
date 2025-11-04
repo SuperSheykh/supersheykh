@@ -2,6 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { getProject } from "actions/projects";
 import { Project } from "@/db/schema/projects";
 import { z } from "zod";
+import MDRenderer from "@/components/ui/md-renderer"; // Import MDRenderer
+import PageLoading from "@/components/page-loading";
+import Gutter from "@/components/gutter";
+import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
+import { GithubIcon, GlobeIcon } from "lucide-react";
+import { useTrans } from "@/hooks/use-trans";
 
 export const Route = createFileRoute("/portfolio/$projectId/")({
   component: RouteComponent,
@@ -11,51 +18,63 @@ export const Route = createFileRoute("/portfolio/$projectId/")({
   validateSearch: z.object({
     lang: z.enum(["en", "fr"]).optional(),
   }),
+  pendingComponent: PageLoading,
 });
 
 function RouteComponent() {
   const project = Route.useLoaderData() as Project;
   const { lang } = Route.useSearch();
+  const t = useTrans();
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="bg-card text-card-foreground rounded-lg shadow-lg overflow-hidden">
-        <img
-          src={project.cover}
-          alt={project.title}
-          className="w-full h-64 object-cover"
+    <Gutter className="space-y-8 py-8">
+      <img
+        src={`/images/${project.cover}`}
+        alt={project.title}
+        className="w-full h-64 object-cover"
+      />
+      <h1 className="text-3xl font-bold mb-4">
+        {lang === "fr" ? project.title_fr : project.title}
+      </h1>
+      <div className="flex items-center mb-4">
+        <Progress value={project.completion * 100} className="mr-2" />
+        <span className="ml-2 text-sm font-medium">{project.completion}%</span>
+      </div>
+      <div className="text-muted-foreground mb-4">
+        {" "}
+        {/* Changed p to div to wrap MDRenderer */}
+        <MDRenderer
+          source={lang === "fr" ? project.description_fr : project.description}
         />
-        <div className="p-6">
-          <h1 className="text-3xl font-bold mb-2">
-            {lang === "fr" ? project.title_fr : project.title}
-          </h1>
-          <p className="text-muted-foreground mb-4">
-            {lang === "fr" ? project.description_fr : project.description}
-          </p>
-          <div className="flex items-center mb-4">
-            <span className="text-sm font-medium mr-2">Completion:</span>
-            <div className="w-full bg-muted rounded-full h-2.5">
-              <div
-                className="bg-primary h-2.5 rounded-full"
-                style={{ width: `${project.completion}%` }}
-              ></div>
-            </div>
-            <span className="ml-2 text-sm font-medium">
-              {project.completion}%
-            </span>
-          </div>
-          {project.github && (
+      </div>
+      <div className="flex gap-2">
+        {project.github && (
+          <Button variant="outline" asChild>
             <a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:underline"
             >
-              View on GitHub
+              <GithubIcon className="mr-2" />
+              Github
             </a>
-          )}
-        </div>
+          </Button>
+        )}
+        {project.live && (
+          <Button variant="outline" asChild>
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              <GlobeIcon className="mr-2" />
+              {t("Live", "En ligne")}
+            </a>
+          </Button>
+        )}
       </div>
-    </div>
+    </Gutter>
   );
 }

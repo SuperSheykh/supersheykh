@@ -1,26 +1,31 @@
 import { createServerFn } from "@tanstack/react-start";
 import db from "@/db";
-import { blogFormSchema, blogs, blogSchema } from "@/db/schema/blogs";
-import { generateObject } from 'ai'
-import { groq } from '@ai-sdk/groq'
-import { getPrompt } from "@/lib/utils/get-translate-prompt";
+import { blogs, blogSchema } from "@/db/schema/blogs";
+import { env } from "cloudflare:workers";
+import { images } from "@/db/schema/images";
 
 export const upsertBlog = createServerFn()
-  .inputValidator(blogFormSchema)
+  .inputValidator(blogSchema)
   .handler(async ({ data }) => {
-    const prompt = getPrompt(data, 'blog')
+    const { id, ...objectRest } = data;
+    const imgObject = data.cover ? await env.BK.get(data.cover) : null;
+    if (!imgObject) throw new Error("Image not found");
 
-    const { object } = await generateObject({
-      model: groq('openai/gpt-oss-20b'),
-      prompt,
-      schema: blogSchema,
-    })
-
-    const { id, ...objectRest } = object
+    const [img] = await db
+      .insert(images)
+      .values({
+        id: imgObject.key,
+        alt: data.title,
+        type: imgObject.httpMetadata?.contentType,
+        size: imgObject.size,
+        uploadedAt: new Date().toISOString(),
+      })
+      .onConflictDoNothing()
+      .returning();
 
     const [res] = await db
       .insert(blogs)
-      .values(object)
+      .values({ ...data, cover: img?.id ?? imgObject.key })
       .onConflictDoUpdate({ target: blogs.id, set: objectRest })
       .returning();
 
