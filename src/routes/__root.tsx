@@ -9,6 +9,7 @@ import type { User } from "better-auth/types";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../i18n";
 import { Toaster } from "@/components/ui/sonner";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import Header from "@/components/header";
 
@@ -21,6 +22,8 @@ import BreadcrumbComponent from "@/components/breadcrumb";
 import { themeScript } from "@/lib/utils/themeScript";
 import { getUser } from "actions/auth/get-user";
 import NotFound from "@/components/not-found";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { TanStackDevtools } from "@tanstack/react-devtools";
 
 export interface RouterContext {
   auth: {
@@ -87,6 +90,23 @@ export function RootDocument({ children }: { children: React.ReactNode }) {
             <Toaster />
           </ThemeProvider>
         </I18nextProvider>
+        {process.env.NODE_ENV === "development" && (
+          <TanStackDevtools
+            config={{
+              position: "bottom-right",
+            }}
+            plugins={[
+              {
+                name: "Tanstack Router",
+                render: <TanStackRouterDevtoolsPanel />,
+              },
+              {
+                name: "React Query",
+                render: <ReactQueryDevtools />,
+              },
+            ]}
+          />
+        )}
         <Scripts />
       </body>
     </html>
