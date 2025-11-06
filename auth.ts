@@ -3,10 +3,12 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import db from "./auth-db/index";
 import { reactStartCookies } from "better-auth/react-start";
 import { admin } from "better-auth/plugins";
+import * as schema from "./auth-db/auth-schema";
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL,
   database: drizzleAdapter(db, {
+    schema,
     provider: "pg",
   }),
   appName: "SuperSheykh",
@@ -33,7 +35,6 @@ export const auth = betterAuth({
     //What actually permits me to have cookies sent to subdomains.
     crossSubDomainCookies: {
       enabled: true,
-      domain: ".supersheykh.win",
     },
   },
   plugins: [

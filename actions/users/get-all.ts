@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { user } from "@/db/schema/auth-schema";
+import { user } from "auth-db/auth-schema";
 import db from "@/db";
 
 export const getAllUsers = createServerFn().handler(async () => {
