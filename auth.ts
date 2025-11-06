@@ -1,16 +1,13 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-// import { db } from "@/db/db-cli"; //NOTE: When using the @better-auth/cli
-import db from "@/db";
+import db from "./auth-db/index";
 import { reactStartCookies } from "better-auth/react-start";
 import { admin } from "better-auth/plugins";
-import * as schema from "@/db/schema";
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL,
   database: drizzleAdapter(db, {
-    provider: "sqlite",
-    schema,
+    provider: "pg",
   }),
   appName: "SuperSheykh",
   emailAndPassword: {
@@ -30,6 +27,13 @@ export const auth = betterAuth({
     facebook: {
       clientId: process.env.FACEBOOK_CLIENT_ID as string,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
+    },
+  },
+  advanced: {
+    //What actually permits me to have cookies sent to subdomains.
+    crossSubDomainCookies: {
+      enabled: true,
+      domain: ".supersheykh.win",
     },
   },
   plugins: [

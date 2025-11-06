@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import handler from "@tanstack/react-start/server-entry";
 import { trpcServer } from "@hono/trpc-server";
 import { appRouter } from "../trpc/router";
@@ -12,6 +13,19 @@ const app = new Hono<{
   Bindings: Env;
   Variables: { user: User | null; session: Session | null };
 }>();
+
+//Cors settings for the auth route to allow my sub domains to access it.
+app.use(
+  "/api/auth/*",
+  cors({
+    origin: ["/\.supersheykh\.win$/"],
+    allowHeaders: ["Content-Type", "Authorization"],
+    allowMethods: ["POST", "GET", "OPTIONS"],
+    exposeHeaders: ["Content-Length"],
+    maxAge: 600,
+    credentials: true,
+  }),
+);
 
 app.use("/api/auth/*", async (c) => {
   return auth.handler(c.req.raw);
