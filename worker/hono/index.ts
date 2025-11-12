@@ -18,7 +18,7 @@ const app = new Hono<{
 app.use(
   "/api/auth/*",
   cors({
-    origin: ["/\.supersheykh\.win$/"],
+    origin: ["/\.supersheykh\.win$/", "http://localhost:3000"],
     allowHeaders: ["Content-Type", "Authorization"],
     allowMethods: ["POST", "GET", "OPTIONS"],
     exposeHeaders: ["Content-Length"],

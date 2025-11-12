@@ -15,9 +15,9 @@ function RouteComponent() {
   return (
     <div className="space-y-24">
       <Hero />
+      <Quotes />
       <Projects />
       <Skills />
-      <Quotes />
       <LatestBlogs />
     </div>
   );

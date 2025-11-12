@@ -20,11 +20,9 @@ const Projects = () => {
         actionLink="/portfolio"
       />
       <ScrollArea className="w-full whitespace-nowrap pb-4">
-        <ItemGroup className="flex w-max flex-row space-x-4">
+        <ItemGroup className="flex w-max flex-row items-stretch space-x-4">
           {data?.map((project) => (
-            <div className="w-[350px]" key={project.id}>
-              <ProjectCard {...project} />
-            </div>
+            <ProjectCard {...project} className="w-[350px]" key={project.id} />
           ))}
         </ItemGroup>
         <ScrollBar orientation="horizontal" />
