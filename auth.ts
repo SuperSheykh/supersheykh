@@ -35,6 +35,7 @@ export const auth = betterAuth({
     //What actually permits me to have cookies sent to subdomains.
     crossSubDomainCookies: {
       enabled: true,
+      domain: ".supersheykh.win",
     },
   },
   plugins: [
