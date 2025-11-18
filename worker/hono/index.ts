@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import handler from "@tanstack/react-start/server-entry";
 import { trpcServer } from "@hono/trpc-server";
 import { appRouter } from "../trpc/router";
@@ -12,6 +13,17 @@ const app = new Hono<{
   Bindings: Env;
   Variables: { user: User | null; session: Session | null };
 }>();
+
+app.use(
+  "*",
+  cors({
+    origin: ["/\.supersheykh\.win/"],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization"],
+    exposeHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }),
+);
 
 app.use("/api/auth/*", async (c) => {
   return auth.handler(c.req.raw);
