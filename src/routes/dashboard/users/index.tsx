@@ -3,7 +3,6 @@ import Gutter from "@/components/gutter";
 import PageTitle from "@/components/page-title";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./-columns";
-import { getAllUsers } from "actions/users/get-all";
 import PageLoading from "@/components/page-loading";
 
 export const Route = createFileRoute("/dashboard/users/")({

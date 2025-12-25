@@ -17,6 +17,9 @@ export const projects = sqliteTable(
     cover: text("cover")
       .notNull()
       .references(() => images.id),
+    category: text("category", { enum: ["web", "mobile", "other"] })
+      .notNull()
+      .default("web"),
     live: text("live").default("1"),
     completion: real("completion").notNull(),
     github: text("github"),
@@ -49,6 +52,7 @@ export const projectFormSchema = projectSchema
     live: true,
     completion: true,
     github: true,
+    category: true,
   })
   .extend({
     id: z.string().optional(),

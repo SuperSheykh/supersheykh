@@ -20,7 +20,6 @@ import DialogProvider from "@/components/providers/dialog-provider";
 import Footer from "@/components/footer";
 import BreadcrumbComponent from "@/components/breadcrumb";
 import { themeScript } from "@/lib/utils/themeScript";
-import { getUser } from "actions/auth/get-user";
 import NotFound from "@/components/not-found";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
@@ -57,14 +56,14 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   }),
   shellComponent: RootDocument,
   notFoundComponent: NotFound,
-  beforeLoad: async () => {
-    const user = await getUser();
-    return {
-      auth: {
-        user,
-      },
-    };
-  },
+  // beforeLoad: async () => {
+  //   const user = await getUser();
+  //   return {
+  //     auth: {
+  //       user,
+  //     },
+  //   };
+  // },
 });
 
 export function RootDocument({ children }: { children: React.ReactNode }) {
@@ -79,9 +78,9 @@ export function RootDocument({ children }: { children: React.ReactNode }) {
           <ThemeProvider>
             <MenuDrawerProvider />
             <DialogProvider />
-            <div className="flex flex-col min-h-screen gap-y-12">
+            <div className="flex flex-col min-h-screen">
               <Header />
-              <div className="h-full">
+              <div className="h-full flex flex-col gap-y-8 mb-12">
                 <BreadcrumbComponent />
                 {children}
               </div>

@@ -106,6 +106,13 @@
       "when": 1762449460971,
       "tag": "0015_light_wolf_cub",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "6",
+      "when": 1766687873579,
+      "tag": "0016_free_fallen_one",
+      "breakpoints": true
     }
   ]
 }

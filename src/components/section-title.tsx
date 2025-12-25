@@ -2,22 +2,30 @@ import { Link } from "@tanstack/react-router";
 import { Button } from "./ui/button";
 import { ArrowRightIcon } from "lucide-react";
 import { useTrans } from "@/hooks/use-trans";
+import { cn } from "@/lib/utils";
 
 const SectionTitle = ({
   title,
   title_fr,
   action,
   actionLink,
+  className,
 }: {
   title: string;
   title_fr?: string;
   action?: string;
   actionLink?: string;
+  className?: string;
 }) => {
   const t = useTrans();
   return (
-    <div className="flex items-center gap-4 mb-12">
-      <h2 className="text-2xl md:text-3xl font-bold">
+    <div
+      className={cn(
+        "flex items-center flex-col justify-center gap-4 mb-12",
+        className,
+      )}
+    >
+      <h2 className="text-3xl md:text-5xl font-bold">
         <span className="text-primary mr-0.5">#</span>
         {t(title, title_fr)}
       </h2>

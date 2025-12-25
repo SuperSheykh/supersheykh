@@ -1,0 +1,1 @@
+ALTER TABLE `projects` ADD `category` text DEFAULT 'web' NOT NULL;

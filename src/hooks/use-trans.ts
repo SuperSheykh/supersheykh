@@ -11,6 +11,7 @@ export const useTrans = () => {
 
   const t = (name: string, nameFr?: string | null) => {
     if (mounted) return i18n.language === "fr" ? nameFr || name : name;
+    else return name;
   };
 
   return t;

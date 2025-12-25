@@ -4,11 +4,10 @@ import { Button } from "./ui/button";
 import Logo from "./logo";
 
 import { PAGES } from "@/lib/constants";
-import { MenuIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useMenuDrawer } from "@/hooks/use-menu-drawer";
 import { useTrans } from "@/hooks/use-trans";
-import LoginBtn from "./auth/login-btn";
+import MobileNav from "./mobile-nav";
+import DesktopNav from "./desktop-nav";
 
 export default function Header() {
   return (
@@ -16,7 +15,7 @@ export default function Header() {
       <Gutter>
         <nav className="py-2 flex justify-between items-center">
           <Logo className="text-base" />
-          <div className="w-auto flex gap-x-2 justify-end">
+          <div className="w-auto flex gap-x-2 justify-end items-center">
             {PAGES.map((page) => (
               <NavItem
                 key={page.path}
@@ -25,11 +24,9 @@ export default function Header() {
                 title_fr={page.title_fr}
               />
             ))}
-            <div className="ml-3 flex gap-x-1">
-              <LoginBtn />
-              <MenuBtn />
-            </div>
           </div>
+          <MobileNav />
+          <DesktopNav />
         </nav>
       </Gutter>
     </header>
@@ -71,15 +68,6 @@ const NavItem = ({
         </span>
         {t(title, title_fr)}
       </Link>
-    </Button>
-  );
-};
-
-const MenuBtn = () => {
-  const openMenu = useMenuDrawer((state) => state.open);
-  return (
-    <Button variant={"ghost"} className="md:hidden" onClick={openMenu}>
-      <MenuIcon />
     </Button>
   );
 };

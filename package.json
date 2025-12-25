@@ -8,6 +8,7 @@
     "build": "vite build",
     "serve": "vite preview",
     "test": "vitest run",
+    "drizzle:generate": "drizzle-kit generate",
     "deploy": "wrangler deploy"
   },
   "dependencies": {

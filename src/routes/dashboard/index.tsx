@@ -22,7 +22,7 @@ function RouteComponent() {
   const router = useRouter();
 
   return (
-    <Gutter className='space-y-16'>
+    <Gutter className="space-y-16">
       <PageTitle title="Dashboard" />
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {DASHBOARD_SECTIONS.map((section) => (

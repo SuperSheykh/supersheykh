@@ -5,7 +5,6 @@ import { trpcServer } from "@hono/trpc-server";
 import { appRouter } from "../trpc/router";
 import { createContext } from "../trpc/context";
 import { Env } from "@/types";
-import { auth } from "auth";
 import type { User, Session } from "better-auth";
 import apiRoutes from "./api";
 
@@ -24,24 +23,6 @@ app.use(
     credentials: true,
   }),
 );
-
-app.use("/api/auth/*", async (c) => {
-  return auth.handler(c.req.raw);
-});
-
-// Auth middleware. that will fetch the user and set the user variable.
-app.use("*", async (c, next) => {
-  const res = await auth.api.getSession({ headers: c.req.raw.headers });
-  if (!res) {
-    c.set("user", null);
-    c.set("session", null);
-    await next();
-    return;
-  }
-  c.set("user", res.user);
-  c.set("session", res.session);
-  await next();
-});
 
 // Setup tRPC server
 app.use(
